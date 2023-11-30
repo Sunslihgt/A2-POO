@@ -10,11 +10,13 @@ namespace IHM {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Description résumée de EmployeeList
+	/// Description résumée de PurchaseList
 	/// </summary>
-	public ref class EmployeeList : public System::Windows::Forms::Form {
+	public ref class PurchaseList : public System::Windows::Forms::Form
+	{
 	public:
-		EmployeeList(void) {
+		PurchaseList(void)
+		{
 			InitializeComponent();
 			//
 			//TODO: ajoutez ici le code du constructeur
@@ -25,32 +27,45 @@ namespace IHM {
 		/// <summary>
 		/// Nettoyage des ressources utilisées.
 		/// </summary>
-		~EmployeeList() {
-			if (components) {
+		~PurchaseList()
+		{
+			if (components)
+			{
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::DataGridView^ dgvPurchases;
+	protected:
 
-	private: System::Windows::Forms::DataGridView^ dgvEmployees;
+	protected:
+
+
 	private: System::Windows::Forms::TextBox^ txtName;
 	private: System::Windows::Forms::Button^ btnOpenEmployee;
 	private: System::Windows::Forms::GroupBox^ gpbSearch;
 	private: System::Windows::Forms::Label^ lblName;
 	private: System::Windows::Forms::Label^ lblFirstName;
 	private: System::Windows::Forms::TextBox^ txtFirstName;
-	private: System::Windows::Forms::Label^ lblStreetName;
-	private: System::Windows::Forms::TextBox^ txtStreetName;
-	private: System::Windows::Forms::NumericUpDown^ numStreetNumber;
-	private: System::Windows::Forms::Label^ lblStreetNumber;
-	private: System::Windows::Forms::Label^ lblCityName;
-	private: System::Windows::Forms::TextBox^ txtCityName;
+
+
 	private: System::Windows::Forms::GroupBox^ gpbOpen;
 	private: System::Windows::Forms::NumericUpDown^ numIdEmployee;
 	private: System::Windows::Forms::Label^ lblId;
 	private: System::Windows::Forms::GroupBox^ gpbCreate;
 	private: System::Windows::Forms::Button^ btnCreateEmployee;
 	private: System::Windows::Forms::Button^ btnSearchEmployees;
+	private: System::Windows::Forms::DateTimePicker^ dtpOrder;
+
+	private: System::Windows::Forms::Label^ lblOrderDate;
+	private: System::Windows::Forms::Label^ lblPayDate;
+	private: System::Windows::Forms::DateTimePicker^ dtpPay;
+
+
+
 	private: System::Windows::Forms::Label^ lblTitle;
+	private: System::Windows::Forms::Label^ lblDeliveryDate;
+	private: System::Windows::Forms::DateTimePicker^ dtpDelivery;
+
 
 
 	private:
@@ -65,15 +80,15 @@ namespace IHM {
 		/// le contenu de cette méthode avec l'éditeur de code.
 		/// </summary>
 		void InitializeComponent(void) {
-			this->dgvEmployees = (gcnew System::Windows::Forms::DataGridView());
+			this->dgvPurchases = (gcnew System::Windows::Forms::DataGridView());
 			this->gpbSearch = (gcnew System::Windows::Forms::GroupBox());
+			this->lblDeliveryDate = (gcnew System::Windows::Forms::Label());
+			this->dtpDelivery = (gcnew System::Windows::Forms::DateTimePicker());
+			this->lblPayDate = (gcnew System::Windows::Forms::Label());
+			this->dtpPay = (gcnew System::Windows::Forms::DateTimePicker());
+			this->lblOrderDate = (gcnew System::Windows::Forms::Label());
+			this->dtpOrder = (gcnew System::Windows::Forms::DateTimePicker());
 			this->btnSearchEmployees = (gcnew System::Windows::Forms::Button());
-			this->lblCityName = (gcnew System::Windows::Forms::Label());
-			this->txtCityName = (gcnew System::Windows::Forms::TextBox());
-			this->lblStreetName = (gcnew System::Windows::Forms::Label());
-			this->txtStreetName = (gcnew System::Windows::Forms::TextBox());
-			this->numStreetNumber = (gcnew System::Windows::Forms::NumericUpDown());
-			this->lblStreetNumber = (gcnew System::Windows::Forms::Label());
 			this->lblFirstName = (gcnew System::Windows::Forms::Label());
 			this->txtFirstName = (gcnew System::Windows::Forms::TextBox());
 			this->lblName = (gcnew System::Windows::Forms::Label());
@@ -85,108 +100,115 @@ namespace IHM {
 			this->lblId = (gcnew System::Windows::Forms::Label());
 			this->btnOpenEmployee = (gcnew System::Windows::Forms::Button());
 			this->lblTitle = (gcnew System::Windows::Forms::Label());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvEmployees))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvPurchases))->BeginInit();
 			this->gpbSearch->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numStreetNumber))->BeginInit();
 			this->gpbCreate->SuspendLayout();
 			this->gpbOpen->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numIdEmployee))->BeginInit();
 			this->SuspendLayout();
 			// 
-			// dgvEmployees
+			// dgvPurchases
 			// 
-			this->dgvEmployees->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+			this->dgvPurchases->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->dgvEmployees->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgvEmployees->Location = System::Drawing::Point(12, 131);
-			this->dgvEmployees->Name = L"dgvEmployees";
-			this->dgvEmployees->Size = System::Drawing::Size(513, 294);
-			this->dgvEmployees->TabIndex = 0;
+			this->dgvPurchases->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgvPurchases->Location = System::Drawing::Point(12, 131);
+			this->dgvPurchases->Name = L"dgvPurchases";
+			this->dgvPurchases->Size = System::Drawing::Size(656, 302);
+			this->dgvPurchases->TabIndex = 0;
 			// 
 			// gpbSearch
 			// 
 			this->gpbSearch->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
+			this->gpbSearch->Controls->Add(this->lblDeliveryDate);
+			this->gpbSearch->Controls->Add(this->dtpDelivery);
+			this->gpbSearch->Controls->Add(this->lblPayDate);
+			this->gpbSearch->Controls->Add(this->dtpPay);
+			this->gpbSearch->Controls->Add(this->lblOrderDate);
+			this->gpbSearch->Controls->Add(this->dtpOrder);
 			this->gpbSearch->Controls->Add(this->btnSearchEmployees);
-			this->gpbSearch->Controls->Add(this->lblCityName);
-			this->gpbSearch->Controls->Add(this->txtCityName);
-			this->gpbSearch->Controls->Add(this->lblStreetName);
-			this->gpbSearch->Controls->Add(this->txtStreetName);
-			this->gpbSearch->Controls->Add(this->numStreetNumber);
-			this->gpbSearch->Controls->Add(this->lblStreetNumber);
 			this->gpbSearch->Controls->Add(this->lblFirstName);
 			this->gpbSearch->Controls->Add(this->txtFirstName);
 			this->gpbSearch->Controls->Add(this->lblName);
 			this->gpbSearch->Controls->Add(this->txtName);
 			this->gpbSearch->Location = System::Drawing::Point(12, 35);
 			this->gpbSearch->Name = L"gpbSearch";
-			this->gpbSearch->Size = System::Drawing::Size(681, 90);
+			this->gpbSearch->Size = System::Drawing::Size(824, 90);
 			this->gpbSearch->TabIndex = 4;
 			this->gpbSearch->TabStop = false;
 			this->gpbSearch->Text = L"Rechercher";
 			// 
+			// lblDeliveryDate
+			// 
+			this->lblDeliveryDate->AutoSize = true;
+			this->lblDeliveryDate->Location = System::Drawing::Point(431, 61);
+			this->lblDeliveryDate->Margin = System::Windows::Forms::Padding(15, 0, 3, 0);
+			this->lblDeliveryDate->Name = L"lblDeliveryDate";
+			this->lblDeliveryDate->Size = System::Drawing::Size(122, 13);
+			this->lblDeliveryDate->TabIndex = 14;
+			this->lblDeliveryDate->Text = L"Date de livraison prévue";
+			this->lblDeliveryDate->Click += gcnew System::EventHandler(this, &PurchaseList::label1_Click);
+			// 
+			// dtpDelivery
+			// 
+			this->dtpDelivery->Format = System::Windows::Forms::DateTimePickerFormat::Short;
+			this->dtpDelivery->Location = System::Drawing::Point(559, 58);
+			this->dtpDelivery->Name = L"dtpDelivery";
+			this->dtpDelivery->Size = System::Drawing::Size(95, 20);
+			this->dtpDelivery->TabIndex = 13;
+			this->dtpDelivery->Value = System::DateTime(1900, 1, 1, 0, 0, 0, 0);
+			this->dtpDelivery->ValueChanged += gcnew System::EventHandler(this, &PurchaseList::dateTimePicker1_ValueChanged);
+			// 
+			// lblPayDate
+			// 
+			this->lblPayDate->AutoSize = true;
+			this->lblPayDate->Location = System::Drawing::Point(221, 61);
+			this->lblPayDate->Margin = System::Windows::Forms::Padding(15, 0, 3, 0);
+			this->lblPayDate->Name = L"lblPayDate";
+			this->lblPayDate->Size = System::Drawing::Size(91, 13);
+			this->lblPayDate->TabIndex = 12;
+			this->lblPayDate->Text = L"Date de paiement";
+			// 
+			// dtpPay
+			// 
+			this->dtpPay->Format = System::Windows::Forms::DateTimePickerFormat::Short;
+			this->dtpPay->Location = System::Drawing::Point(318, 58);
+			this->dtpPay->Name = L"dtpPay";
+			this->dtpPay->Size = System::Drawing::Size(95, 20);
+			this->dtpPay->TabIndex = 11;
+			this->dtpPay->Value = System::DateTime(1900, 1, 1, 0, 0, 0, 0);
+			// 
+			// lblOrderDate
+			// 
+			this->lblOrderDate->AutoSize = true;
+			this->lblOrderDate->Location = System::Drawing::Point(6, 61);
+			this->lblOrderDate->Margin = System::Windows::Forms::Padding(15, 0, 3, 0);
+			this->lblOrderDate->Name = L"lblOrderDate";
+			this->lblOrderDate->Size = System::Drawing::Size(100, 13);
+			this->lblOrderDate->TabIndex = 10;
+			this->lblOrderDate->Text = L"Date de commande";
+			// 
+			// dtpOrder
+			// 
+			this->dtpOrder->Format = System::Windows::Forms::DateTimePickerFormat::Short;
+			this->dtpOrder->Location = System::Drawing::Point(108, 58);
+			this->dtpOrder->Name = L"dtpOrder";
+			this->dtpOrder->Size = System::Drawing::Size(95, 20);
+			this->dtpOrder->TabIndex = 9;
+			this->dtpOrder->Value = System::DateTime(1900, 1, 1, 0, 0, 0, 0);
+			// 
 			// btnSearchEmployees
 			// 
 			this->btnSearchEmployees->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
-			this->btnSearchEmployees->Location = System::Drawing::Point(525, 55);
+			this->btnSearchEmployees->Location = System::Drawing::Point(668, 56);
 			this->btnSearchEmployees->Margin = System::Windows::Forms::Padding(3, 10, 3, 3);
 			this->btnSearchEmployees->Name = L"btnSearchEmployees";
 			this->btnSearchEmployees->Size = System::Drawing::Size(150, 23);
 			this->btnSearchEmployees->TabIndex = 6;
 			this->btnSearchEmployees->Text = L"Chercher";
 			this->btnSearchEmployees->UseVisualStyleBackColor = true;
-			// 
-			// lblCityName
-			// 
-			this->lblCityName->AutoSize = true;
-			this->lblCityName->Location = System::Drawing::Point(326, 61);
-			this->lblCityName->Margin = System::Windows::Forms::Padding(15, 0, 3, 0);
-			this->lblCityName->Name = L"lblCityName";
-			this->lblCityName->Size = System::Drawing::Size(26, 13);
-			this->lblCityName->TabIndex = 6;
-			this->lblCityName->Text = L"Ville";
-			// 
-			// txtCityName
-			// 
-			this->txtCityName->Location = System::Drawing::Point(358, 58);
-			this->txtCityName->Name = L"txtCityName";
-			this->txtCityName->Size = System::Drawing::Size(139, 20);
-			this->txtCityName->TabIndex = 5;
-			// 
-			// lblStreetName
-			// 
-			this->lblStreetName->AutoSize = true;
-			this->lblStreetName->Location = System::Drawing::Point(115, 60);
-			this->lblStreetName->Margin = System::Windows::Forms::Padding(15, 0, 3, 0);
-			this->lblStreetName->Name = L"lblStreetName";
-			this->lblStreetName->Size = System::Drawing::Size(27, 13);
-			this->lblStreetName->TabIndex = 8;
-			this->lblStreetName->Text = L"Rue";
-			// 
-			// txtStreetName
-			// 
-			this->txtStreetName->Location = System::Drawing::Point(145, 58);
-			this->txtStreetName->Name = L"txtStreetName";
-			this->txtStreetName->Size = System::Drawing::Size(163, 20);
-			this->txtStreetName->TabIndex = 7;
-			// 
-			// numStreetNumber
-			// 
-			this->numStreetNumber->AllowDrop = true;
-			this->numStreetNumber->Location = System::Drawing::Point(54, 58);
-			this->numStreetNumber->Name = L"numStreetNumber";
-			this->numStreetNumber->Size = System::Drawing::Size(43, 20);
-			this->numStreetNumber->TabIndex = 5;
-			// 
-			// lblStreetNumber
-			// 
-			this->lblStreetNumber->AutoSize = true;
-			this->lblStreetNumber->Location = System::Drawing::Point(6, 60);
-			this->lblStreetNumber->Name = L"lblStreetNumber";
-			this->lblStreetNumber->Size = System::Drawing::Size(42, 13);
-			this->lblStreetNumber->TabIndex = 6;
-			this->lblStreetNumber->Text = L"N° Rue";
 			// 
 			// lblFirstName
 			// 
@@ -225,7 +247,7 @@ namespace IHM {
 			// 
 			this->gpbCreate->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->gpbCreate->Controls->Add(this->btnCreateEmployee);
-			this->gpbCreate->Location = System::Drawing::Point(531, 224);
+			this->gpbCreate->Location = System::Drawing::Point(674, 224);
 			this->gpbCreate->Name = L"gpbCreate";
 			this->gpbCreate->Size = System::Drawing::Size(162, 52);
 			this->gpbCreate->TabIndex = 11;
@@ -249,7 +271,7 @@ namespace IHM {
 			this->gpbOpen->Controls->Add(this->numIdEmployee);
 			this->gpbOpen->Controls->Add(this->lblId);
 			this->gpbOpen->Controls->Add(this->btnOpenEmployee);
-			this->gpbOpen->Location = System::Drawing::Point(531, 131);
+			this->gpbOpen->Location = System::Drawing::Point(674, 131);
 			this->gpbOpen->Name = L"gpbOpen";
 			this->gpbOpen->Size = System::Drawing::Size(162, 87);
 			this->gpbOpen->TabIndex = 10;
@@ -292,29 +314,28 @@ namespace IHM {
 			this->lblTitle->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
 			this->lblTitle->Location = System::Drawing::Point(12, 9);
 			this->lblTitle->Name = L"lblTitle";
-			this->lblTitle->Size = System::Drawing::Size(681, 23);
-			this->lblTitle->TabIndex = 12;
-			this->lblTitle->Text = L"Gestion des employés";
+			this->lblTitle->Size = System::Drawing::Size(824, 23);
+			this->lblTitle->TabIndex = 13;
+			this->lblTitle->Text = L"Gestion des commandes";
 			this->lblTitle->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 			// 
-			// EmployeeList
+			// PurchaseList
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(705, 437);
+			this->ClientSize = System::Drawing::Size(848, 445);
 			this->Controls->Add(this->lblTitle);
 			this->Controls->Add(this->gpbCreate);
 			this->Controls->Add(this->gpbOpen);
 			this->Controls->Add(this->gpbSearch);
-			this->Controls->Add(this->dgvEmployees);
-			this->Name = L"EmployeeList";
+			this->Controls->Add(this->dgvPurchases);
+			this->Name = L"PurchaseList";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Employés";
-			this->Load += gcnew System::EventHandler(this, &EmployeeList::employeeListLoad);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvEmployees))->EndInit();
+			this->Text = L"Commandes";
+			this->Load += gcnew System::EventHandler(this, &PurchaseList::purchaseListLoad);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvPurchases))->EndInit();
 			this->gpbSearch->ResumeLayout(false);
 			this->gpbSearch->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numStreetNumber))->EndInit();
 			this->gpbCreate->ResumeLayout(false);
 			this->gpbOpen->ResumeLayout(false);
 			this->gpbOpen->PerformLayout();
@@ -323,8 +344,10 @@ namespace IHM {
 
 		}
 #pragma endregion
-		private: System::Void employeeListLoad(System::Object^ sender, System::EventArgs^ e) {
-		
-		}
-	};
+	private: System::Void purchaseListLoad(System::Object^ sender, System::EventArgs^ e) {
+
+	}
+	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {}
+private: System::Void dateTimePicker1_ValueChanged(System::Object^ sender, System::EventArgs^ e) {}
+};
 }

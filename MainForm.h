@@ -1,9 +1,11 @@
 #pragma once
 
 #include "EmployeeList.h"
+#include "ClientList.h"
+#include "ItemList.h"
+#include "PurchaseList.h"
 
 namespace IHM {
-
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -116,7 +118,6 @@ namespace IHM {
 			this->btnEmployee->Text = L"Employés";
 			this->btnEmployee->UseVisualStyleBackColor = true;
 			this->btnEmployee->Click += gcnew System::EventHandler(this, &MainForm::btnEmployeeClick);
-
 			// 
 			// btnClient
 			// 
@@ -127,6 +128,7 @@ namespace IHM {
 			this->btnClient->TabIndex = 2;
 			this->btnClient->Text = L"Clients";
 			this->btnClient->UseVisualStyleBackColor = true;
+			this->btnClient->Click += gcnew System::EventHandler(this, &MainForm::btnClientClick);
 			// 
 			// btnItem
 			// 
@@ -137,6 +139,7 @@ namespace IHM {
 			this->btnItem->TabIndex = 3;
 			this->btnItem->Text = L"Produits";
 			this->btnItem->UseVisualStyleBackColor = true;
+			this->btnItem->Click += gcnew System::EventHandler(this, &MainForm::btnItemClick);
 			// 
 			// btnPurchase
 			// 
@@ -147,6 +150,7 @@ namespace IHM {
 			this->btnPurchase->TabIndex = 4;
 			this->btnPurchase->Text = L"Commandes";
 			this->btnPurchase->UseVisualStyleBackColor = true;
+			this->btnPurchase->Click += gcnew System::EventHandler(this, &MainForm::btnPurchaseClick);
 			// 
 			// btnStatistics
 			// 
@@ -172,18 +176,35 @@ namespace IHM {
 			this->Controls->Add(this->btnEmployee);
 			this->Controls->Add(this->lblTitle);
 			this->Name = L"MainForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Projet POO - Groupe 1";
 			this->Load += gcnew System::EventHandler(this, &MainForm::mainFormLoad);
 			this->ResumeLayout(false);
+
 		}
 #pragma endregion
-		private: System::Void mainFormLoad(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void mainFormLoad(System::Object^ sender, System::EventArgs^ e) {
 
-		}
+	}
 
-		private: System::Void btnEmployeeClick(System::Object^ sender, System::EventArgs^ e) {
-			IHM::EmployeeList employeeList;
-			employeeList.ShowDialog();
-		}
+	private: System::Void btnEmployeeClick(System::Object^ sender, System::EventArgs^ e) {
+		IHM::EmployeeList employeeList;
+		employeeList.ShowDialog();
+	}
+
+	private: System::Void btnClientClick(System::Object^ sender, System::EventArgs^ e) {
+		IHM::ClientList clientList;
+		clientList.ShowDialog();
+	}
+
+	private: System::Void btnItemClick(System::Object^ sender, System::EventArgs^ e) {
+		IHM::ItemList itemList;
+		itemList.ShowDialog();
+	}
+
+	private: System::Void btnPurchaseClick(System::Object^ sender, System::EventArgs^ e) {
+		IHM::PurchaseList purchaseList;
+		purchaseList.ShowDialog();
+	}
 	};
 }

@@ -120,24 +120,45 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ClientList.cpp" />
     <ClCompile Include="EmployeeList.cpp" />
+    <ClCompile Include="ItemList.cpp" />
     <ClCompile Include="MainForm.cpp" />
+    <ClCompile Include="PurchaseList.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClientList.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="EmployeeList.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="ItemList.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PurchaseList.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ClientList.resx">
+      <DependentUpon>ClientList.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EmployeeList.resx">
       <DependentUpon>EmployeeList.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ItemList.resx">
+      <DependentUpon>ItemList.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PurchaseList.resx">
+      <DependentUpon>PurchaseList.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
