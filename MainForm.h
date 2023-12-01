@@ -35,6 +35,7 @@ namespace IHM {
 			}
 		}
 	private: System::Windows::Forms::Label^ label1;
+	private: System::Windows::Forms::Label^ label2;
 	protected:
 
 	private:
@@ -51,6 +52,7 @@ namespace IHM {
 		void InitializeComponent(void)
 		{
 			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// label1
@@ -65,11 +67,21 @@ namespace IHM {
 			this->label1->Text = L"Projet POO";
 			this->label1->Click += gcnew System::EventHandler(this, &MainForm::label1_Click);
 			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(126, 194);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(30, 13);
+			this->label2->TabIndex = 1;
+			this->label2->Text = L"BDD";
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(284, 261);
+			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->Name = L"MainForm";
 			this->Text = L"MainForm";
