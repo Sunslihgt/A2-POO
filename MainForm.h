@@ -4,6 +4,7 @@
 #include "ClientList.h"
 #include "ItemList.h"
 #include "PurchaseList.h"
+#include "Statistics.h"
 
 namespace IHM {
 	using namespace System;
@@ -161,6 +162,7 @@ namespace IHM {
 			this->btnStatistics->TabIndex = 5;
 			this->btnStatistics->Text = L"Statistiques";
 			this->btnStatistics->UseVisualStyleBackColor = true;
+			this->btnStatistics->Click += gcnew System::EventHandler(this, &MainForm::btnStatisticsClick);
 			// 
 			// MainForm
 			// 
@@ -205,6 +207,11 @@ namespace IHM {
 	private: System::Void btnPurchaseClick(System::Object^ sender, System::EventArgs^ e) {
 		IHM::PurchaseList purchaseList;
 		purchaseList.ShowDialog();
+	}
+
+	private: System::Void btnStatisticsClick(System::Object^ sender, System::EventArgs^ e) {
+		IHM::Statistics statistics;
+		statistics.ShowDialog();
 	}
 	};
 }

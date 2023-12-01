@@ -125,6 +125,7 @@
     <ClCompile Include="ItemList.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="PurchaseList.cpp" />
+    <ClCompile Include="Statistics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientList.h">
@@ -143,6 +144,9 @@
     <ClInclude Include="PurchaseList.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Statistics.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ClientList.resx">
@@ -159,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PurchaseList.resx">
       <DependentUpon>PurchaseList.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Statistics.resx">
+      <DependentUpon>Statistics.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
