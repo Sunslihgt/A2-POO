@@ -5,6 +5,7 @@
 #include "ItemList.h"
 #include "PurchaseList.h"
 #include "Statistics.h"
+#include "Mapper.h"
 
 namespace IHM {
 	using namespace System;

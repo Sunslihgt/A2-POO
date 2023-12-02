@@ -120,17 +120,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CAD.cpp" />
     <ClCompile Include="ClientList.cpp" />
+    <ClCompile Include="DBController.cpp" />
+    <ClCompile Include="Employee.cpp" />
     <ClCompile Include="EmployeeList.cpp" />
     <ClCompile Include="ItemList.cpp" />
     <ClCompile Include="MainForm.cpp" />
+    <ClCompile Include="Mapper.cpp" />
     <ClCompile Include="PurchaseList.cpp" />
+    <ClCompile Include="Services.cpp" />
     <ClCompile Include="Statistics.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CAD.h" />
     <ClInclude Include="ClientList.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="DBController.h" />
+    <ClInclude Include="Employee.h" />
     <ClInclude Include="EmployeeList.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -140,10 +148,11 @@
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="Mapper.h" />
     <ClInclude Include="PurchaseList.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Services.h" />
     <ClInclude Include="Statistics.h">
       <FileType>CppForm</FileType>
     </ClInclude>
