@@ -21,39 +21,27 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EmployeeList.h">
+    <ClInclude Include="EmployeeListForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ClientList.h">
+    <ClInclude Include="ClientListForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ItemList.h">
+    <ClInclude Include="ItemListForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PurchaseList.h">
+    <ClInclude Include="PurchaseListForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Statistics.h">
+    <ClInclude Include="StatisticsForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectionForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MainForm.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="EmployeeList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ClientList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ItemList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PurchaseList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Statistics.cpp">
+    <ClCompile Include="ConnectionForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -120,52 +120,53 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ClientList.cpp" />
-    <ClCompile Include="EmployeeList.cpp" />
-    <ClCompile Include="ItemList.cpp" />
-    <ClCompile Include="MainForm.cpp" />
-    <ClCompile Include="PurchaseList.cpp" />
-    <ClCompile Include="Statistics.cpp" />
+    <ClCompile Include="ConnectionForm.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ClientList.h">
+    <ClInclude Include="ClientListForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="EmployeeList.h">
+    <ClInclude Include="ConnectionForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="ItemList.h">
+    <ClInclude Include="EmployeeListForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="ItemListForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="PurchaseList.h">
+    <ClInclude Include="PurchaseListForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="Statistics.h">
+    <ClInclude Include="StatisticsForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ClientList.resx">
-      <DependentUpon>ClientList.h</DependentUpon>
+    <EmbeddedResource Include="ClientListForm.resx">
+      <DependentUpon>ClientListForm.h</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EmployeeList.resx">
-      <DependentUpon>EmployeeList.h</DependentUpon>
+    <EmbeddedResource Include="ConnectionForm.resx">
+      <DependentUpon>ConnectionForm.h</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ItemList.resx">
-      <DependentUpon>ItemList.h</DependentUpon>
+    <EmbeddedResource Include="EmployeeListForm.resx">
+      <DependentUpon>EmployeeListForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItemListForm.resx">
+      <DependentUpon>ItemListForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PurchaseList.resx">
-      <DependentUpon>PurchaseList.h</DependentUpon>
+    <EmbeddedResource Include="PurchaseListForm.resx">
+      <DependentUpon>PurchaseListForm.h</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Statistics.resx">
-      <DependentUpon>Statistics.h</DependentUpon>
+    <EmbeddedResource Include="StatisticsForm.resx">
+      <DependentUpon>StatisticsForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

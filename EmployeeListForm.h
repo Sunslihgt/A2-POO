@@ -10,13 +10,11 @@ namespace IHM {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Description résumée de Statistics
+	/// Description résumée de EmployeeList
 	/// </summary>
-	public ref class Statistics : public System::Windows::Forms::Form
-	{
+	public ref class EmployeeListForm : public System::Windows::Forms::Form {
 	public:
-		Statistics(void)
-		{
+		EmployeeListForm(void) {
 			InitializeComponent();
 			//
 			//TODO: ajoutez ici le code du constructeur
@@ -27,17 +25,15 @@ namespace IHM {
 		/// <summary>
 		/// Nettoyage des ressources utilisées.
 		/// </summary>
-		~Statistics()
-		{
-			if (components)
-			{
+		~EmployeeListForm() {
+			if (components) {
 				delete components;
 			}
 		}
 
 	private: System::Windows::Forms::DataGridView^ dgvEmployees;
 	private: System::Windows::Forms::TextBox^ txtName;
-
+	private: System::Windows::Forms::Button^ btnOpenEmployee;
 	private: System::Windows::Forms::GroupBox^ gpbSearch;
 	private: System::Windows::Forms::Label^ lblName;
 	private: System::Windows::Forms::Label^ lblFirstName;
@@ -48,21 +44,13 @@ namespace IHM {
 	private: System::Windows::Forms::Label^ lblStreetNumber;
 	private: System::Windows::Forms::Label^ lblCityName;
 	private: System::Windows::Forms::TextBox^ txtCityName;
-
-
-
-
-
+	private: System::Windows::Forms::GroupBox^ gpbOpen;
+	private: System::Windows::Forms::NumericUpDown^ numIdEmployee;
+	private: System::Windows::Forms::Label^ lblId;
+	private: System::Windows::Forms::GroupBox^ gpbCreate;
+	private: System::Windows::Forms::Button^ btnCreateEmployee;
 	private: System::Windows::Forms::Button^ btnSearchEmployees;
 	private: System::Windows::Forms::Label^ lblTitle;
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::GroupBox^ gpbTurnOverMonth;
-	private: System::Windows::Forms::Label^ lblFirstPurchase;
-	private: System::Windows::Forms::NumericUpDown^ numericUpDown2;
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::NumericUpDown^ numericUpDown1;
-
 
 
 	private:
@@ -90,20 +78,19 @@ namespace IHM {
 			this->txtFirstName = (gcnew System::Windows::Forms::TextBox());
 			this->lblName = (gcnew System::Windows::Forms::Label());
 			this->txtName = (gcnew System::Windows::Forms::TextBox());
+			this->gpbCreate = (gcnew System::Windows::Forms::GroupBox());
+			this->btnCreateEmployee = (gcnew System::Windows::Forms::Button());
+			this->gpbOpen = (gcnew System::Windows::Forms::GroupBox());
+			this->numIdEmployee = (gcnew System::Windows::Forms::NumericUpDown());
+			this->lblId = (gcnew System::Windows::Forms::Label());
+			this->btnOpenEmployee = (gcnew System::Windows::Forms::Button());
 			this->lblTitle = (gcnew System::Windows::Forms::Label());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->gpbTurnOverMonth = (gcnew System::Windows::Forms::GroupBox());
-			this->lblFirstPurchase = (gcnew System::Windows::Forms::Label());
-			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
-			this->numericUpDown2 = (gcnew System::Windows::Forms::NumericUpDown());
-			this->label1 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvEmployees))->BeginInit();
 			this->gpbSearch->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numStreetNumber))->BeginInit();
-			this->gpbTurnOverMonth->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->BeginInit();
+			this->gpbCreate->SuspendLayout();
+			this->gpbOpen->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numIdEmployee))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// dgvEmployees
@@ -114,7 +101,7 @@ namespace IHM {
 			this->dgvEmployees->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dgvEmployees->Location = System::Drawing::Point(12, 131);
 			this->dgvEmployees->Name = L"dgvEmployees";
-			this->dgvEmployees->Size = System::Drawing::Size(510, 294);
+			this->dgvEmployees->Size = System::Drawing::Size(513, 294);
 			this->dgvEmployees->TabIndex = 0;
 			// 
 			// gpbSearch
@@ -134,7 +121,7 @@ namespace IHM {
 			this->gpbSearch->Controls->Add(this->txtName);
 			this->gpbSearch->Location = System::Drawing::Point(12, 35);
 			this->gpbSearch->Name = L"gpbSearch";
-			this->gpbSearch->Size = System::Drawing::Size(824, 90);
+			this->gpbSearch->Size = System::Drawing::Size(681, 90);
 			this->gpbSearch->TabIndex = 4;
 			this->gpbSearch->TabStop = false;
 			this->gpbSearch->Text = L"Rechercher";
@@ -142,7 +129,7 @@ namespace IHM {
 			// btnSearchEmployees
 			// 
 			this->btnSearchEmployees->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
-			this->btnSearchEmployees->Location = System::Drawing::Point(668, 55);
+			this->btnSearchEmployees->Location = System::Drawing::Point(525, 55);
 			this->btnSearchEmployees->Margin = System::Windows::Forms::Padding(3, 10, 3, 3);
 			this->btnSearchEmployees->Name = L"btnSearchEmployees";
 			this->btnSearchEmployees->Size = System::Drawing::Size(150, 23);
@@ -234,6 +221,70 @@ namespace IHM {
 			this->txtName->Size = System::Drawing::Size(100, 20);
 			this->txtName->TabIndex = 1;
 			// 
+			// gpbCreate
+			// 
+			this->gpbCreate->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->gpbCreate->Controls->Add(this->btnCreateEmployee);
+			this->gpbCreate->Location = System::Drawing::Point(531, 224);
+			this->gpbCreate->Name = L"gpbCreate";
+			this->gpbCreate->Size = System::Drawing::Size(162, 52);
+			this->gpbCreate->TabIndex = 11;
+			this->gpbCreate->TabStop = false;
+			this->gpbCreate->Text = L"Créer";
+			// 
+			// btnCreateEmployee
+			// 
+			this->btnCreateEmployee->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->btnCreateEmployee->Location = System::Drawing::Point(6, 19);
+			this->btnCreateEmployee->Name = L"btnCreateEmployee";
+			this->btnCreateEmployee->Size = System::Drawing::Size(150, 23);
+			this->btnCreateEmployee->TabIndex = 2;
+			this->btnCreateEmployee->Text = L"Ouvrir";
+			this->btnCreateEmployee->UseVisualStyleBackColor = true;
+			// 
+			// gpbOpen
+			// 
+			this->gpbOpen->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->gpbOpen->Controls->Add(this->numIdEmployee);
+			this->gpbOpen->Controls->Add(this->lblId);
+			this->gpbOpen->Controls->Add(this->btnOpenEmployee);
+			this->gpbOpen->Location = System::Drawing::Point(531, 131);
+			this->gpbOpen->Name = L"gpbOpen";
+			this->gpbOpen->Size = System::Drawing::Size(162, 87);
+			this->gpbOpen->TabIndex = 10;
+			this->gpbOpen->TabStop = false;
+			this->gpbOpen->Text = L"Modifier";
+			// 
+			// numIdEmployee
+			// 
+			this->numIdEmployee->AllowDrop = true;
+			this->numIdEmployee->Location = System::Drawing::Point(41, 20);
+			this->numIdEmployee->Name = L"numIdEmployee";
+			this->numIdEmployee->Size = System::Drawing::Size(115, 20);
+			this->numIdEmployee->TabIndex = 5;
+			// 
+			// lblId
+			// 
+			this->lblId->AutoSize = true;
+			this->lblId->Location = System::Drawing::Point(6, 22);
+			this->lblId->Name = L"lblId";
+			this->lblId->Size = System::Drawing::Size(16, 13);
+			this->lblId->TabIndex = 2;
+			this->lblId->Text = L"Id";
+			// 
+			// btnOpenEmployee
+			// 
+			this->btnOpenEmployee->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->btnOpenEmployee->Location = System::Drawing::Point(6, 53);
+			this->btnOpenEmployee->Margin = System::Windows::Forms::Padding(3, 10, 3, 3);
+			this->btnOpenEmployee->Name = L"btnOpenEmployee";
+			this->btnOpenEmployee->Size = System::Drawing::Size(150, 23);
+			this->btnOpenEmployee->TabIndex = 2;
+			this->btnOpenEmployee->Text = L"Ouvrir";
+			this->btnOpenEmployee->UseVisualStyleBackColor = true;
+			// 
 			// lblTitle
 			// 
 			this->lblTitle->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
@@ -241,112 +292,39 @@ namespace IHM {
 			this->lblTitle->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
 			this->lblTitle->Location = System::Drawing::Point(12, 9);
 			this->lblTitle->Name = L"lblTitle";
-			this->lblTitle->Size = System::Drawing::Size(824, 23);
+			this->lblTitle->Size = System::Drawing::Size(681, 23);
 			this->lblTitle->TabIndex = 12;
-			this->lblTitle->Text = L"Statistiques";
+			this->lblTitle->Text = L"Gestion des employés";
 			this->lblTitle->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 			// 
-			// button1
-			// 
-			this->button1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
-			this->button1->Location = System::Drawing::Point(680, 163);
-			this->button1->Margin = System::Windows::Forms::Padding(3, 10, 3, 3);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(150, 23);
-			this->button1->TabIndex = 9;
-			this->button1->Text = L"Panier Moyen";
-			this->button1->UseVisualStyleBackColor = true;
-			// 
-			// button2
-			// 
-			this->button2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
-				| System::Windows::Forms::AnchorStyles::Right));
-			this->button2->Location = System::Drawing::Point(6, 72);
-			this->button2->Margin = System::Windows::Forms::Padding(3, 10, 3, 3);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(152, 23);
-			this->button2->TabIndex = 13;
-			this->button2->Text = L"Panier Moyen";
-			this->button2->UseVisualStyleBackColor = true;
-			// 
-			// gpbTurnOverMonth
-			// 
-			this->gpbTurnOverMonth->Controls->Add(this->numericUpDown2);
-			this->gpbTurnOverMonth->Controls->Add(this->label1);
-			this->gpbTurnOverMonth->Controls->Add(this->numericUpDown1);
-			this->gpbTurnOverMonth->Controls->Add(this->lblFirstPurchase);
-			this->gpbTurnOverMonth->Controls->Add(this->button2);
-			this->gpbTurnOverMonth->Location = System::Drawing::Point(604, 286);
-			this->gpbTurnOverMonth->Name = L"gpbTurnOverMonth";
-			this->gpbTurnOverMonth->Size = System::Drawing::Size(164, 101);
-			this->gpbTurnOverMonth->TabIndex = 14;
-			this->gpbTurnOverMonth->TabStop = false;
-			this->gpbTurnOverMonth->Text = L"Chiffre d\'affaires";
-			// 
-			// lblFirstPurchase
-			// 
-			this->lblFirstPurchase->AutoSize = true;
-			this->lblFirstPurchase->Location = System::Drawing::Point(6, 26);
-			this->lblFirstPurchase->Margin = System::Windows::Forms::Padding(3, 10, 3, 0);
-			this->lblFirstPurchase->Name = L"lblFirstPurchase";
-			this->lblFirstPurchase->Size = System::Drawing::Size(29, 13);
-			this->lblFirstPurchase->TabIndex = 15;
-			this->lblFirstPurchase->Text = L"Mois";
-			// 
-			// numericUpDown1
-			// 
-			this->numericUpDown1->AllowDrop = true;
-			this->numericUpDown1->Location = System::Drawing::Point(50, 24);
-			this->numericUpDown1->Name = L"numericUpDown1";
-			this->numericUpDown1->Size = System::Drawing::Size(54, 20);
-			this->numericUpDown1->TabIndex = 9;
-			// 
-			// numericUpDown2
-			// 
-			this->numericUpDown2->AllowDrop = true;
-			this->numericUpDown2->Location = System::Drawing::Point(50, 47);
-			this->numericUpDown2->Name = L"numericUpDown2";
-			this->numericUpDown2->Size = System::Drawing::Size(54, 20);
-			this->numericUpDown2->TabIndex = 16;
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(6, 49);
-			this->label1->Margin = System::Windows::Forms::Padding(3, 10, 3, 0);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(38, 13);
-			this->label1->TabIndex = 17;
-			this->label1->Text = L"Année";
-			// 
-			// Statistics
+			// EmployeeList
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(848, 437);
-			this->Controls->Add(this->gpbTurnOverMonth);
-			this->Controls->Add(this->button1);
+			this->ClientSize = System::Drawing::Size(705, 437);
 			this->Controls->Add(this->lblTitle);
+			this->Controls->Add(this->gpbCreate);
+			this->Controls->Add(this->gpbOpen);
 			this->Controls->Add(this->gpbSearch);
 			this->Controls->Add(this->dgvEmployees);
-			this->Name = L"Statistics";
+			this->Name = L"EmployeeList";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Statistiques";
-			this->Load += gcnew System::EventHandler(this, &Statistics::statisticsLoad);
+			this->Text = L"Employés";
+			this->Load += gcnew System::EventHandler(this, &EmployeeListForm::employeeListLoad);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvEmployees))->EndInit();
 			this->gpbSearch->ResumeLayout(false);
 			this->gpbSearch->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numStreetNumber))->EndInit();
-			this->gpbTurnOverMonth->ResumeLayout(false);
-			this->gpbTurnOverMonth->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->EndInit();
+			this->gpbCreate->ResumeLayout(false);
+			this->gpbOpen->ResumeLayout(false);
+			this->gpbOpen->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numIdEmployee))->EndInit();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
-	private: System::Void statisticsLoad(System::Object^ sender, System::EventArgs^ e) {
-
-	}
+		private: System::Void employeeListLoad(System::Object^ sender, System::EventArgs^ e) {
+		
+		}
 	};
 }

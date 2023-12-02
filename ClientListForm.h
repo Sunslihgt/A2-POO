@@ -12,10 +12,10 @@ namespace IHM {
 	/// <summary>
 	/// Description résumée de ClientList
 	/// </summary>
-	public ref class ClientList : public System::Windows::Forms::Form
+	public ref class ClientListForm : public System::Windows::Forms::Form
 	{
 	public:
-		ClientList(void)
+		ClientListForm(void)
 		{
 			InitializeComponent();
 			//
@@ -27,7 +27,7 @@ namespace IHM {
 		/// <summary>
 		/// Nettoyage des ressources utilisées.
 		/// </summary>
-		~ClientList()
+		~ClientListForm()
 		{
 			if (components)
 			{
@@ -297,7 +297,7 @@ namespace IHM {
 			this->Name = L"ClientList";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Clients";
-			this->Load += gcnew System::EventHandler(this, &ClientList::clientListLoad);
+			this->Load += gcnew System::EventHandler(this, &ClientListForm::clientListLoad);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvClients))->EndInit();
 			this->gpbSearch->ResumeLayout(false);
 			this->gpbSearch->PerformLayout();

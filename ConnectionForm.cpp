@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "MainForm.h"
+#include "ConnectionForm.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -8,6 +8,6 @@ using namespace System::Windows::Forms;
 int __clrcall WinMain(array<String^>^ args) {
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
-	IHM::MainForm mainForm;
-	Application::Run(% mainForm);
+	IHM::ConnectionForm connectionForm;
+	Application::Run(% connectionForm);
 }

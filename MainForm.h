@@ -1,10 +1,10 @@
 #pragma once
 
-#include "EmployeeList.h"
-#include "ClientList.h"
-#include "ItemList.h"
-#include "PurchaseList.h"
-#include "Statistics.h"
+#include "EmployeeListForm.h"
+#include "ClientListForm.h"
+#include "ItemListForm.h"
+#include "PurchaseListForm.h"
+#include "StatisticsForm.h"
 
 namespace IHM {
 	using namespace System;
@@ -190,13 +190,13 @@ namespace IHM {
 	}
 
 	private: System::Void btnEmployeeClick(System::Object^ sender, System::EventArgs^ e) {
-		IHM::EmployeeList employeeList;
-		employeeList.ShowDialog();
+		IHM::EmployeeListForm employeeListForm;
+		employeeListForm.ShowDialog();
 	}
 
 	private: System::Void btnClientClick(System::Object^ sender, System::EventArgs^ e) {
-		IHM::ClientList clientList;
-		clientList.ShowDialog();
+		IHM::ClientListForm clientListForm;
+		clientListForm.ShowDialog();
 	}
 
 	private: System::Void btnItemClick(System::Object^ sender, System::EventArgs^ e) {
@@ -205,13 +205,13 @@ namespace IHM {
 	}
 
 	private: System::Void btnPurchaseClick(System::Object^ sender, System::EventArgs^ e) {
-		IHM::PurchaseList purchaseList;
-		purchaseList.ShowDialog();
+		IHM::PurchaseListForm purchaseListForm;
+		purchaseListForm.ShowDialog();
 	}
 
 	private: System::Void btnStatisticsClick(System::Object^ sender, System::EventArgs^ e) {
-		IHM::Statistics statistics;
-		statistics.ShowDialog();
+		IHM::StatisticsForm statisticsForm;
+		statisticsForm.ShowDialog();
 	}
 	};
 }
