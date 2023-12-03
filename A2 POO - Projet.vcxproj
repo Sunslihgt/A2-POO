@@ -121,7 +121,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConnectionForm.cpp" />
+    <ClCompile Include="ItemEditorForm.cpp" />
     <ClCompile Include="PurchaseEditorForm.cpp" />
+    <ClCompile Include="StatisticsForm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientEditorForm.h">
@@ -155,6 +157,7 @@
     <ClInclude Include="PurchaseListForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Services.h" />
     <ClInclude Include="StatisticsForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>

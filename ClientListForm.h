@@ -1,5 +1,8 @@
 #pragma once
 
+#include "ClientEditorForm.h"
+#include "Services.h"
+
 namespace IHM {
 
 	using namespace System;
@@ -12,11 +15,10 @@ namespace IHM {
 	/// <summary>
 	/// Description résumée de ClientList
 	/// </summary>
-	public ref class ClientListForm : public System::Windows::Forms::Form
-	{
+	public ref class ClientListForm : public System::Windows::Forms::Form {
 	public:
-		ClientListForm(void)
-		{
+		ClientListForm(Services::Services^ services) {
+			this->services = services;
 			InitializeComponent();
 			//
 			//TODO: ajoutez ici le code du constructeur
@@ -27,25 +29,22 @@ namespace IHM {
 		/// <summary>
 		/// Nettoyage des ressources utilisées.
 		/// </summary>
-		~ClientListForm()
-		{
-			if (components)
-			{
+		~ClientListForm() {
+			if (components) {
 				delete components;
 			}
 		}
+
+	private:
+		Services::Services^ services = gcnew Services::Services();
+
 	private: System::Windows::Forms::DataGridView^ dgvClients;
-	protected:
-
-
 	private: System::Windows::Forms::TextBox^ txtName;
 	private: System::Windows::Forms::Button^ btnOpenEmployee;
 	private: System::Windows::Forms::GroupBox^ gpbSearch;
 	private: System::Windows::Forms::Label^ lblName;
 	private: System::Windows::Forms::Label^ lblFirstName;
 	private: System::Windows::Forms::TextBox^ txtFirstName;
-
-
 	private: System::Windows::Forms::GroupBox^ gpbOpen;
 	private: System::Windows::Forms::NumericUpDown^ numIdEmployee;
 	private: System::Windows::Forms::Label^ lblId;
@@ -219,7 +218,7 @@ namespace IHM {
 			this->gpbCreate->Size = System::Drawing::Size(162, 52);
 			this->gpbCreate->TabIndex = 11;
 			this->gpbCreate->TabStop = false;
-			this->gpbCreate->Text = L"Créer";
+			this->gpbCreate->Text = L"Nouveau";
 			// 
 			// btnCreateEmployee
 			// 
@@ -229,8 +228,9 @@ namespace IHM {
 			this->btnCreateEmployee->Name = L"btnCreateEmployee";
 			this->btnCreateEmployee->Size = System::Drawing::Size(150, 23);
 			this->btnCreateEmployee->TabIndex = 2;
-			this->btnCreateEmployee->Text = L"Ouvrir";
+			this->btnCreateEmployee->Text = L"Créer";
 			this->btnCreateEmployee->UseVisualStyleBackColor = true;
+			this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &ClientListForm::btnCreateClientClick);
 			// 
 			// gpbOpen
 			// 
@@ -317,6 +317,16 @@ namespace IHM {
 #pragma endregion
 	private: System::Void clientListLoad(System::Object^ sender, System::EventArgs^ e) {
 
+	}
+
+	private: System::Void btnCreateClientClick(System::Object^ sender, System::EventArgs^ e) {
+		ClientEditorForm^ clientEditorForm = gcnew ClientEditorForm(services, false);
+		clientEditorForm->ShowDialog();
+	}
+
+	private: System::Void btnUpdateClientClick(System::Object^ sender, System::EventArgs^ e) {
+		//ClientEditorForm^ clientEditorForm = gcnew ClientEditorForm(services, true);
+		//clientEditorForm->ShowDialog();
 	}
 	};
 }

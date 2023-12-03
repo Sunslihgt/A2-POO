@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Services.h"
+
 namespace IHM {
 
 	using namespace System;
@@ -14,11 +16,18 @@ namespace IHM {
 	/// </summary>
 	public ref class PurchaseEditorForm : public System::Windows::Forms::Form {
 	public:
-		PurchaseEditorForm(void) {
+		PurchaseEditorForm(Services::Services^ services, bool alreadyExists) {
+			this->services = services;
+			this->alreadyExists = alreadyExists;
+
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+
+			if (alreadyExists) {
+				this->btnUpdatePurchase->Enabled = false;
+				this->btnDeletePurchase->Enabled = false;
+			} else {
+				this->btnCreatePurchase->Enabled = false;
+			}
 		}
 
 	protected:
@@ -30,6 +39,11 @@ namespace IHM {
 				delete components;
 			}
 		}
+
+	private:
+		Services::Services^ services = gcnew Services::Services();
+		bool alreadyExists;
+
 	private: System::Windows::Forms::Button^ btnDeletePurchase;
 	private: System::Windows::Forms::Button^ btnCreatePurchase;
 	private: System::Windows::Forms::TextBox^ txtFirstName;
@@ -70,20 +84,18 @@ namespace IHM {
 	private: System::Windows::Forms::NumericUpDown^ numPaymentStreetNumber;
 	private: System::Windows::Forms::Label^ lblPaymentStreetNumber;
 	private: System::Windows::Forms::GroupBox^ gpbPayment;
-	private: System::Windows::Forms::TextBox^ textBox3;
-	private: System::Windows::Forms::Label^ label4;
-	private: System::Windows::Forms::Label^ label5;
-	private: System::Windows::Forms::TextBox^ textBox4;
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::TextBox^ textBox2;
-	private: System::Windows::Forms::Label^ label2;
-	private: System::Windows::Forms::NumericUpDown^ numericUpDown1;
-	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::TextBox^ textBox6;
-	private: System::Windows::Forms::Label^ label7;
-	private: System::Windows::Forms::TextBox^ textBox5;
-	private: System::Windows::Forms::Label^ label6;
+	private: System::Windows::Forms::TextBox^ txtPaymentFirstName;
+	private: System::Windows::Forms::Label^ lblPaymentFirstName;
+	private: System::Windows::Forms::Label^ lblPaymentName;
+	private: System::Windows::Forms::TextBox^ txtPaymentName;
+	private: System::Windows::Forms::TextBox^ txtPaymentType;
+	private: System::Windows::Forms::Label^ lblPaymentType;
+	private: System::Windows::Forms::TextBox^ txtFloatPaymentAmount;
+	private: System::Windows::Forms::Label^ lblFloatPaymentAmount;
+
+
+
+
 
 	private:
 		/// <summary>
@@ -137,20 +149,14 @@ namespace IHM {
 			this->numPaymentStreetNumber = (gcnew System::Windows::Forms::NumericUpDown());
 			this->lblPaymentStreetNumber = (gcnew System::Windows::Forms::Label());
 			this->gpbPayment = (gcnew System::Windows::Forms::GroupBox());
-			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
-			this->label7 = (gcnew System::Windows::Forms::Label());
-			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
-			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
-			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->txtPaymentType = (gcnew System::Windows::Forms::TextBox());
+			this->lblPaymentType = (gcnew System::Windows::Forms::Label());
+			this->txtFloatPaymentAmount = (gcnew System::Windows::Forms::TextBox());
+			this->txtPaymentFirstName = (gcnew System::Windows::Forms::TextBox());
+			this->lblFloatPaymentAmount = (gcnew System::Windows::Forms::Label());
+			this->lblPaymentFirstName = (gcnew System::Windows::Forms::Label());
+			this->lblPaymentName = (gcnew System::Windows::Forms::Label());
+			this->txtPaymentName = (gcnew System::Windows::Forms::TextBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvPurchasedItems))->BeginInit();
 			this->gpbInfos->SuspendLayout();
 			this->gpbPrice->SuspendLayout();
@@ -159,7 +165,6 @@ namespace IHM {
 			this->gpbPaymentAddress->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numPaymentStreetNumber))->BeginInit();
 			this->gpbPayment->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// btnDeletePurchase
@@ -182,6 +187,7 @@ namespace IHM {
 			// 
 			// txtFirstName
 			// 
+			this->txtFirstName->Enabled = false;
 			this->txtFirstName->Location = System::Drawing::Point(55, 45);
 			this->txtFirstName->MaxLength = 50;
 			this->txtFirstName->Name = L"txtFirstName";
@@ -232,6 +238,7 @@ namespace IHM {
 			// 
 			// txtName
 			// 
+			this->txtName->Enabled = false;
 			this->txtName->Location = System::Drawing::Point(55, 19);
 			this->txtName->MaxLength = 50;
 			this->txtName->Name = L"txtName";
@@ -259,7 +266,7 @@ namespace IHM {
 			this->dgvPurchasedItems->Location = System::Drawing::Point(492, 48);
 			this->dgvPurchasedItems->Name = L"dgvPurchasedItems";
 			this->dgvPurchasedItems->ReadOnly = true;
-			this->dgvPurchasedItems->Size = System::Drawing::Size(425, 430);
+			this->dgvPurchasedItems->Size = System::Drawing::Size(425, 366);
 			this->dgvPurchasedItems->TabIndex = 39;
 			// 
 			// btnUpdatePurchase
@@ -338,6 +345,7 @@ namespace IHM {
 			// 
 			// txtFloatTtcPrice
 			// 
+			this->txtFloatTtcPrice->Enabled = false;
 			this->txtFloatTtcPrice->Location = System::Drawing::Point(112, 97);
 			this->txtFloatTtcPrice->MaxLength = 10;
 			this->txtFloatTtcPrice->Name = L"txtFloatTtcPrice";
@@ -356,17 +364,18 @@ namespace IHM {
 			this->lblFloatTtcPrice->TabIndex = 25;
 			this->lblFloatTtcPrice->Text = L"Prix TTC";
 			// 
-			// textFloatDiscountAmount
+			// txtFloatDiscountAmount
 			// 
 			this->txtFloatDiscountAmount->Location = System::Drawing::Point(112, 19);
 			this->txtFloatDiscountAmount->MaxLength = 10;
-			this->txtFloatDiscountAmount->Name = L"textFloatDiscountAmount";
+			this->txtFloatDiscountAmount->Name = L"txtFloatDiscountAmount";
 			this->txtFloatDiscountAmount->Size = System::Drawing::Size(102, 20);
 			this->txtFloatDiscountAmount->TabIndex = 22;
 			this->txtFloatDiscountAmount->Text = L"0";
 			// 
 			// txtFloatDutyFreePrice
 			// 
+			this->txtFloatDutyFreePrice->Enabled = false;
 			this->txtFloatDutyFreePrice->Location = System::Drawing::Point(112, 45);
 			this->txtFloatDutyFreePrice->MaxLength = 10;
 			this->txtFloatDutyFreePrice->Name = L"txtFloatDutyFreePrice";
@@ -557,157 +566,93 @@ namespace IHM {
 			// 
 			// gpbPayment
 			// 
-			this->gpbPayment->Controls->Add(this->textBox6);
-			this->gpbPayment->Controls->Add(this->label7);
-			this->gpbPayment->Controls->Add(this->textBox5);
-			this->gpbPayment->Controls->Add(this->textBox3);
-			this->gpbPayment->Controls->Add(this->label6);
-			this->gpbPayment->Controls->Add(this->label4);
-			this->gpbPayment->Controls->Add(this->label5);
-			this->gpbPayment->Controls->Add(this->textBox4);
-			this->gpbPayment->Controls->Add(this->label1);
-			this->gpbPayment->Controls->Add(this->textBox1);
-			this->gpbPayment->Controls->Add(this->textBox2);
-			this->gpbPayment->Controls->Add(this->label2);
-			this->gpbPayment->Controls->Add(this->numericUpDown1);
-			this->gpbPayment->Controls->Add(this->label3);
+			this->gpbPayment->Controls->Add(this->txtPaymentType);
+			this->gpbPayment->Controls->Add(this->lblPaymentType);
+			this->gpbPayment->Controls->Add(this->txtFloatPaymentAmount);
+			this->gpbPayment->Controls->Add(this->txtPaymentFirstName);
+			this->gpbPayment->Controls->Add(this->lblFloatPaymentAmount);
+			this->gpbPayment->Controls->Add(this->lblPaymentFirstName);
+			this->gpbPayment->Controls->Add(this->lblPaymentName);
+			this->gpbPayment->Controls->Add(this->txtPaymentName);
 			this->gpbPayment->Location = System::Drawing::Point(266, 268);
 			this->gpbPayment->Name = L"gpbPayment";
-			this->gpbPayment->Size = System::Drawing::Size(220, 210);
+			this->gpbPayment->Size = System::Drawing::Size(220, 126);
 			this->gpbPayment->TabIndex = 43;
 			this->gpbPayment->TabStop = false;
 			this->gpbPayment->Text = L"Paiement";
 			// 
-			// textBox6
+			// txtPaymentType
 			// 
-			this->textBox6->Location = System::Drawing::Point(98, 179);
-			this->textBox6->MaxLength = 10;
-			this->textBox6->Name = L"textBox6";
-			this->textBox6->Size = System::Drawing::Size(116, 20);
-			this->textBox6->TabIndex = 30;
+			this->txtPaymentType->Location = System::Drawing::Point(98, 97);
+			this->txtPaymentType->MaxLength = 10;
+			this->txtPaymentType->Name = L"txtPaymentType";
+			this->txtPaymentType->Size = System::Drawing::Size(116, 20);
+			this->txtPaymentType->TabIndex = 30;
 			// 
-			// label7
+			// lblPaymentType
 			// 
-			this->label7->AutoSize = true;
-			this->label7->Location = System::Drawing::Point(6, 182);
-			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(86, 13);
-			this->label7->TabIndex = 29;
-			this->label7->Text = L"Type de paiment";
+			this->lblPaymentType->AutoSize = true;
+			this->lblPaymentType->Location = System::Drawing::Point(6, 100);
+			this->lblPaymentType->Name = L"lblPaymentType";
+			this->lblPaymentType->Size = System::Drawing::Size(86, 13);
+			this->lblPaymentType->TabIndex = 29;
+			this->lblPaymentType->Text = L"Type de paiment";
 			// 
-			// textBox5
+			// txtFloatPaymentAmount
 			// 
-			this->textBox5->Location = System::Drawing::Point(118, 153);
-			this->textBox5->MaxLength = 10;
-			this->textBox5->Name = L"textBox5";
-			this->textBox5->Size = System::Drawing::Size(96, 20);
-			this->textBox5->TabIndex = 28;
-			this->textBox5->Text = L"0,00";
+			this->txtFloatPaymentAmount->Location = System::Drawing::Point(98, 71);
+			this->txtFloatPaymentAmount->MaxLength = 10;
+			this->txtFloatPaymentAmount->Name = L"txtFloatPaymentAmount";
+			this->txtFloatPaymentAmount->Size = System::Drawing::Size(116, 20);
+			this->txtFloatPaymentAmount->TabIndex = 28;
+			this->txtFloatPaymentAmount->Text = L"0,00";
 			// 
-			// textBox3
+			// txtPaymentFirstName
 			// 
-			this->textBox3->Location = System::Drawing::Point(61, 45);
-			this->textBox3->MaxLength = 50;
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->ReadOnly = true;
-			this->textBox3->Size = System::Drawing::Size(153, 20);
-			this->textBox3->TabIndex = 22;
+			this->txtPaymentFirstName->Location = System::Drawing::Point(61, 45);
+			this->txtPaymentFirstName->MaxLength = 50;
+			this->txtPaymentFirstName->Name = L"txtPaymentFirstName";
+			this->txtPaymentFirstName->Size = System::Drawing::Size(153, 20);
+			this->txtPaymentFirstName->TabIndex = 22;
 			// 
-			// label6
+			// lblFloatPaymentAmount
 			// 
-			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(6, 156);
-			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(46, 13);
-			this->label6->TabIndex = 27;
-			this->label6->Text = L"Montant";
+			this->lblFloatPaymentAmount->AutoSize = true;
+			this->lblFloatPaymentAmount->Location = System::Drawing::Point(6, 74);
+			this->lblFloatPaymentAmount->Name = L"lblFloatPaymentAmount";
+			this->lblFloatPaymentAmount->Size = System::Drawing::Size(46, 13);
+			this->lblFloatPaymentAmount->TabIndex = 27;
+			this->lblFloatPaymentAmount->Text = L"Montant";
 			// 
-			// label4
+			// lblPaymentFirstName
 			// 
-			this->label4->Location = System::Drawing::Point(6, 48);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(43, 13);
-			this->label4->TabIndex = 24;
-			this->label4->Text = L"Prénom";
+			this->lblPaymentFirstName->Location = System::Drawing::Point(6, 48);
+			this->lblPaymentFirstName->Name = L"lblPaymentFirstName";
+			this->lblPaymentFirstName->Size = System::Drawing::Size(43, 13);
+			this->lblPaymentFirstName->TabIndex = 24;
+			this->lblPaymentFirstName->Text = L"Prénom";
 			// 
-			// label5
+			// lblPaymentName
 			// 
-			this->label5->Location = System::Drawing::Point(6, 22);
-			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(29, 13);
-			this->label5->TabIndex = 23;
-			this->label5->Text = L"Nom";
+			this->lblPaymentName->Location = System::Drawing::Point(6, 22);
+			this->lblPaymentName->Name = L"lblPaymentName";
+			this->lblPaymentName->Size = System::Drawing::Size(29, 13);
+			this->lblPaymentName->TabIndex = 23;
+			this->lblPaymentName->Text = L"Nom";
 			// 
-			// textBox4
+			// txtPaymentName
 			// 
-			this->textBox4->Location = System::Drawing::Point(61, 19);
-			this->textBox4->MaxLength = 50;
-			this->textBox4->Name = L"textBox4";
-			this->textBox4->ReadOnly = true;
-			this->textBox4->Size = System::Drawing::Size(153, 20);
-			this->textBox4->TabIndex = 21;
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(5, 130);
-			this->label1->Margin = System::Windows::Forms::Padding(15, 0, 3, 0);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(26, 13);
-			this->label1->TabIndex = 17;
-			this->label1->Text = L"Ville";
-			// 
-			// textBox1
-			// 
-			this->textBox1->Location = System::Drawing::Point(54, 127);
-			this->textBox1->MaxLength = 50;
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(160, 20);
-			this->textBox1->TabIndex = 15;
-			// 
-			// textBox2
-			// 
-			this->textBox2->Location = System::Drawing::Point(54, 101);
-			this->textBox2->MaxLength = 50;
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(160, 20);
-			this->textBox2->TabIndex = 19;
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(5, 104);
-			this->label2->Margin = System::Windows::Forms::Padding(15, 0, 3, 0);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(27, 13);
-			this->label2->TabIndex = 20;
-			this->label2->Text = L"Rue";
-			// 
-			// numericUpDown1
-			// 
-			this->numericUpDown1->AllowDrop = true;
-			this->numericUpDown1->Location = System::Drawing::Point(118, 71);
-			this->numericUpDown1->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
-				999999, 0, 0, 0
-			});
-			this->numericUpDown1->Name = L"numericUpDown1";
-			this->numericUpDown1->Size = System::Drawing::Size(96, 20);
-			this->numericUpDown1->TabIndex = 16;
-			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(6, 75);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(42, 13);
-			this->label3->TabIndex = 18;
-			this->label3->Text = L"N° Rue";
+			this->txtPaymentName->Location = System::Drawing::Point(61, 19);
+			this->txtPaymentName->MaxLength = 50;
+			this->txtPaymentName->Name = L"txtPaymentName";
+			this->txtPaymentName->Size = System::Drawing::Size(153, 20);
+			this->txtPaymentName->TabIndex = 21;
 			// 
 			// PurchaseEditorForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(957, 485);
+			this->ClientSize = System::Drawing::Size(957, 421);
 			this->Controls->Add(this->gpbPayment);
 			this->Controls->Add(this->gpbPaymentAddress);
 			this->Controls->Add(this->gpbDeliveryAddress);
@@ -718,7 +663,7 @@ namespace IHM {
 			this->Controls->Add(this->btnUpdatePurchase);
 			this->Controls->Add(this->gpbInfos);
 			this->Controls->Add(this->lblTitle);
-			this->MinimumSize = System::Drawing::Size(973, 394);
+			this->MinimumSize = System::Drawing::Size(973, 460);
 			this->Name = L"PurchaseEditorForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"PurchaseEditorForm";
@@ -735,15 +680,13 @@ namespace IHM {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numPaymentStreetNumber))->EndInit();
 			this->gpbPayment->ResumeLayout(false);
 			this->gpbPayment->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
 			this->ResumeLayout(false);
 
-			addFloatTextBoxConstraints();
 		}
 #pragma endregion
 	private:
 
 		System::Void addFloatTextBoxConstraints();
-	//private: System::Void a(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {}
-};
+		//private: System::Void a(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {}
+	};
 }

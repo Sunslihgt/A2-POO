@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MainForm.h"
+#include "Services.h"
 
 namespace IHM {
 
@@ -32,6 +33,10 @@ namespace IHM {
 				delete components;
 			}
 		}
+
+	private:
+		Services::Services^ services = gcnew Services::Services();
+
 	private: System::Windows::Forms::TextBox^ txtLogin;
 	private: System::Windows::Forms::Label^ lblLogin;
 	private: System::Windows::Forms::Button^ btnConnection;
@@ -197,7 +202,7 @@ namespace IHM {
 		// DB::DBController dbController = gcnew DB::DBController(this->txtLogin->Text, this->txtPassword->Text);
 
 		// Création du MainForm
-		IHM::MainForm^ mainForm = gcnew MainForm();
+		IHM::MainForm^ mainForm = gcnew MainForm(services);
 
 		// Affichage du MainForm
 		mainForm->ShowDialog();

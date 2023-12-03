@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Services.h"
+
 namespace IHM {
 
 	using namespace System;
@@ -12,34 +14,38 @@ namespace IHM {
 	/// <summary>
 	/// Summary for ClientEditorForm
 	/// </summary>
-	public ref class ClientEditorForm : public System::Windows::Forms::Form
-	{
+	public ref class ClientEditorForm : public System::Windows::Forms::Form {
 	public:
-		ClientEditorForm(void)
-		{
+		ClientEditorForm(Services::Services^ services, bool alreadyExists) {
+			this->services = services;
+			this->alreadyExists = alreadyExists;
+
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+
+			if (alreadyExists) {
+				this->btnUpdateClient->Enabled = false;
+				this->btnDeleteClient->Enabled = false;
+			} else {
+				this->btnCreateClient->Enabled = false;
+			}
 		}
 
 	protected:
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		~ClientEditorForm()
-		{
-			if (components)
-			{
+		~ClientEditorForm() {
+			if (components) {
 				delete components;
 			}
 		}
+
+	private:
+		Services::Services^ services = gcnew Services::Services();
+		bool alreadyExists;
+
 	private: System::Windows::Forms::Button^ btnDeleteClient;
-	protected:
-
 	private: System::Windows::Forms::Button^ btnCreateClient;
-	protected:
-
 	private: System::Windows::Forms::TextBox^ txtFirstName;
 	private: System::Windows::Forms::Label^ lblFirstName;
 	private: System::Windows::Forms::Label^ lblBirth;
@@ -47,55 +53,24 @@ namespace IHM {
 	private: System::Windows::Forms::Label^ lblName;
 	private: System::Windows::Forms::Label^ lblFirstPurchase;
 	private: System::Windows::Forms::TextBox^ txtName;
-
-
-
-
 	private: System::Windows::Forms::DateTimePicker^ dtpFirstPurchase;
 	private: System::Windows::Forms::Button^ btnUpdateClient;
-
-
-
-
 	private: System::Windows::Forms::GroupBox^ gpbInfos;
 	private: System::Windows::Forms::Label^ lblTitle;
 	private: System::Windows::Forms::DataGridView^ dgvAddresses;
-
-
-	protected:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
 		/// </summary>
-		void InitializeComponent(void)
-		{
+		void InitializeComponent(void) {
 			this->btnDeleteClient = (gcnew System::Windows::Forms::Button());
 			this->btnCreateClient = (gcnew System::Windows::Forms::Button());
 			this->txtFirstName = (gcnew System::Windows::Forms::TextBox());

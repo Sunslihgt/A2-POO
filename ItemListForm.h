@@ -1,5 +1,8 @@
 #pragma once
 
+#include "ItemEditorForm.h"
+#include "Services.h"
+
 namespace IHM {
 
 	using namespace System;
@@ -12,11 +15,10 @@ namespace IHM {
 	/// <summary>
 	/// Description résumée de ItemList
 	/// </summary>
-	public ref class ItemList : public System::Windows::Forms::Form
-	{
+	public ref class ItemListForm : public System::Windows::Forms::Form {
 	public:
-		ItemList(void)
-		{
+		ItemListForm(Services::Services^ services) {
+			this->services = services;
 			InitializeComponent();
 			//
 			//TODO: ajoutez ici le code du constructeur
@@ -27,30 +29,22 @@ namespace IHM {
 		/// <summary>
 		/// Nettoyage des ressources utilisées.
 		/// </summary>
-		~ItemList()
-		{
-			if (components)
-			{
+		~ItemListForm() {
+			if (components) {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::DataGridView^ dgvItems;
-	protected:
 
+	private:
+		Services::Services^ services = gcnew Services::Services();
+
+	private: System::Windows::Forms::DataGridView^ dgvItems;
 	private: System::Windows::Forms::TextBox^ txtName;
 	private: System::Windows::Forms::Button^ btnOpenEmployee;
 	private: System::Windows::Forms::GroupBox^ gpbSearch;
 	private: System::Windows::Forms::Label^ lblName;
 	private: System::Windows::Forms::Label^ lblReference;
-
 	private: System::Windows::Forms::TextBox^ txtReference;
-
-
-
-
-
-
-
 	private: System::Windows::Forms::GroupBox^ gpbOpen;
 	private: System::Windows::Forms::NumericUpDown^ numIdEmployee;
 	private: System::Windows::Forms::Label^ lblId;
@@ -58,7 +52,6 @@ namespace IHM {
 	private: System::Windows::Forms::Button^ btnCreateEmployee;
 	private: System::Windows::Forms::Button^ btnSearchEmployees;
 	private: System::Windows::Forms::Label^ lblTitle;
-
 
 	private:
 		/// <summary>
@@ -173,7 +166,7 @@ namespace IHM {
 			this->gpbCreate->Size = System::Drawing::Size(162, 52);
 			this->gpbCreate->TabIndex = 11;
 			this->gpbCreate->TabStop = false;
-			this->gpbCreate->Text = L"Créer";
+			this->gpbCreate->Text = L"Nouveau";
 			// 
 			// btnCreateEmployee
 			// 
@@ -183,8 +176,9 @@ namespace IHM {
 			this->btnCreateEmployee->Name = L"btnCreateEmployee";
 			this->btnCreateEmployee->Size = System::Drawing::Size(150, 23);
 			this->btnCreateEmployee->TabIndex = 2;
-			this->btnCreateEmployee->Text = L"Ouvrir";
+			this->btnCreateEmployee->Text = L"Créer";
 			this->btnCreateEmployee->UseVisualStyleBackColor = true;
+			this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &ItemListForm::btnCreateItemClick);
 			// 
 			// gpbOpen
 			// 
@@ -240,7 +234,7 @@ namespace IHM {
 			this->lblTitle->Text = L"Gestion du stock";
 			this->lblTitle->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 			// 
-			// ItemList
+			// ItemListForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
@@ -250,10 +244,10 @@ namespace IHM {
 			this->Controls->Add(this->gpbOpen);
 			this->Controls->Add(this->gpbSearch);
 			this->Controls->Add(this->dgvItems);
-			this->Name = L"ItemList";
+			this->Name = L"ItemListForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Stock";
-			this->Load += gcnew System::EventHandler(this, &ItemList::itemListLoad);
+			this->Load += gcnew System::EventHandler(this, &ItemListForm::itemListLoad);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvItems))->EndInit();
 			this->gpbSearch->ResumeLayout(false);
 			this->gpbSearch->PerformLayout();
@@ -267,6 +261,11 @@ namespace IHM {
 #pragma endregion
 	private: System::Void itemListLoad(System::Object^ sender, System::EventArgs^ e) {
 
+	}
+
+	private: System::Void btnCreateItemClick(System::Object^ sender, System::EventArgs^ e) {
+		ItemEditorForm^ itemEditorForm = gcnew ItemEditorForm(services, false);
+		itemEditorForm->ShowDialog();
 	}
 	};
 }

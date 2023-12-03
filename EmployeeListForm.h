@@ -1,5 +1,8 @@
 #pragma once
 
+#include "EmployeeEditorForm.h"
+#include "Services.h"
+
 namespace IHM {
 
 	using namespace System;
@@ -14,7 +17,8 @@ namespace IHM {
 	/// </summary>
 	public ref class EmployeeListForm : public System::Windows::Forms::Form {
 	public:
-		EmployeeListForm(void) {
+		EmployeeListForm(Services::Services^ services) {
+			this->services = services;
 			InitializeComponent();
 			//
 			//TODO: ajoutez ici le code du constructeur
@@ -30,6 +34,9 @@ namespace IHM {
 				delete components;
 			}
 		}
+
+	private:
+		Services::Services^ services = gcnew Services::Services();
 
 	private: System::Windows::Forms::DataGridView^ dgvEmployees;
 	private: System::Windows::Forms::TextBox^ txtName;
@@ -51,7 +58,6 @@ namespace IHM {
 	private: System::Windows::Forms::Button^ btnCreateEmployee;
 	private: System::Windows::Forms::Button^ btnSearchEmployees;
 	private: System::Windows::Forms::Label^ lblTitle;
-
 
 	private:
 		/// <summary>
@@ -237,7 +243,7 @@ namespace IHM {
 			this->gpbCreate->Size = System::Drawing::Size(162, 52);
 			this->gpbCreate->TabIndex = 11;
 			this->gpbCreate->TabStop = false;
-			this->gpbCreate->Text = L"Créer";
+			this->gpbCreate->Text = L"Nouveau";
 			// 
 			// btnCreateEmployee
 			// 
@@ -247,8 +253,9 @@ namespace IHM {
 			this->btnCreateEmployee->Name = L"btnCreateEmployee";
 			this->btnCreateEmployee->Size = System::Drawing::Size(150, 23);
 			this->btnCreateEmployee->TabIndex = 2;
-			this->btnCreateEmployee->Text = L"Ouvrir";
+			this->btnCreateEmployee->Text = L"Créer";
 			this->btnCreateEmployee->UseVisualStyleBackColor = true;
+			this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &EmployeeListForm::btnCreateEmployeeClick);
 			// 
 			// gpbOpen
 			// 
@@ -267,6 +274,9 @@ namespace IHM {
 			// 
 			this->numIdEmployee->AllowDrop = true;
 			this->numIdEmployee->Location = System::Drawing::Point(41, 20);
+			this->numIdEmployee->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+				999999, 0, 0, 0
+			});
 			this->numIdEmployee->Name = L"numIdEmployee";
 			this->numIdEmployee->Size = System::Drawing::Size(115, 20);
 			this->numIdEmployee->TabIndex = 5;
@@ -333,6 +343,11 @@ namespace IHM {
 #pragma endregion
 		private: System::Void employeeListLoad(System::Object^ sender, System::EventArgs^ e) {
 		
+		}
+
+		private: System::Void btnCreateEmployeeClick(System::Object^ sender, System::EventArgs^ e) {
+			EmployeeEditorForm^ employeeEditorForm = gcnew EmployeeEditorForm(services, false);
+			employeeEditorForm->ShowDialog();
 		}
 	};
 }

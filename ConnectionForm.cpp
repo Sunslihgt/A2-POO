@@ -12,9 +12,6 @@ int __clrcall WinMain(array<String^>^ args) {
 
 	System::DateTime::Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-	IHM::PurchaseEditorForm form;
-	Application::Run(% form);
-
-	//IHM::ConnectionForm connectionForm;
-	//Application::Run(% connectionForm);
+	IHM::ConnectionForm connectionForm;
+	Application::Run(% connectionForm);
 }

@@ -5,6 +5,7 @@
 #include "ItemListForm.h"
 #include "PurchaseListForm.h"
 #include "StatisticsForm.h"
+#include "Services.h"
 
 namespace IHM {
 	using namespace System;
@@ -19,7 +20,8 @@ namespace IHM {
 	/// </summary>
 	public ref class MainForm : public System::Windows::Forms::Form {
 	public:
-		MainForm(void) {
+		MainForm(Services::Services^ services) {
+			this->services = services;
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
@@ -35,6 +37,10 @@ namespace IHM {
 				delete components;
 			}
 		}
+
+	private:
+		Services::Services^ services = gcnew Services::Services();
+
 	private: System::Windows::Forms::Label^ lblTitle;
 	private: System::Windows::Forms::Button^ btnClient;
 	private: System::Windows::Forms::Button^ btnItem;
@@ -191,32 +197,31 @@ namespace IHM {
 	}
 
 	private: System::Void btnEmployeeClick(System::Object^ sender, System::EventArgs^ e) {
-		IHM::EmployeeListForm employeeListForm;
-		employeeListForm.ShowDialog();
+		IHM::EmployeeListForm^ employeeListForm = gcnew EmployeeListForm(services);
+		employeeListForm->ShowDialog();
 	}
 
 	private: System::Void btnClientClick(System::Object^ sender, System::EventArgs^ e) {
-		IHM::ClientListForm clientListForm;
-		clientListForm.ShowDialog();
+		IHM::ClientListForm^ clientListForm = gcnew ClientListForm(services);
+		clientListForm->ShowDialog();
 	}
 
 	private: System::Void btnItemClick(System::Object^ sender, System::EventArgs^ e) {
-		IHM::ItemList itemList;
-		itemList.ShowDialog();
+		IHM::ItemListForm^ itemList = gcnew ItemListForm(services);
+		itemList->ShowDialog();
 	}
 
 	private: System::Void btnPurchaseClick(System::Object^ sender, System::EventArgs^ e) {
-		IHM::PurchaseListForm purchaseListForm;
-		purchaseListForm.ShowDialog();
+		IHM::PurchaseListForm^ purchaseListForm = gcnew PurchaseListForm(services);
+		purchaseListForm->ShowDialog();
 	}
 
 	private: System::Void btnStatisticsClick(System::Object^ sender, System::EventArgs^ e) {
-		IHM::StatisticsForm statisticsForm;
-		statisticsForm.ShowDialog();
+		IHM::StatisticsForm^ statisticsForm = gcnew StatisticsForm(services);
+		statisticsForm->ShowDialog();
 	}
 
 	public:
-
 		// Permet de limiter la saisie à un nombre à virgule (Code utilisé dans tout le projet)
 		static System::Void txtFloatKeyDown(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
 			if (sender->GetType() != System::Windows::Forms::TextBox::typeid) {

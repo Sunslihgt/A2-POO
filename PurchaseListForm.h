@@ -1,5 +1,8 @@
 #pragma once
 
+#include "PurchaseEditorForm.h"
+#include "Services.h"
+
 namespace IHM {
 
 	using namespace System;
@@ -12,11 +15,10 @@ namespace IHM {
 	/// <summary>
 	/// Description résumée de PurchaseList
 	/// </summary>
-	public ref class PurchaseListForm : public System::Windows::Forms::Form
-	{
+	public ref class PurchaseListForm : public System::Windows::Forms::Form {
 	public:
-		PurchaseListForm(void)
-		{
+		PurchaseListForm(Services::Services^ sercices) {
+			this->services = services;
 			InitializeComponent();
 			//
 			//TODO: ajoutez ici le code du constructeur
@@ -27,27 +29,22 @@ namespace IHM {
 		/// <summary>
 		/// Nettoyage des ressources utilisées.
 		/// </summary>
-		~PurchaseListForm()
-		{
-			if (components)
-			{
+		~PurchaseListForm() {
+			if (components) {
 				delete components;
 			}
 		}
+
+	private:
+		Services::Services^ services = gcnew Services::Services();
+
 	private: System::Windows::Forms::DataGridView^ dgvPurchases;
-	protected:
-
-	protected:
-
-
 	private: System::Windows::Forms::TextBox^ txtName;
 	private: System::Windows::Forms::Button^ btnOpenEmployee;
 	private: System::Windows::Forms::GroupBox^ gpbSearch;
 	private: System::Windows::Forms::Label^ lblName;
 	private: System::Windows::Forms::Label^ lblFirstName;
 	private: System::Windows::Forms::TextBox^ txtFirstName;
-
-
 	private: System::Windows::Forms::GroupBox^ gpbOpen;
 	private: System::Windows::Forms::NumericUpDown^ numIdEmployee;
 	private: System::Windows::Forms::Label^ lblId;
@@ -55,18 +52,12 @@ namespace IHM {
 	private: System::Windows::Forms::Button^ btnCreateEmployee;
 	private: System::Windows::Forms::Button^ btnSearchEmployees;
 	private: System::Windows::Forms::DateTimePicker^ dtpOrder;
-
 	private: System::Windows::Forms::Label^ lblOrderDate;
 	private: System::Windows::Forms::Label^ lblPayDate;
 	private: System::Windows::Forms::DateTimePicker^ dtpPay;
-
-
-
 	private: System::Windows::Forms::Label^ lblTitle;
 	private: System::Windows::Forms::Label^ lblDeliveryDate;
 	private: System::Windows::Forms::DateTimePicker^ dtpDelivery;
-
-
 
 	private:
 		/// <summary>
@@ -149,7 +140,6 @@ namespace IHM {
 			this->lblDeliveryDate->Size = System::Drawing::Size(122, 13);
 			this->lblDeliveryDate->TabIndex = 14;
 			this->lblDeliveryDate->Text = L"Date de livraison prévue";
-			this->lblDeliveryDate->Click += gcnew System::EventHandler(this, &PurchaseListForm::label1_Click);
 			// 
 			// dtpDelivery
 			// 
@@ -159,7 +149,6 @@ namespace IHM {
 			this->dtpDelivery->Size = System::Drawing::Size(95, 20);
 			this->dtpDelivery->TabIndex = 13;
 			this->dtpDelivery->Value = System::DateTime(1900, 1, 1, 0, 0, 0, 0);
-			this->dtpDelivery->ValueChanged += gcnew System::EventHandler(this, &PurchaseListForm::dateTimePicker1_ValueChanged);
 			// 
 			// lblPayDate
 			// 
@@ -254,7 +243,7 @@ namespace IHM {
 			this->gpbCreate->Size = System::Drawing::Size(162, 52);
 			this->gpbCreate->TabIndex = 11;
 			this->gpbCreate->TabStop = false;
-			this->gpbCreate->Text = L"Créer";
+			this->gpbCreate->Text = L"Nouveau";
 			// 
 			// btnCreateEmployee
 			// 
@@ -264,8 +253,9 @@ namespace IHM {
 			this->btnCreateEmployee->Name = L"btnCreateEmployee";
 			this->btnCreateEmployee->Size = System::Drawing::Size(150, 23);
 			this->btnCreateEmployee->TabIndex = 2;
-			this->btnCreateEmployee->Text = L"Ouvrir";
+			this->btnCreateEmployee->Text = L"Créer";
 			this->btnCreateEmployee->UseVisualStyleBackColor = true;
+			this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &PurchaseListForm::btnCreatePurchaseClick);
 			// 
 			// gpbOpen
 			// 
@@ -353,7 +343,10 @@ namespace IHM {
 	private: System::Void purchaseListLoad(System::Object^ sender, System::EventArgs^ e) {
 
 	}
-	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {}
-private: System::Void dateTimePicker1_ValueChanged(System::Object^ sender, System::EventArgs^ e) {}
-};
+
+	private: System::Void btnCreatePurchaseClick(System::Object^ sender, System::EventArgs^ e) {
+		PurchaseEditorForm^ purchaseEditorForm = gcnew PurchaseEditorForm(services, false);
+		purchaseEditorForm->ShowDialog();
+	}
+	};
 }

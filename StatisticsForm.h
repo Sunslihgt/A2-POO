@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Services.h"
+
 namespace IHM {
 
 	using namespace System;
@@ -12,11 +14,10 @@ namespace IHM {
 	/// <summary>
 	/// Description résumée de Statistics
 	/// </summary>
-	public ref class StatisticsForm : public System::Windows::Forms::Form
-	{
+	public ref class StatisticsForm : public System::Windows::Forms::Form {
 	public:
-		StatisticsForm(void)
-		{
+		StatisticsForm(Services::Services^ services) {
+			this->services = services;
 			InitializeComponent();
 			//
 			//TODO: ajoutez ici le code du constructeur
@@ -27,101 +28,43 @@ namespace IHM {
 		/// <summary>
 		/// Nettoyage des ressources utilisées.
 		/// </summary>
-		~StatisticsForm()
-		{
-			if (components)
-			{
+		~StatisticsForm() {
+			if (components) {
 				delete components;
 			}
 		}
+
+	private:
+		Services::Services^ services = gcnew Services::Services();
+
 	private: System::Windows::Forms::DataGridView^ dgvItems;
-	protected:
-
-
-	private: System::Windows::Forms::TextBox^ txtProfitPercent;
+	private: System::Windows::Forms::TextBox^ txtFloatProfitPercent;
 	private: System::Windows::Forms::GroupBox^ gpbStockValue;
-
-
-
-
 	private: System::Windows::Forms::Label^ lblProfit;
 	private: System::Windows::Forms::Label^ lblVatPercent;
-
-
-
-
-	private: System::Windows::Forms::TextBox^ txtFirstName;
+	private: System::Windows::Forms::TextBox^ txtFloatVatPercent;
 	private: System::Windows::Forms::Label^ lblUnknownShrinkage;
-	private: System::Windows::Forms::TextBox^ txtUnknownShrinkagePercent;
+	private: System::Windows::Forms::TextBox^ txtFloatUnknownShrinkagePercent;
 	private: System::Windows::Forms::Button^ btnStoredValue;
-
-
-
-
-
-
-
-
-
-
-
-
 	private: System::Windows::Forms::Label^ lblTitle;
 	private: System::Windows::Forms::Button^ btnTurnOverMonth;
-
-
 	private: System::Windows::Forms::GroupBox^ gpbTurnOverMonth;
 	private: System::Windows::Forms::Label^ lblTurnOverMonth;
 	private: System::Windows::Forms::NumericUpDown^ numTurnOverYear;
-
-
 	private: System::Windows::Forms::Label^ lblTurnOverYear;
 	private: System::Windows::Forms::NumericUpDown^ numTurnOverMonth;
-
-
 	private: System::Windows::Forms::GroupBox^ gpbClientTotalSpending;
 	private: System::Windows::Forms::Button^ btnThresholdWarning;
-
-
-
-
-
-
-
-
-
-
 	private: System::Windows::Forms::NumericUpDown^ numClientId;
-
-
 	private: System::Windows::Forms::Label^ lblClientId;
 	private: System::Windows::Forms::Button^ btnClientTotalSpending;
 	private: System::Windows::Forms::Button^ btnMostSoldItems;
-
-
-
-
 	private: System::Windows::Forms::Button^ btnLeastSoldItems;
 	private: System::Windows::Forms::Button^ btnStoredSupplierPrice;
 	private: System::Windows::Forms::Button^ btnStoredSellPrice;
 	private: System::Windows::Forms::GroupBox^ gpbStockStats;
-
-
-
-
-
 	private: System::Windows::Forms::Button^ btnAveragePurchasePrice;
 	private: System::Windows::Forms::GroupBox^ gpbItemsStock;
-
-
-
-
-
-
-
-
-
-
 
 	private:
 		/// <summary>
@@ -139,11 +82,11 @@ namespace IHM {
 			this->gpbStockValue = (gcnew System::Windows::Forms::GroupBox());
 			this->btnStoredValue = (gcnew System::Windows::Forms::Button());
 			this->lblUnknownShrinkage = (gcnew System::Windows::Forms::Label());
-			this->txtUnknownShrinkagePercent = (gcnew System::Windows::Forms::TextBox());
+			this->txtFloatUnknownShrinkagePercent = (gcnew System::Windows::Forms::TextBox());
 			this->lblVatPercent = (gcnew System::Windows::Forms::Label());
-			this->txtFirstName = (gcnew System::Windows::Forms::TextBox());
+			this->txtFloatVatPercent = (gcnew System::Windows::Forms::TextBox());
 			this->lblProfit = (gcnew System::Windows::Forms::Label());
-			this->txtProfitPercent = (gcnew System::Windows::Forms::TextBox());
+			this->txtFloatProfitPercent = (gcnew System::Windows::Forms::TextBox());
 			this->lblTitle = (gcnew System::Windows::Forms::Label());
 			this->btnTurnOverMonth = (gcnew System::Windows::Forms::Button());
 			this->gpbTurnOverMonth = (gcnew System::Windows::Forms::GroupBox());
@@ -152,12 +95,12 @@ namespace IHM {
 			this->numTurnOverMonth = (gcnew System::Windows::Forms::NumericUpDown());
 			this->lblTurnOverMonth = (gcnew System::Windows::Forms::Label());
 			this->gpbClientTotalSpending = (gcnew System::Windows::Forms::GroupBox());
+			this->numClientId = (gcnew System::Windows::Forms::NumericUpDown());
+			this->lblClientId = (gcnew System::Windows::Forms::Label());
+			this->btnClientTotalSpending = (gcnew System::Windows::Forms::Button());
 			this->btnThresholdWarning = (gcnew System::Windows::Forms::Button());
 			this->btnMostSoldItems = (gcnew System::Windows::Forms::Button());
 			this->btnLeastSoldItems = (gcnew System::Windows::Forms::Button());
-			this->btnClientTotalSpending = (gcnew System::Windows::Forms::Button());
-			this->numClientId = (gcnew System::Windows::Forms::NumericUpDown());
-			this->lblClientId = (gcnew System::Windows::Forms::Label());
 			this->btnStoredSupplierPrice = (gcnew System::Windows::Forms::Button());
 			this->btnStoredSellPrice = (gcnew System::Windows::Forms::Button());
 			this->gpbStockStats = (gcnew System::Windows::Forms::GroupBox());
@@ -191,11 +134,11 @@ namespace IHM {
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->gpbStockValue->Controls->Add(this->btnStoredValue);
 			this->gpbStockValue->Controls->Add(this->lblUnknownShrinkage);
-			this->gpbStockValue->Controls->Add(this->txtUnknownShrinkagePercent);
+			this->gpbStockValue->Controls->Add(this->txtFloatUnknownShrinkagePercent);
 			this->gpbStockValue->Controls->Add(this->lblVatPercent);
-			this->gpbStockValue->Controls->Add(this->txtFirstName);
+			this->gpbStockValue->Controls->Add(this->txtFloatVatPercent);
 			this->gpbStockValue->Controls->Add(this->lblProfit);
-			this->gpbStockValue->Controls->Add(this->txtProfitPercent);
+			this->gpbStockValue->Controls->Add(this->txtFloatProfitPercent);
 			this->gpbStockValue->Location = System::Drawing::Point(12, 35);
 			this->gpbStockValue->Name = L"gpbStockValue";
 			this->gpbStockValue->Size = System::Drawing::Size(612, 52);
@@ -223,14 +166,14 @@ namespace IHM {
 			this->lblUnknownShrinkage->TabIndex = 8;
 			this->lblUnknownShrinkage->Text = L"Démarque inconnue";
 			// 
-			// txtUnknownShrinkagePercent
+			// txtFloatUnknownShrinkagePercent
 			// 
-			this->txtUnknownShrinkagePercent->Location = System::Drawing::Point(391, 19);
-			this->txtUnknownShrinkagePercent->MaxLength = 8;
-			this->txtUnknownShrinkagePercent->Name = L"txtUnknownShrinkagePercent";
-			this->txtUnknownShrinkagePercent->Size = System::Drawing::Size(55, 20);
-			this->txtUnknownShrinkagePercent->TabIndex = 7;
-			this->txtUnknownShrinkagePercent->Text = L"5,0";
+			this->txtFloatUnknownShrinkagePercent->Location = System::Drawing::Point(391, 19);
+			this->txtFloatUnknownShrinkagePercent->MaxLength = 8;
+			this->txtFloatUnknownShrinkagePercent->Name = L"txtFloatUnknownShrinkagePercent";
+			this->txtFloatUnknownShrinkagePercent->Size = System::Drawing::Size(55, 20);
+			this->txtFloatUnknownShrinkagePercent->TabIndex = 7;
+			this->txtFloatUnknownShrinkagePercent->Text = L"5,0";
 			// 
 			// lblVatPercent
 			// 
@@ -242,14 +185,14 @@ namespace IHM {
 			this->lblVatPercent->TabIndex = 4;
 			this->lblVatPercent->Text = L"TVA";
 			// 
-			// txtFirstName
+			// txtFloatVatPercent
 			// 
-			this->txtFirstName->Location = System::Drawing::Point(209, 19);
-			this->txtFirstName->MaxLength = 8;
-			this->txtFirstName->Name = L"txtFirstName";
-			this->txtFirstName->Size = System::Drawing::Size(55, 20);
-			this->txtFirstName->TabIndex = 3;
-			this->txtFirstName->Text = L"20,0";
+			this->txtFloatVatPercent->Location = System::Drawing::Point(209, 19);
+			this->txtFloatVatPercent->MaxLength = 8;
+			this->txtFloatVatPercent->Name = L"txtFloatVatPercent";
+			this->txtFloatVatPercent->Size = System::Drawing::Size(55, 20);
+			this->txtFloatVatPercent->TabIndex = 3;
+			this->txtFloatVatPercent->Text = L"20,0";
 			// 
 			// lblProfit
 			// 
@@ -260,14 +203,14 @@ namespace IHM {
 			this->lblProfit->TabIndex = 2;
 			this->lblProfit->Text = L"Marge commerciale";
 			// 
-			// txtProfitPercent
+			// txtFloatProfitPercent
 			// 
-			this->txtProfitPercent->Location = System::Drawing::Point(102, 19);
-			this->txtProfitPercent->MaxLength = 8;
-			this->txtProfitPercent->Name = L"txtProfitPercent";
-			this->txtProfitPercent->Size = System::Drawing::Size(55, 20);
-			this->txtProfitPercent->TabIndex = 1;
-			this->txtProfitPercent->Text = L"15,00";
+			this->txtFloatProfitPercent->Location = System::Drawing::Point(111, 19);
+			this->txtFloatProfitPercent->MaxLength = 8;
+			this->txtFloatProfitPercent->Name = L"txtFloatProfitPercent";
+			this->txtFloatProfitPercent->Size = System::Drawing::Size(55, 20);
+			this->txtFloatProfitPercent->TabIndex = 1;
+			this->txtFloatProfitPercent->Text = L"15,00";
 			// 
 			// lblTitle
 			// 
@@ -375,6 +318,36 @@ namespace IHM {
 			this->gpbClientTotalSpending->TabStop = false;
 			this->gpbClientTotalSpending->Text = L"Dépenses client";
 			// 
+			// numClientId
+			// 
+			this->numClientId->AllowDrop = true;
+			this->numClientId->Location = System::Drawing::Point(56, 24);
+			this->numClientId->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+				9999999, 0, 0, 0
+			});
+			this->numClientId->Name = L"numClientId";
+			this->numClientId->Size = System::Drawing::Size(52, 20);
+			this->numClientId->TabIndex = 18;
+			// 
+			// lblClientId
+			// 
+			this->lblClientId->AutoSize = true;
+			this->lblClientId->Location = System::Drawing::Point(6, 26);
+			this->lblClientId->Margin = System::Windows::Forms::Padding(3, 10, 3, 0);
+			this->lblClientId->Name = L"lblClientId";
+			this->lblClientId->Size = System::Drawing::Size(44, 13);
+			this->lblClientId->TabIndex = 19;
+			this->lblClientId->Text = L"Id client";
+			// 
+			// btnClientTotalSpending
+			// 
+			this->btnClientTotalSpending->Location = System::Drawing::Point(114, 21);
+			this->btnClientTotalSpending->Name = L"btnClientTotalSpending";
+			this->btnClientTotalSpending->Size = System::Drawing::Size(152, 23);
+			this->btnClientTotalSpending->TabIndex = 20;
+			this->btnClientTotalSpending->Text = L"Calcul dépenses";
+			this->btnClientTotalSpending->UseVisualStyleBackColor = true;
+			// 
 			// btnThresholdWarning
 			// 
 			this->btnThresholdWarning->Location = System::Drawing::Point(6, 19);
@@ -404,36 +377,6 @@ namespace IHM {
 			this->btnLeastSoldItems->Text = L"Produits les moins vendus";
 			this->btnLeastSoldItems->UseVisualStyleBackColor = true;
 			this->btnLeastSoldItems->Click += gcnew System::EventHandler(this, &StatisticsForm::button6_Click);
-			// 
-			// btnClientTotalSpending
-			// 
-			this->btnClientTotalSpending->Location = System::Drawing::Point(114, 21);
-			this->btnClientTotalSpending->Name = L"btnClientTotalSpending";
-			this->btnClientTotalSpending->Size = System::Drawing::Size(152, 23);
-			this->btnClientTotalSpending->TabIndex = 20;
-			this->btnClientTotalSpending->Text = L"Calcul dépenses";
-			this->btnClientTotalSpending->UseVisualStyleBackColor = true;
-			// 
-			// numClientId
-			// 
-			this->numClientId->AllowDrop = true;
-			this->numClientId->Location = System::Drawing::Point(56, 24);
-			this->numClientId->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
-				9999999, 0, 0, 0
-			});
-			this->numClientId->Name = L"numClientId";
-			this->numClientId->Size = System::Drawing::Size(52, 20);
-			this->numClientId->TabIndex = 18;
-			// 
-			// lblClientId
-			// 
-			this->lblClientId->AutoSize = true;
-			this->lblClientId->Location = System::Drawing::Point(6, 26);
-			this->lblClientId->Margin = System::Windows::Forms::Padding(3, 10, 3, 0);
-			this->lblClientId->Name = L"lblClientId";
-			this->lblClientId->Size = System::Drawing::Size(44, 13);
-			this->lblClientId->TabIndex = 19;
-			this->lblClientId->Text = L"Id client";
 			// 
 			// btnStoredSupplierPrice
 			// 
@@ -527,7 +470,10 @@ namespace IHM {
 
 	}
 	private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {}
-private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e) {}
-private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {}
-};
+	private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e) {}
+	private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {}
+
+	private:
+		System::Void IHM::StatisticsForm::addFloatTextBoxConstraints();
+	};
 }

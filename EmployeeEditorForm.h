@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Services.h"
+
 namespace IHM {
 
 	using namespace System;
@@ -12,86 +14,67 @@ namespace IHM {
 	/// <summary>
 	/// Summary for EmployeeEditorForm
 	/// </summary>
-	public ref class EmployeeEditorForm : public System::Windows::Forms::Form
-	{
+	public ref class EmployeeEditorForm : public System::Windows::Forms::Form {
 	public:
-		EmployeeEditorForm(void)
-		{
+		EmployeeEditorForm(Services::Services^ services, bool alreadyExists) {
+			this->services = services;
+			this->alreadyExists = alreadyExists;
+
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+
+			if (alreadyExists) {
+				this->btnUpdateEmployee->Enabled = false;
+				this->btnDeleteEmployee->Enabled = false;
+			} else {
+				this->btnCreateEmployee->Enabled = false;
+			}
 		}
 
 	protected:
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		~EmployeeEditorForm()
-		{
-			if (components)
-			{
+		~EmployeeEditorForm() {
+			if (components) {
 				delete components;
 			}
 		}
+
+	private:
+		Services::Services^ services = gcnew Services::Services();
+		bool alreadyExists;
+
 	private: System::Windows::Forms::Label^ lblTitle;
 	private: System::Windows::Forms::GroupBox^ gpbInfos;
-	protected:
-
 	private: System::Windows::Forms::TextBox^ txtFirstName;
 	private: System::Windows::Forms::Label^ lblFirstName;
 	private: System::Windows::Forms::Label^ lblStart;
 	private: System::Windows::Forms::DateTimePicker^ dtpStart;
-
-
-
 	private: System::Windows::Forms::Label^ lblName;
-
 	private: System::Windows::Forms::TextBox^ txtName;
-
 	private: System::Windows::Forms::GroupBox^ gpbAddress;
-
-
-
-
-
-
-
 	private: System::Windows::Forms::Label^ lblCity;
 	private: System::Windows::Forms::TextBox^ txtCity;
-
-
-
 	private: System::Windows::Forms::TextBox^ txtStreet;
-
-
 	private: System::Windows::Forms::Label^ lblStreet;
-
 	private: System::Windows::Forms::NumericUpDown^ numStreetNumber;
-
 	private: System::Windows::Forms::Label^ lblStreetNumber;
-
-
 	private: System::Windows::Forms::Button^ btnCreateEmployee;
 	private: System::Windows::Forms::Button^ btnUpdateEmployee;
 	private: System::Windows::Forms::Button^ btnDeleteEmployee;
-
-
-
 
 	private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
 		/// </summary>
-		void InitializeComponent(void)
-		{
+		void InitializeComponent(void) {
 			this->lblTitle = (gcnew System::Windows::Forms::Label());
 			this->gpbInfos = (gcnew System::Windows::Forms::GroupBox());
 			this->txtFirstName = (gcnew System::Windows::Forms::TextBox());

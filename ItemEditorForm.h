@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Services.h"
+
 namespace IHM {
 
 	using namespace System;
@@ -12,47 +14,43 @@ namespace IHM {
 	/// <summary>
 	/// Summary for ItemEditorForm
 	/// </summary>
-	public ref class ItemEditorForm : public System::Windows::Forms::Form
-	{
+	public ref class ItemEditorForm : public System::Windows::Forms::Form {
 	public:
-		ItemEditorForm(void)
-		{
+		ItemEditorForm(Services::Services^ services, bool alreadyExists) {
+			this->services = services;
+			this->alreadyExists = alreadyExists;
+
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+
+			if (alreadyExists) {
+				this->btnUpdateItem->Enabled = false;
+				this->btnDeleteItem->Enabled = false;
+			} else {
+				this->btnCreateItem->Enabled = false;
+			}
 		}
 
 	protected:
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		~ItemEditorForm()
-		{
-			if (components)
-			{
+		~ItemEditorForm() {
+			if (components) {
 				delete components;
 			}
 		}
+
+	private:
+		Services::Services^ services = gcnew Services::Services();
+		bool alreadyExists;
+
 	private: System::Windows::Forms::Button^ btnDeleteItem;
-	protected:
-
 	private: System::Windows::Forms::Button^ btnUpdateItem;
-	protected:
-
 	private: System::Windows::Forms::Button^ btnCreateItem;
-
 	private: System::Windows::Forms::GroupBox^ gpbQuantity;
 	private: System::Windows::Forms::Label^ lblAvailableQuantity;
-
-
-
-
-
 	private: System::Windows::Forms::NumericUpDown^ numQuantity;
 	private: System::Windows::Forms::Label^ lblQauntity;
-
-
 	private: System::Windows::Forms::GroupBox^ gpbInfos;
 	private: System::Windows::Forms::TextBox^ txtFirstName;
 	private: System::Windows::Forms::Label^ lblFirstName;
@@ -63,38 +61,27 @@ namespace IHM {
 	private: System::Windows::Forms::Label^ lblTitle;
 	private: System::Windows::Forms::NumericUpDown^ numAvailableQuantity;
 	private: System::Windows::Forms::NumericUpDown^ numQuantityThreshold;
-
-
 	private: System::Windows::Forms::Label^ lblQuantityThreshold;
-
-
 	private: System::Windows::Forms::GroupBox^ groupBox1;
 	private: System::Windows::Forms::TextBox^ txtFloatSupplierPrice;
 	private: System::Windows::Forms::TextBox^ txtFloatUnitPrice;
 	private: System::Windows::Forms::Label^ lblVatRate;
-	private: System::Windows::Forms::TextBox^ txtVatRate;
-
-
-
-
+	private: System::Windows::Forms::TextBox^ txtFloatVatRate;
 	private: System::Windows::Forms::Label^ lblFloatUnitPrice;
-
 	private: System::Windows::Forms::Label^ lblFloatSupplierPrice;
-
 
 	private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
 		/// </summary>
-		void InitializeComponent(void)
-		{
+		void InitializeComponent(void) {
 			this->btnDeleteItem = (gcnew System::Windows::Forms::Button());
 			this->btnUpdateItem = (gcnew System::Windows::Forms::Button());
 			this->btnCreateItem = (gcnew System::Windows::Forms::Button());
@@ -117,7 +104,7 @@ namespace IHM {
 			this->txtFloatSupplierPrice = (gcnew System::Windows::Forms::TextBox());
 			this->txtFloatUnitPrice = (gcnew System::Windows::Forms::TextBox());
 			this->lblVatRate = (gcnew System::Windows::Forms::Label());
-			this->txtVatRate = (gcnew System::Windows::Forms::TextBox());
+			this->txtFloatVatRate = (gcnew System::Windows::Forms::TextBox());
 			this->lblFloatUnitPrice = (gcnew System::Windows::Forms::Label());
 			this->lblFloatSupplierPrice = (gcnew System::Windows::Forms::Label());
 			this->gpbQuantity->SuspendLayout();
@@ -311,7 +298,7 @@ namespace IHM {
 			this->groupBox1->Controls->Add(this->txtFloatSupplierPrice);
 			this->groupBox1->Controls->Add(this->txtFloatUnitPrice);
 			this->groupBox1->Controls->Add(this->lblVatRate);
-			this->groupBox1->Controls->Add(this->txtVatRate);
+			this->groupBox1->Controls->Add(this->txtFloatVatRate);
 			this->groupBox1->Controls->Add(this->lblFloatUnitPrice);
 			this->groupBox1->Controls->Add(this->lblFloatSupplierPrice);
 			this->groupBox1->Location = System::Drawing::Point(75, 262);
@@ -351,12 +338,12 @@ namespace IHM {
 			// 
 			// txtVatRate
 			// 
-			this->txtVatRate->Location = System::Drawing::Point(112, 71);
-			this->txtVatRate->MaxLength = 10;
-			this->txtVatRate->Name = L"txtVatRate";
-			this->txtVatRate->Size = System::Drawing::Size(102, 20);
-			this->txtVatRate->TabIndex = 15;
-			this->txtVatRate->Text = L"0";
+			this->txtFloatVatRate->Location = System::Drawing::Point(112, 71);
+			this->txtFloatVatRate->MaxLength = 10;
+			this->txtFloatVatRate->Name = L"txtVatRate";
+			this->txtFloatVatRate->Size = System::Drawing::Size(102, 20);
+			this->txtFloatVatRate->TabIndex = 15;
+			this->txtFloatVatRate->Text = L"0";
 			// 
 			// lblFloatUnitPrice
 			// 
@@ -405,8 +392,10 @@ namespace IHM {
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
 			this->ResumeLayout(false);
-
+			addFloatTextBoxConstraints();
 		}
 #pragma endregion
+	private:
+		System::Void IHM::ItemEditorForm::addFloatTextBoxConstraints();
 	};
 }
