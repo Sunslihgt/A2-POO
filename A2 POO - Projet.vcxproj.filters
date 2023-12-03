@@ -39,9 +39,24 @@
     <ClInclude Include="ConnectionForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EmployeeEditorForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientEditorForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemEditorForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PurchaseEditorForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConnectionForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PurchaseEditorForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

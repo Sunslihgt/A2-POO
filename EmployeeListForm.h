@@ -150,6 +150,7 @@ namespace IHM {
 			// txtCityName
 			// 
 			this->txtCityName->Location = System::Drawing::Point(358, 58);
+			this->txtCityName->MaxLength = 50;
 			this->txtCityName->Name = L"txtCityName";
 			this->txtCityName->Size = System::Drawing::Size(139, 20);
 			this->txtCityName->TabIndex = 5;
@@ -167,6 +168,7 @@ namespace IHM {
 			// txtStreetName
 			// 
 			this->txtStreetName->Location = System::Drawing::Point(145, 58);
+			this->txtStreetName->MaxLength = 50;
 			this->txtStreetName->Name = L"txtStreetName";
 			this->txtStreetName->Size = System::Drawing::Size(163, 20);
 			this->txtStreetName->TabIndex = 7;
@@ -175,6 +177,9 @@ namespace IHM {
 			// 
 			this->numStreetNumber->AllowDrop = true;
 			this->numStreetNumber->Location = System::Drawing::Point(54, 58);
+			this->numStreetNumber->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+				999999, 0, 0, 0
+			});
 			this->numStreetNumber->Name = L"numStreetNumber";
 			this->numStreetNumber->Size = System::Drawing::Size(43, 20);
 			this->numStreetNumber->TabIndex = 5;
@@ -201,6 +206,7 @@ namespace IHM {
 			// txtFirstName
 			// 
 			this->txtFirstName->Location = System::Drawing::Point(208, 19);
+			this->txtFirstName->MaxLength = 50;
 			this->txtFirstName->Name = L"txtFirstName";
 			this->txtFirstName->Size = System::Drawing::Size(100, 20);
 			this->txtFirstName->TabIndex = 3;
@@ -217,6 +223,7 @@ namespace IHM {
 			// txtName
 			// 
 			this->txtName->Location = System::Drawing::Point(41, 19);
+			this->txtName->MaxLength = 50;
 			this->txtName->Name = L"txtName";
 			this->txtName->Size = System::Drawing::Size(100, 20);
 			this->txtName->TabIndex = 1;
@@ -297,7 +304,7 @@ namespace IHM {
 			this->lblTitle->Text = L"Gestion des employés";
 			this->lblTitle->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 			// 
-			// EmployeeList
+			// EmployeeListForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
@@ -307,7 +314,8 @@ namespace IHM {
 			this->Controls->Add(this->gpbOpen);
 			this->Controls->Add(this->gpbSearch);
 			this->Controls->Add(this->dgvEmployees);
-			this->Name = L"EmployeeList";
+			this->MinimumSize = System::Drawing::Size(700, 325);
+			this->Name = L"EmployeeListForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Employés";
 			this->Load += gcnew System::EventHandler(this, &EmployeeListForm::employeeListLoad);

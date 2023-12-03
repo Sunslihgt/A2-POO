@@ -115,7 +115,7 @@ namespace IHM {
 			this->dgvPurchases->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dgvPurchases->Location = System::Drawing::Point(12, 131);
 			this->dgvPurchases->Name = L"dgvPurchases";
-			this->dgvPurchases->Size = System::Drawing::Size(656, 302);
+			this->dgvPurchases->Size = System::Drawing::Size(657, 302);
 			this->dgvPurchases->TabIndex = 0;
 			// 
 			// gpbSearch
@@ -135,7 +135,7 @@ namespace IHM {
 			this->gpbSearch->Controls->Add(this->txtName);
 			this->gpbSearch->Location = System::Drawing::Point(12, 35);
 			this->gpbSearch->Name = L"gpbSearch";
-			this->gpbSearch->Size = System::Drawing::Size(824, 90);
+			this->gpbSearch->Size = System::Drawing::Size(825, 90);
 			this->gpbSearch->TabIndex = 4;
 			this->gpbSearch->TabStop = false;
 			this->gpbSearch->Text = L"Rechercher";
@@ -202,7 +202,7 @@ namespace IHM {
 			// btnSearchEmployees
 			// 
 			this->btnSearchEmployees->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
-			this->btnSearchEmployees->Location = System::Drawing::Point(668, 56);
+			this->btnSearchEmployees->Location = System::Drawing::Point(669, 56);
 			this->btnSearchEmployees->Margin = System::Windows::Forms::Padding(3, 10, 3, 3);
 			this->btnSearchEmployees->Name = L"btnSearchEmployees";
 			this->btnSearchEmployees->Size = System::Drawing::Size(150, 23);
@@ -223,6 +223,7 @@ namespace IHM {
 			// txtFirstName
 			// 
 			this->txtFirstName->Location = System::Drawing::Point(208, 19);
+			this->txtFirstName->MaxLength = 50;
 			this->txtFirstName->Name = L"txtFirstName";
 			this->txtFirstName->Size = System::Drawing::Size(100, 20);
 			this->txtFirstName->TabIndex = 3;
@@ -239,6 +240,7 @@ namespace IHM {
 			// txtName
 			// 
 			this->txtName->Location = System::Drawing::Point(41, 19);
+			this->txtName->MaxLength = 50;
 			this->txtName->Name = L"txtName";
 			this->txtName->Size = System::Drawing::Size(100, 20);
 			this->txtName->TabIndex = 1;
@@ -247,7 +249,7 @@ namespace IHM {
 			// 
 			this->gpbCreate->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->gpbCreate->Controls->Add(this->btnCreateEmployee);
-			this->gpbCreate->Location = System::Drawing::Point(674, 224);
+			this->gpbCreate->Location = System::Drawing::Point(675, 224);
 			this->gpbCreate->Name = L"gpbCreate";
 			this->gpbCreate->Size = System::Drawing::Size(162, 52);
 			this->gpbCreate->TabIndex = 11;
@@ -271,7 +273,7 @@ namespace IHM {
 			this->gpbOpen->Controls->Add(this->numIdEmployee);
 			this->gpbOpen->Controls->Add(this->lblId);
 			this->gpbOpen->Controls->Add(this->btnOpenEmployee);
-			this->gpbOpen->Location = System::Drawing::Point(674, 131);
+			this->gpbOpen->Location = System::Drawing::Point(675, 131);
 			this->gpbOpen->Name = L"gpbOpen";
 			this->gpbOpen->Size = System::Drawing::Size(162, 87);
 			this->gpbOpen->TabIndex = 10;
@@ -282,6 +284,9 @@ namespace IHM {
 			// 
 			this->numIdEmployee->AllowDrop = true;
 			this->numIdEmployee->Location = System::Drawing::Point(41, 20);
+			this->numIdEmployee->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+				99999999, 0, 0, 0
+			});
 			this->numIdEmployee->Name = L"numIdEmployee";
 			this->numIdEmployee->Size = System::Drawing::Size(115, 20);
 			this->numIdEmployee->TabIndex = 5;
@@ -314,22 +319,23 @@ namespace IHM {
 			this->lblTitle->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
 			this->lblTitle->Location = System::Drawing::Point(12, 9);
 			this->lblTitle->Name = L"lblTitle";
-			this->lblTitle->Size = System::Drawing::Size(824, 23);
+			this->lblTitle->Size = System::Drawing::Size(825, 23);
 			this->lblTitle->TabIndex = 13;
 			this->lblTitle->Text = L"Gestion des commandes";
 			this->lblTitle->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 			// 
-			// PurchaseList
+			// PurchaseListForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(848, 445);
+			this->ClientSize = System::Drawing::Size(849, 445);
 			this->Controls->Add(this->lblTitle);
 			this->Controls->Add(this->gpbCreate);
 			this->Controls->Add(this->gpbOpen);
 			this->Controls->Add(this->gpbSearch);
 			this->Controls->Add(this->dgvPurchases);
-			this->Name = L"PurchaseList";
+			this->MinimumSize = System::Drawing::Size(865, 327);
+			this->Name = L"PurchaseListForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Commandes";
 			this->Load += gcnew System::EventHandler(this, &PurchaseListForm::purchaseListLoad);

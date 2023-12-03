@@ -177,6 +177,7 @@ namespace IHM {
 			this->Controls->Add(this->btnClient);
 			this->Controls->Add(this->btnEmployee);
 			this->Controls->Add(this->lblTitle);
+			this->MinimumSize = System::Drawing::Size(265, 335);
 			this->Name = L"MainForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Projet POO - Groupe 1";
@@ -213,5 +214,26 @@ namespace IHM {
 		IHM::StatisticsForm statisticsForm;
 		statisticsForm.ShowDialog();
 	}
+
+	public:
+
+		// Permet de limiter la saisie à un nombre à virgule (Code utilisé dans tout le projet)
+		static System::Void txtFloatKeyDown(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
+			if (sender->GetType() != System::Windows::Forms::TextBox::typeid) {
+				return;  // On ne fait rien si ce n'est pas un TextBox
+			}
+
+			// On récupère le TextBox
+			TextBox^ txtBoxFloat = (TextBox^) sender;
+
+
+			if (e->KeyChar == ',') {  // On vérifie si le TextBox contient déjà une virgule
+				if (txtBoxFloat->Text->Length == 0 || txtBoxFloat->Text->IndexOf(",") >= 0) {
+					e->Handled = true;  // On bloque la saisie si le champ est vide ou s'il y a déjà une virgule
+				}
+			} else if ((e->KeyChar < '0' || e->KeyChar > '9') && e->KeyChar != (wchar_t) Keys::Back && e->KeyChar != (wchar_t) Keys::Delete) {
+				e->Handled = true;  // On bloque la saisie si ce n'est pas un chiffre ou la touche effacer/supprimer
+			}
+		}
 	};
 }

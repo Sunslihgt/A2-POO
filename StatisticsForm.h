@@ -34,16 +34,26 @@ namespace IHM {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::DataGridView^ dgvItems;
+	protected:
 
-	private: System::Windows::Forms::DataGridView^ dgvEmployees;
-	private: System::Windows::Forms::TextBox^ txtName;
 
-	private: System::Windows::Forms::GroupBox^ gpbSearch;
-	private: System::Windows::Forms::Label^ lblName;
-	private: System::Windows::Forms::Label^ lblFirstName;
+	private: System::Windows::Forms::TextBox^ txtProfitPercent;
+	private: System::Windows::Forms::GroupBox^ gpbStockValue;
+
+
+
+
+	private: System::Windows::Forms::Label^ lblProfit;
+	private: System::Windows::Forms::Label^ lblVatPercent;
+
+
+
+
 	private: System::Windows::Forms::TextBox^ txtFirstName;
-	private: System::Windows::Forms::Label^ lblStreetName;
-	private: System::Windows::Forms::TextBox^ txtStreetName;
+	private: System::Windows::Forms::Label^ lblUnknownShrinkage;
+	private: System::Windows::Forms::TextBox^ txtUnknownShrinkagePercent;
+	private: System::Windows::Forms::Button^ btnStoredValue;
 
 
 
@@ -53,26 +63,36 @@ namespace IHM {
 
 
 
-	private: System::Windows::Forms::Button^ btnSearchEmployees;
+
+
+
 	private: System::Windows::Forms::Label^ lblTitle;
+	private: System::Windows::Forms::Button^ btnTurnOverMonth;
 
-	private: System::Windows::Forms::Button^ button2;
+
 	private: System::Windows::Forms::GroupBox^ gpbTurnOverMonth;
-	private: System::Windows::Forms::Label^ lblFirstPurchase;
-	private: System::Windows::Forms::NumericUpDown^ numericUpDown2;
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::NumericUpDown^ numericUpDown1;
+	private: System::Windows::Forms::Label^ lblTurnOverMonth;
+	private: System::Windows::Forms::NumericUpDown^ numTurnOverYear;
+
+
+	private: System::Windows::Forms::Label^ lblTurnOverYear;
+	private: System::Windows::Forms::NumericUpDown^ numTurnOverMonth;
+
+
+	private: System::Windows::Forms::GroupBox^ gpbClientTotalSpending;
+	private: System::Windows::Forms::Button^ btnThresholdWarning;
 
 
 
-	private: System::Windows::Forms::GroupBox^ groupBox2;
 
 
 
 
 
-	private: System::Windows::Forms::Button^ button4;
-	private: System::Windows::Forms::NumericUpDown^ nudClientId;
+
+
+	private: System::Windows::Forms::NumericUpDown^ numClientId;
+
 
 	private: System::Windows::Forms::Label^ lblClientId;
 	private: System::Windows::Forms::Button^ btnClientTotalSpending;
@@ -82,12 +102,19 @@ namespace IHM {
 
 
 	private: System::Windows::Forms::Button^ btnLeastSoldItems;
+	private: System::Windows::Forms::Button^ btnStoredSupplierPrice;
+	private: System::Windows::Forms::Button^ btnStoredSellPrice;
+	private: System::Windows::Forms::GroupBox^ gpbStockStats;
 
-	private: System::Windows::Forms::Button^ button7;
-	private: System::Windows::Forms::Button^ button8;
-	private: System::Windows::Forms::GroupBox^ groupBox3;
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::GroupBox^ groupBox1;
+
+
+
+
+	private: System::Windows::Forms::Button^ btnAveragePurchasePrice;
+	private: System::Windows::Forms::GroupBox^ gpbItemsStock;
+
+
+
 
 
 
@@ -108,137 +135,139 @@ namespace IHM {
 		/// le contenu de cette méthode avec l'éditeur de code.
 		/// </summary>
 		void InitializeComponent(void) {
-			this->dgvEmployees = (gcnew System::Windows::Forms::DataGridView());
-			this->gpbSearch = (gcnew System::Windows::Forms::GroupBox());
-			this->btnSearchEmployees = (gcnew System::Windows::Forms::Button());
-			this->lblStreetName = (gcnew System::Windows::Forms::Label());
-			this->txtStreetName = (gcnew System::Windows::Forms::TextBox());
-			this->lblFirstName = (gcnew System::Windows::Forms::Label());
+			this->dgvItems = (gcnew System::Windows::Forms::DataGridView());
+			this->gpbStockValue = (gcnew System::Windows::Forms::GroupBox());
+			this->btnStoredValue = (gcnew System::Windows::Forms::Button());
+			this->lblUnknownShrinkage = (gcnew System::Windows::Forms::Label());
+			this->txtUnknownShrinkagePercent = (gcnew System::Windows::Forms::TextBox());
+			this->lblVatPercent = (gcnew System::Windows::Forms::Label());
 			this->txtFirstName = (gcnew System::Windows::Forms::TextBox());
-			this->lblName = (gcnew System::Windows::Forms::Label());
-			this->txtName = (gcnew System::Windows::Forms::TextBox());
+			this->lblProfit = (gcnew System::Windows::Forms::Label());
+			this->txtProfitPercent = (gcnew System::Windows::Forms::TextBox());
 			this->lblTitle = (gcnew System::Windows::Forms::Label());
-			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->btnTurnOverMonth = (gcnew System::Windows::Forms::Button());
 			this->gpbTurnOverMonth = (gcnew System::Windows::Forms::GroupBox());
-			this->numericUpDown2 = (gcnew System::Windows::Forms::NumericUpDown());
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->numericUpDown1 = (gcnew System::Windows::Forms::NumericUpDown());
-			this->lblFirstPurchase = (gcnew System::Windows::Forms::Label());
-			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
-			this->button4 = (gcnew System::Windows::Forms::Button());
+			this->numTurnOverYear = (gcnew System::Windows::Forms::NumericUpDown());
+			this->lblTurnOverYear = (gcnew System::Windows::Forms::Label());
+			this->numTurnOverMonth = (gcnew System::Windows::Forms::NumericUpDown());
+			this->lblTurnOverMonth = (gcnew System::Windows::Forms::Label());
+			this->gpbClientTotalSpending = (gcnew System::Windows::Forms::GroupBox());
+			this->btnThresholdWarning = (gcnew System::Windows::Forms::Button());
 			this->btnMostSoldItems = (gcnew System::Windows::Forms::Button());
 			this->btnLeastSoldItems = (gcnew System::Windows::Forms::Button());
 			this->btnClientTotalSpending = (gcnew System::Windows::Forms::Button());
-			this->nudClientId = (gcnew System::Windows::Forms::NumericUpDown());
+			this->numClientId = (gcnew System::Windows::Forms::NumericUpDown());
 			this->lblClientId = (gcnew System::Windows::Forms::Label());
-			this->button7 = (gcnew System::Windows::Forms::Button());
-			this->button8 = (gcnew System::Windows::Forms::Button());
-			this->groupBox3 = (gcnew System::Windows::Forms::GroupBox());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvEmployees))->BeginInit();
-			this->gpbSearch->SuspendLayout();
+			this->btnStoredSupplierPrice = (gcnew System::Windows::Forms::Button());
+			this->btnStoredSellPrice = (gcnew System::Windows::Forms::Button());
+			this->gpbStockStats = (gcnew System::Windows::Forms::GroupBox());
+			this->btnAveragePurchasePrice = (gcnew System::Windows::Forms::Button());
+			this->gpbItemsStock = (gcnew System::Windows::Forms::GroupBox());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvItems))->BeginInit();
+			this->gpbStockValue->SuspendLayout();
 			this->gpbTurnOverMonth->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
-			this->groupBox2->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nudClientId))->BeginInit();
-			this->groupBox3->SuspendLayout();
-			this->groupBox1->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numTurnOverYear))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numTurnOverMonth))->BeginInit();
+			this->gpbClientTotalSpending->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numClientId))->BeginInit();
+			this->gpbStockStats->SuspendLayout();
+			this->gpbItemsStock->SuspendLayout();
 			this->SuspendLayout();
 			// 
-			// dgvEmployees
+			// dgvItems
 			// 
-			this->dgvEmployees->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+			this->dgvItems->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->dgvEmployees->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dgvEmployees->Location = System::Drawing::Point(12, 151);
-			this->dgvEmployees->Name = L"dgvEmployees";
-			this->dgvEmployees->Size = System::Drawing::Size(612, 274);
-			this->dgvEmployees->TabIndex = 0;
+			this->dgvItems->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dgvItems->Location = System::Drawing::Point(12, 151);
+			this->dgvItems->Name = L"dgvItems";
+			this->dgvItems->Size = System::Drawing::Size(612, 274);
+			this->dgvItems->TabIndex = 0;
 			// 
-			// gpbSearch
+			// gpbStockValue
 			// 
-			this->gpbSearch->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+			this->gpbStockValue->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->gpbSearch->Controls->Add(this->btnSearchEmployees);
-			this->gpbSearch->Controls->Add(this->lblStreetName);
-			this->gpbSearch->Controls->Add(this->txtStreetName);
-			this->gpbSearch->Controls->Add(this->lblFirstName);
-			this->gpbSearch->Controls->Add(this->txtFirstName);
-			this->gpbSearch->Controls->Add(this->lblName);
-			this->gpbSearch->Controls->Add(this->txtName);
-			this->gpbSearch->Location = System::Drawing::Point(12, 35);
-			this->gpbSearch->Name = L"gpbSearch";
-			this->gpbSearch->Size = System::Drawing::Size(612, 52);
-			this->gpbSearch->TabIndex = 4;
-			this->gpbSearch->TabStop = false;
-			this->gpbSearch->Text = L"Statistiques stock (paramètres en %)";
+			this->gpbStockValue->Controls->Add(this->btnStoredValue);
+			this->gpbStockValue->Controls->Add(this->lblUnknownShrinkage);
+			this->gpbStockValue->Controls->Add(this->txtUnknownShrinkagePercent);
+			this->gpbStockValue->Controls->Add(this->lblVatPercent);
+			this->gpbStockValue->Controls->Add(this->txtFirstName);
+			this->gpbStockValue->Controls->Add(this->lblProfit);
+			this->gpbStockValue->Controls->Add(this->txtProfitPercent);
+			this->gpbStockValue->Location = System::Drawing::Point(12, 35);
+			this->gpbStockValue->Name = L"gpbStockValue";
+			this->gpbStockValue->Size = System::Drawing::Size(612, 52);
+			this->gpbStockValue->TabIndex = 4;
+			this->gpbStockValue->TabStop = false;
+			this->gpbStockValue->Text = L"Valeur de vente totale du stock (paramètres en %)";
 			// 
-			// btnSearchEmployees
+			// btnStoredValue
 			// 
-			this->btnSearchEmployees->Location = System::Drawing::Point(457, 17);
-			this->btnSearchEmployees->Margin = System::Windows::Forms::Padding(8, 2, 3, 3);
-			this->btnSearchEmployees->Name = L"btnSearchEmployees";
-			this->btnSearchEmployees->Size = System::Drawing::Size(149, 23);
-			this->btnSearchEmployees->TabIndex = 6;
-			this->btnSearchEmployees->Text = L"Chercher";
-			this->btnSearchEmployees->UseVisualStyleBackColor = true;
+			this->btnStoredValue->Location = System::Drawing::Point(457, 17);
+			this->btnStoredValue->Margin = System::Windows::Forms::Padding(8, 2, 3, 3);
+			this->btnStoredValue->Name = L"btnStoredValue";
+			this->btnStoredValue->Size = System::Drawing::Size(149, 23);
+			this->btnStoredValue->TabIndex = 6;
+			this->btnStoredValue->Text = L"Calculer valeur stock";
+			this->btnStoredValue->UseVisualStyleBackColor = true;
 			// 
-			// lblStreetName
+			// lblUnknownShrinkage
 			// 
-			this->lblStreetName->AutoSize = true;
-			this->lblStreetName->Location = System::Drawing::Point(282, 22);
-			this->lblStreetName->Margin = System::Windows::Forms::Padding(15, 0, 3, 0);
-			this->lblStreetName->Name = L"lblStreetName";
-			this->lblStreetName->Size = System::Drawing::Size(103, 13);
-			this->lblStreetName->TabIndex = 8;
-			this->lblStreetName->Text = L"Démarque inconnue";
+			this->lblUnknownShrinkage->AutoSize = true;
+			this->lblUnknownShrinkage->Location = System::Drawing::Point(282, 22);
+			this->lblUnknownShrinkage->Margin = System::Windows::Forms::Padding(15, 0, 3, 0);
+			this->lblUnknownShrinkage->Name = L"lblUnknownShrinkage";
+			this->lblUnknownShrinkage->Size = System::Drawing::Size(103, 13);
+			this->lblUnknownShrinkage->TabIndex = 8;
+			this->lblUnknownShrinkage->Text = L"Démarque inconnue";
 			// 
-			// txtStreetName
+			// txtUnknownShrinkagePercent
 			// 
-			this->txtStreetName->Location = System::Drawing::Point(391, 19);
-			this->txtStreetName->Name = L"txtStreetName";
-			this->txtStreetName->Size = System::Drawing::Size(55, 20);
-			this->txtStreetName->TabIndex = 7;
-			this->txtStreetName->Text = L"5,0";
+			this->txtUnknownShrinkagePercent->Location = System::Drawing::Point(391, 19);
+			this->txtUnknownShrinkagePercent->MaxLength = 8;
+			this->txtUnknownShrinkagePercent->Name = L"txtUnknownShrinkagePercent";
+			this->txtUnknownShrinkagePercent->Size = System::Drawing::Size(55, 20);
+			this->txtUnknownShrinkagePercent->TabIndex = 7;
+			this->txtUnknownShrinkagePercent->Text = L"5,0";
 			// 
-			// lblFirstName
+			// lblVatPercent
 			// 
-			this->lblFirstName->AutoSize = true;
-			this->lblFirstName->Location = System::Drawing::Point(175, 22);
-			this->lblFirstName->Margin = System::Windows::Forms::Padding(15, 0, 3, 0);
-			this->lblFirstName->Name = L"lblFirstName";
-			this->lblFirstName->Size = System::Drawing::Size(28, 13);
-			this->lblFirstName->TabIndex = 4;
-			this->lblFirstName->Text = L"TVA";
+			this->lblVatPercent->AutoSize = true;
+			this->lblVatPercent->Location = System::Drawing::Point(175, 22);
+			this->lblVatPercent->Margin = System::Windows::Forms::Padding(15, 0, 3, 0);
+			this->lblVatPercent->Name = L"lblVatPercent";
+			this->lblVatPercent->Size = System::Drawing::Size(28, 13);
+			this->lblVatPercent->TabIndex = 4;
+			this->lblVatPercent->Text = L"TVA";
 			// 
 			// txtFirstName
 			// 
 			this->txtFirstName->Location = System::Drawing::Point(209, 19);
-			this->txtFirstName->MaxLength = 10;
+			this->txtFirstName->MaxLength = 8;
 			this->txtFirstName->Name = L"txtFirstName";
 			this->txtFirstName->Size = System::Drawing::Size(55, 20);
 			this->txtFirstName->TabIndex = 3;
 			this->txtFirstName->Text = L"20,0";
 			// 
-			// lblName
+			// lblProfit
 			// 
-			this->lblName->AutoSize = true;
-			this->lblName->Location = System::Drawing::Point(6, 22);
-			this->lblName->Name = L"lblName";
-			this->lblName->Size = System::Drawing::Size(99, 13);
-			this->lblName->TabIndex = 2;
-			this->lblName->Text = L"Marge commerciale";
+			this->lblProfit->AutoSize = true;
+			this->lblProfit->Location = System::Drawing::Point(6, 22);
+			this->lblProfit->Name = L"lblProfit";
+			this->lblProfit->Size = System::Drawing::Size(99, 13);
+			this->lblProfit->TabIndex = 2;
+			this->lblProfit->Text = L"Marge commerciale";
 			// 
-			// txtName
+			// txtProfitPercent
 			// 
-			this->txtName->Location = System::Drawing::Point(102, 19);
-			this->txtName->Name = L"txtName";
-			this->txtName->Size = System::Drawing::Size(55, 20);
-			this->txtName->TabIndex = 1;
-			this->txtName->Text = L"15,0";
+			this->txtProfitPercent->Location = System::Drawing::Point(102, 19);
+			this->txtProfitPercent->MaxLength = 8;
+			this->txtProfitPercent->Name = L"txtProfitPercent";
+			this->txtProfitPercent->Size = System::Drawing::Size(55, 20);
+			this->txtProfitPercent->TabIndex = 1;
+			this->txtProfitPercent->Text = L"15,00";
 			// 
 			// lblTitle
 			// 
@@ -252,26 +281,26 @@ namespace IHM {
 			this->lblTitle->Text = L"Statistiques";
 			this->lblTitle->TextAlign = System::Drawing::ContentAlignment::TopCenter;
 			// 
-			// button2
+			// btnTurnOverMonth
 			// 
-			this->button2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+			this->btnTurnOverMonth->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->button2->Location = System::Drawing::Point(6, 79);
-			this->button2->Margin = System::Windows::Forms::Padding(3, 10, 3, 5);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(160, 23);
-			this->button2->TabIndex = 13;
-			this->button2->Text = L"Chiffre d\'affaires";
-			this->button2->UseVisualStyleBackColor = true;
+			this->btnTurnOverMonth->Location = System::Drawing::Point(6, 79);
+			this->btnTurnOverMonth->Margin = System::Windows::Forms::Padding(3, 10, 3, 5);
+			this->btnTurnOverMonth->Name = L"btnTurnOverMonth";
+			this->btnTurnOverMonth->Size = System::Drawing::Size(160, 23);
+			this->btnTurnOverMonth->TabIndex = 13;
+			this->btnTurnOverMonth->Text = L"Chiffre d\'affaires";
+			this->btnTurnOverMonth->UseVisualStyleBackColor = true;
 			// 
 			// gpbTurnOverMonth
 			// 
 			this->gpbTurnOverMonth->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->gpbTurnOverMonth->Controls->Add(this->numericUpDown2);
-			this->gpbTurnOverMonth->Controls->Add(this->label1);
-			this->gpbTurnOverMonth->Controls->Add(this->numericUpDown1);
-			this->gpbTurnOverMonth->Controls->Add(this->lblFirstPurchase);
-			this->gpbTurnOverMonth->Controls->Add(this->button2);
+			this->gpbTurnOverMonth->Controls->Add(this->numTurnOverYear);
+			this->gpbTurnOverMonth->Controls->Add(this->lblTurnOverYear);
+			this->gpbTurnOverMonth->Controls->Add(this->numTurnOverMonth);
+			this->gpbTurnOverMonth->Controls->Add(this->lblTurnOverMonth);
+			this->gpbTurnOverMonth->Controls->Add(this->btnTurnOverMonth);
 			this->gpbTurnOverMonth->Location = System::Drawing::Point(630, 35);
 			this->gpbTurnOverMonth->Name = L"gpbTurnOverMonth";
 			this->gpbTurnOverMonth->Size = System::Drawing::Size(172, 110);
@@ -279,64 +308,82 @@ namespace IHM {
 			this->gpbTurnOverMonth->TabStop = false;
 			this->gpbTurnOverMonth->Text = L"Chiffre d\'affaires";
 			// 
-			// numericUpDown2
+			// numTurnOverYear
 			// 
-			this->numericUpDown2->AllowDrop = true;
-			this->numericUpDown2->Location = System::Drawing::Point(50, 47);
-			this->numericUpDown2->Name = L"numericUpDown2";
-			this->numericUpDown2->Size = System::Drawing::Size(54, 20);
-			this->numericUpDown2->TabIndex = 16;
+			this->numTurnOverYear->AllowDrop = true;
+			this->numTurnOverYear->Location = System::Drawing::Point(50, 47);
+			this->numTurnOverYear->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+				9999, 0, 0, 0
+			});
+			this->numTurnOverYear->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+				1900, 0, 0, 0
+			});
+			this->numTurnOverYear->Name = L"numTurnOverYear";
+			this->numTurnOverYear->Size = System::Drawing::Size(54, 20);
+			this->numTurnOverYear->TabIndex = 16;
+			this->numTurnOverYear->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+				2023, 0, 0, 0
+			});
 			// 
-			// label1
+			// lblTurnOverYear
 			// 
-			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(6, 49);
-			this->label1->Margin = System::Windows::Forms::Padding(3, 10, 3, 0);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(38, 13);
-			this->label1->TabIndex = 17;
-			this->label1->Text = L"Année";
+			this->lblTurnOverYear->AutoSize = true;
+			this->lblTurnOverYear->Location = System::Drawing::Point(6, 49);
+			this->lblTurnOverYear->Margin = System::Windows::Forms::Padding(3, 10, 3, 0);
+			this->lblTurnOverYear->Name = L"lblTurnOverYear";
+			this->lblTurnOverYear->Size = System::Drawing::Size(38, 13);
+			this->lblTurnOverYear->TabIndex = 17;
+			this->lblTurnOverYear->Text = L"Année";
 			// 
-			// numericUpDown1
+			// numTurnOverMonth
 			// 
-			this->numericUpDown1->AllowDrop = true;
-			this->numericUpDown1->Location = System::Drawing::Point(50, 24);
-			this->numericUpDown1->Name = L"numericUpDown1";
-			this->numericUpDown1->Size = System::Drawing::Size(54, 20);
-			this->numericUpDown1->TabIndex = 9;
+			this->numTurnOverMonth->AllowDrop = true;
+			this->numTurnOverMonth->Location = System::Drawing::Point(50, 24);
+			this->numTurnOverMonth->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+				12, 0, 0, 0
+			});
+			this->numTurnOverMonth->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+				1, 0, 0, 0
+			});
+			this->numTurnOverMonth->Name = L"numTurnOverMonth";
+			this->numTurnOverMonth->Size = System::Drawing::Size(54, 20);
+			this->numTurnOverMonth->TabIndex = 9;
+			this->numTurnOverMonth->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+				1, 0, 0, 0
+			});
 			// 
-			// lblFirstPurchase
+			// lblTurnOverMonth
 			// 
-			this->lblFirstPurchase->AutoSize = true;
-			this->lblFirstPurchase->Location = System::Drawing::Point(6, 26);
-			this->lblFirstPurchase->Margin = System::Windows::Forms::Padding(3, 10, 3, 0);
-			this->lblFirstPurchase->Name = L"lblFirstPurchase";
-			this->lblFirstPurchase->Size = System::Drawing::Size(29, 13);
-			this->lblFirstPurchase->TabIndex = 15;
-			this->lblFirstPurchase->Text = L"Mois";
+			this->lblTurnOverMonth->AutoSize = true;
+			this->lblTurnOverMonth->Location = System::Drawing::Point(6, 26);
+			this->lblTurnOverMonth->Margin = System::Windows::Forms::Padding(3, 10, 3, 0);
+			this->lblTurnOverMonth->Name = L"lblTurnOverMonth";
+			this->lblTurnOverMonth->Size = System::Drawing::Size(29, 13);
+			this->lblTurnOverMonth->TabIndex = 15;
+			this->lblTurnOverMonth->Text = L"Mois";
 			// 
-			// groupBox2
+			// gpbClientTotalSpending
 			// 
-			this->groupBox2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->groupBox2->Controls->Add(this->nudClientId);
-			this->groupBox2->Controls->Add(this->lblClientId);
-			this->groupBox2->Controls->Add(this->btnClientTotalSpending);
-			this->groupBox2->Location = System::Drawing::Point(630, 264);
-			this->groupBox2->Name = L"groupBox2";
-			this->groupBox2->Size = System::Drawing::Size(172, 79);
-			this->groupBox2->TabIndex = 18;
-			this->groupBox2->TabStop = false;
-			this->groupBox2->Text = L"Dépenses client";
+			this->gpbClientTotalSpending->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->gpbClientTotalSpending->Controls->Add(this->numClientId);
+			this->gpbClientTotalSpending->Controls->Add(this->lblClientId);
+			this->gpbClientTotalSpending->Controls->Add(this->btnClientTotalSpending);
+			this->gpbClientTotalSpending->Location = System::Drawing::Point(352, 93);
+			this->gpbClientTotalSpending->Name = L"gpbClientTotalSpending";
+			this->gpbClientTotalSpending->Size = System::Drawing::Size(272, 52);
+			this->gpbClientTotalSpending->TabIndex = 18;
+			this->gpbClientTotalSpending->TabStop = false;
+			this->gpbClientTotalSpending->Text = L"Dépenses client";
 			// 
-			// button4
+			// btnThresholdWarning
 			// 
-			this->button4->Location = System::Drawing::Point(6, 19);
-			this->button4->Name = L"button4";
-			this->button4->Size = System::Drawing::Size(157, 23);
-			this->button4->TabIndex = 17;
-			this->button4->Text = L"Produits sous approvisionnés";
-			this->button4->UseVisualStyleBackColor = true;
-			this->button4->Click += gcnew System::EventHandler(this, &StatisticsForm::button4_Click);
+			this->btnThresholdWarning->Location = System::Drawing::Point(6, 19);
+			this->btnThresholdWarning->Name = L"btnThresholdWarning";
+			this->btnThresholdWarning->Size = System::Drawing::Size(157, 23);
+			this->btnThresholdWarning->TabIndex = 17;
+			this->btnThresholdWarning->Text = L"Produits sous approvisionnés";
+			this->btnThresholdWarning->UseVisualStyleBackColor = true;
+			this->btnThresholdWarning->Click += gcnew System::EventHandler(this, &StatisticsForm::button4_Click);
 			// 
 			// btnMostSoldItems
 			// 
@@ -360,20 +407,23 @@ namespace IHM {
 			// 
 			// btnClientTotalSpending
 			// 
-			this->btnClientTotalSpending->Location = System::Drawing::Point(6, 50);
+			this->btnClientTotalSpending->Location = System::Drawing::Point(114, 21);
 			this->btnClientTotalSpending->Name = L"btnClientTotalSpending";
 			this->btnClientTotalSpending->Size = System::Drawing::Size(152, 23);
 			this->btnClientTotalSpending->TabIndex = 20;
 			this->btnClientTotalSpending->Text = L"Calcul dépenses";
 			this->btnClientTotalSpending->UseVisualStyleBackColor = true;
 			// 
-			// nudClientId
+			// numClientId
 			// 
-			this->nudClientId->AllowDrop = true;
-			this->nudClientId->Location = System::Drawing::Point(56, 24);
-			this->nudClientId->Name = L"nudClientId";
-			this->nudClientId->Size = System::Drawing::Size(54, 20);
-			this->nudClientId->TabIndex = 18;
+			this->numClientId->AllowDrop = true;
+			this->numClientId->Location = System::Drawing::Point(56, 24);
+			this->numClientId->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+				9999999, 0, 0, 0
+			});
+			this->numClientId->Name = L"numClientId";
+			this->numClientId->Size = System::Drawing::Size(52, 20);
+			this->numClientId->TabIndex = 18;
 			// 
 			// lblClientId
 			// 
@@ -385,91 +435,90 @@ namespace IHM {
 			this->lblClientId->TabIndex = 19;
 			this->lblClientId->Text = L"Id client";
 			// 
-			// button7
+			// btnStoredSupplierPrice
 			// 
-			this->button7->Location = System::Drawing::Point(122, 19);
-			this->button7->Name = L"button7";
-			this->button7->Size = System::Drawing::Size(110, 23);
-			this->button7->TabIndex = 20;
-			this->button7->Text = L"Prix d\'achat stock";
-			this->button7->UseVisualStyleBackColor = true;
+			this->btnStoredSupplierPrice->Location = System::Drawing::Point(102, 19);
+			this->btnStoredSupplierPrice->Name = L"btnStoredSupplierPrice";
+			this->btnStoredSupplierPrice->Size = System::Drawing::Size(110, 23);
+			this->btnStoredSupplierPrice->TabIndex = 20;
+			this->btnStoredSupplierPrice->Text = L"Prix d\'achat stock";
+			this->btnStoredSupplierPrice->UseVisualStyleBackColor = true;
 			// 
-			// button8
+			// btnStoredSellPrice
 			// 
-			this->button8->Location = System::Drawing::Point(238, 19);
-			this->button8->Name = L"button8";
-			this->button8->Size = System::Drawing::Size(110, 23);
-			this->button8->TabIndex = 21;
-			this->button8->Text = L"Prix de vente stock";
-			this->button8->UseVisualStyleBackColor = true;
+			this->btnStoredSellPrice->Location = System::Drawing::Point(218, 19);
+			this->btnStoredSellPrice->Name = L"btnStoredSellPrice";
+			this->btnStoredSellPrice->Size = System::Drawing::Size(110, 23);
+			this->btnStoredSellPrice->TabIndex = 21;
+			this->btnStoredSellPrice->Text = L"Prix de vente stock";
+			this->btnStoredSellPrice->UseVisualStyleBackColor = true;
 			// 
-			// groupBox3
+			// gpbStockStats
 			// 
-			this->groupBox3->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+			this->gpbStockStats->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->groupBox3->Controls->Add(this->button1);
-			this->groupBox3->Controls->Add(this->button8);
-			this->groupBox3->Controls->Add(this->button7);
-			this->groupBox3->Location = System::Drawing::Point(12, 93);
-			this->groupBox3->Name = L"groupBox3";
-			this->groupBox3->Size = System::Drawing::Size(612, 52);
-			this->groupBox3->TabIndex = 18;
-			this->groupBox3->TabStop = false;
-			this->groupBox3->Text = L"Calcul rapide stock";
+			this->gpbStockStats->Controls->Add(this->btnAveragePurchasePrice);
+			this->gpbStockStats->Controls->Add(this->btnStoredSellPrice);
+			this->gpbStockStats->Controls->Add(this->btnStoredSupplierPrice);
+			this->gpbStockStats->Location = System::Drawing::Point(12, 93);
+			this->gpbStockStats->Name = L"gpbStockStats";
+			this->gpbStockStats->Size = System::Drawing::Size(334, 52);
+			this->gpbStockStats->TabIndex = 18;
+			this->gpbStockStats->TabStop = false;
+			this->gpbStockStats->Text = L"Statistiques stock";
 			// 
-			// button1
+			// btnAveragePurchasePrice
 			// 
-			this->button1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
-				| System::Windows::Forms::AnchorStyles::Right));
-			this->button1->Location = System::Drawing::Point(6, 19);
-			this->button1->Margin = System::Windows::Forms::Padding(3, 3, 3, 5);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(110, 23);
-			this->button1->TabIndex = 18;
-			this->button1->Text = L"Panier Moyen";
-			this->button1->UseVisualStyleBackColor = true;
+			this->btnAveragePurchasePrice->Location = System::Drawing::Point(6, 19);
+			this->btnAveragePurchasePrice->Margin = System::Windows::Forms::Padding(3, 3, 3, 5);
+			this->btnAveragePurchasePrice->Name = L"btnAveragePurchasePrice";
+			this->btnAveragePurchasePrice->Size = System::Drawing::Size(90, 23);
+			this->btnAveragePurchasePrice->TabIndex = 18;
+			this->btnAveragePurchasePrice->Text = L"Panier Moyen";
+			this->btnAveragePurchasePrice->UseVisualStyleBackColor = true;
 			// 
-			// groupBox1
+			// gpbItemsStock
 			// 
-			this->groupBox1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->groupBox1->Controls->Add(this->btnMostSoldItems);
-			this->groupBox1->Controls->Add(this->button4);
-			this->groupBox1->Controls->Add(this->btnLeastSoldItems);
-			this->groupBox1->Location = System::Drawing::Point(630, 151);
-			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(172, 107);
-			this->groupBox1->TabIndex = 21;
-			this->groupBox1->TabStop = false;
-			this->groupBox1->Text = L"Affichage produits";
+			this->gpbItemsStock->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->gpbItemsStock->Controls->Add(this->btnMostSoldItems);
+			this->gpbItemsStock->Controls->Add(this->btnThresholdWarning);
+			this->gpbItemsStock->Controls->Add(this->btnLeastSoldItems);
+			this->gpbItemsStock->Location = System::Drawing::Point(630, 151);
+			this->gpbItemsStock->Name = L"gpbItemsStock";
+			this->gpbItemsStock->Size = System::Drawing::Size(172, 107);
+			this->gpbItemsStock->TabIndex = 21;
+			this->gpbItemsStock->TabStop = false;
+			this->gpbItemsStock->Text = L"Affichage produits";
 			// 
 			// StatisticsForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(814, 437);
-			this->Controls->Add(this->groupBox1);
-			this->Controls->Add(this->groupBox3);
-			this->Controls->Add(this->groupBox2);
+			this->Controls->Add(this->gpbItemsStock);
+			this->Controls->Add(this->gpbStockStats);
+			this->Controls->Add(this->gpbClientTotalSpending);
 			this->Controls->Add(this->gpbTurnOverMonth);
 			this->Controls->Add(this->lblTitle);
-			this->Controls->Add(this->gpbSearch);
-			this->Controls->Add(this->dgvEmployees);
+			this->Controls->Add(this->gpbStockValue);
+			this->Controls->Add(this->dgvItems);
+			this->MinimumSize = System::Drawing::Size(830, 308);
 			this->Name = L"StatisticsForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Statistiques";
 			this->Load += gcnew System::EventHandler(this, &StatisticsForm::statisticsLoad);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvEmployees))->EndInit();
-			this->gpbSearch->ResumeLayout(false);
-			this->gpbSearch->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvItems))->EndInit();
+			this->gpbStockValue->ResumeLayout(false);
+			this->gpbStockValue->PerformLayout();
 			this->gpbTurnOverMonth->ResumeLayout(false);
 			this->gpbTurnOverMonth->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->EndInit();
-			this->groupBox2->ResumeLayout(false);
-			this->groupBox2->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->nudClientId))->EndInit();
-			this->groupBox3->ResumeLayout(false);
-			this->groupBox1->ResumeLayout(false);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numTurnOverYear))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numTurnOverMonth))->EndInit();
+			this->gpbClientTotalSpending->ResumeLayout(false);
+			this->gpbClientTotalSpending->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numClientId))->EndInit();
+			this->gpbStockStats->ResumeLayout(false);
+			this->gpbItemsStock->ResumeLayout(false);
 			this->ResumeLayout(false);
 
 		}

@@ -69,6 +69,7 @@ namespace IHM {
 			this->txtLogin->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->txtLogin->Location = System::Drawing::Point(83, 19);
+			this->txtLogin->MaxLength = 50;
 			this->txtLogin->Name = L"txtLogin";
 			this->txtLogin->Size = System::Drawing::Size(141, 20);
 			this->txtLogin->TabIndex = 0;
@@ -140,6 +141,7 @@ namespace IHM {
 			this->txtPassword->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
 			this->txtPassword->Location = System::Drawing::Point(83, 52);
+			this->txtPassword->MaxLength = 50;
 			this->txtPassword->Name = L"txtPassword";
 			this->txtPassword->PasswordChar = '*';
 			this->txtPassword->Size = System::Drawing::Size(141, 20);
@@ -187,10 +189,10 @@ namespace IHM {
 		connection();  // Démarre la connexion
 	}
 
-	// Se connecte à la base de données puis lance le MainForm
+		   // Se connecte à la base de données puis lance le MainForm
 	private: System::Void connection() {
 		//MessageBox::Show("Création de l'application en cours", "Connexion (WIP)", MessageBoxButtons::OK, MessageBoxIcon::Information);
-		
+
 		// Connexion à la base de données
 		// DB::DBController dbController = gcnew DB::DBController(this->txtLogin->Text, this->txtPassword->Text);
 
