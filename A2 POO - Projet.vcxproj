@@ -120,18 +120,95 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MainForm.cpp" />
+    <ClCompile Include="ConnectionForm.cpp" />
+    <ClCompile Include="DBController.cpp" />
+    <ClCompile Include="Employee.cpp" />
+    <ClCompile Include="ItemEditorForm.cpp" />
+    <ClCompile Include="Mapper.cpp" />
+    <ClCompile Include="PurchaseEditorForm.cpp" />
+    <ClCompile Include="Services.cpp" />
+    <ClCompile Include="StatisticsForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClientEditorForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="ClientListForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="ConnectionForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="DBController.h" />
+    <ClInclude Include="Employee.h" />
+    <ClInclude Include="EmployeeEditorForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="EmployeeListForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="ItemEditorForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="ItemListForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="Mapper.h" />
+    <ClInclude Include="PurchaseEditorForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="PurchaseListForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Services.h" />
+    <ClInclude Include="StatisticsForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ClientEditorForm.resx">
+      <DependentUpon>ClientEditorForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClientListForm.resx">
+      <DependentUpon>ClientListForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConnectionForm.resx">
+      <DependentUpon>ConnectionForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmployeeEditorForm.resx">
+      <DependentUpon>EmployeeEditorForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmployeeListForm.resx">
+      <DependentUpon>EmployeeListForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItemEditorForm.resx">
+      <DependentUpon>ItemEditorForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItemListForm.resx">
+      <DependentUpon>ItemListForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PurchaseEditorForm.resx">
+      <DependentUpon>PurchaseEditorForm.h</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PurchaseListForm.resx">
+      <DependentUpon>PurchaseListForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StatisticsForm.resx">
+      <DependentUpon>StatisticsForm.h</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
