@@ -1,18 +1,24 @@
 #pragma once
 
-ref class Employee {
-public:
-	System::Void setName(System::String^ name);
-	System::Void setfirstName(System::String^ firstName);
-	// System::Void setstartDate(Int32,Int32, Int32);
-	// System::Void setIdAddress(System::String^);
+#include "BaseObject.h"
+#include "Address.h"
 
-	System::String^ getfirstName();
+namespace NS_Services {
+	ref class Employee : public BaseObject {
+	private:
+		System::String^ name;
+		System::String^ firstName;
+		System::DateTime^ startDate;
+		Address^ address;
 
-private:
-	int IdEmployee;
-	System::String^ name;
-	System::String^ firstName;
-	// DateOnly startDate;
-	int IdAddress;
-};
+	public:
+		Employee(int id, bool isCreated, System::String^ name, System::String^ firstName, System::DateTime^ startDate, Address^ address);
+
+		static Employee^ getEmployeeByid(int id);
+		static array<Employee^>^ getEmployees(System::String^ name, System::String^ firstName, System::DateTime^ startDate, Address^ address);
+
+		virtual bool create() override;
+		virtual bool update() override;
+		virtual bool deleteObject() override;
+	};
+}

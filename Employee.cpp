@@ -1,23 +1,30 @@
 #include "Employee.h"
 
-System::Void Employee::setName(System::String^ name) {
-	this->name = name;
+namespace NS_Services {
+    Employee::Employee(int id, bool isCreated, System::String^ name, System::String^ firstName, System::DateTime^ startDate, Address^ address) : BaseObject(id, isCreated) {
+        this->name = name;
+		this->firstName = firstName;
+		this->startDate = startDate;
+		this->address = address;
+    }
+
+    Employee^ Employee::getEmployeeByid(int id) {
+        throw gcnew System::NotImplementedException();
+    }
+
+    array<Employee^>^ Employee::getEmployees(System::String^ name, System::String^ firstName, System::DateTime^ startDate, Address^ address) {
+        throw gcnew System::NotImplementedException();
+    }
+
+    bool Employee::create() {
+        throw gcnew System::NotImplementedException();
+    }
+
+    bool Employee::update() {
+        throw gcnew System::NotImplementedException();
+    }
+
+    bool Employee::deleteObject() {
+        throw gcnew System::NotImplementedException();
+    }
 }
-
-System::Void Employee::setfirstName(System::String^ firstName) {
-	this->firstName = firstName;
-}
-
-System::String^ Employee::getfirstName() {
-	return firstName;
-}
-
-/*void Employee::setstartDate(Int32 a, Int32 b, Int32 c) {
-	startDate = DateOnly(a, b, c);
-}*/
-
-//void Employee::setIdAddress(String^) {
-//
-//}
-
-
