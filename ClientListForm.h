@@ -316,7 +316,8 @@ namespace IHM {
 		}
 #pragma endregion
 	private: System::Void clientListLoad(System::Object^ sender, System::EventArgs^ e) {
-
+		DataSet^ data = services->searchClients(this->txtName->Text, this->txtFirstName->Text, this->dtpBirth->Value, this->dtpFirstPurchase->Value);
+		this->dgvClients->DataSource = data->Tables["Clients"];
 	}
 
 	private: System::Void btnCreateClientClick(System::Object^ sender, System::EventArgs^ e) {

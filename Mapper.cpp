@@ -44,7 +44,7 @@ System::String^ NS_Comp_Mappage::DB::Mapper::getPrenom(void) {
 }*/
 
 /*System::String^ DB::Mapper::selectEmployeeById(int id) {
-	 
+
 }
 
 System::String^ DB::Mapper::selectClientById(int id) {
@@ -85,8 +85,41 @@ System::String^ DB::Mapper::searchEmployee(System::String^ name, System::String^
 }
 
 System::String^ DB::Mapper::searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
-	throw gcnew System::NotImplementedException("A implémenter");
-	return gcnew System::String(" SELECT c.idClient, c.name , c.firstName, c.birthDate, c.firstOrderDate FROM[A2POO - AzureDB].[dbo].[Clients] c ");
+	System::String^ select = gcnew System::String(" SELECT c.idClient, c.name , c.firstName, c.birthDate, c.firstOrderDate FROM [A2POO-AzureDB].[dbo].[Client] c ");
+
+	bool conditions = false;
+	System::String^ filters = gcnew System::String("WHERE ");
+	if (name != nullptr && name != "") {
+		filters += "c.name = '" + name + "'";
+		conditions = true;
+	}
+	if (firstName != nullptr && firstName != "") {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "c.firstName = '" + firstName + "'";
+		conditions = true;
+	}
+	if (birthDate != nullptr && birthDate->Year > MIN_YEAR) {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "c.birthDate = '" + birthDate + "'";
+		conditions = true;
+	}
+	if (firstPurchaseDate != nullptr && firstPurchaseDate->Year > MIN_YEAR) {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "c.firstOrderDate = '" + firstPurchaseDate + "'";
+		conditions = true;
+	}
+
+	if (conditions) {
+		select += filters;
+	}
+
+	return select;
 }
 
 System::String^ DB::Mapper::searchItems(System::String^ name, System::String^ reference) {
@@ -109,6 +142,7 @@ System::String^ DB::Mapper::searchAddresses(System::String^ streetName, System::
 	return gcnew System::String(" SELECT a.streetName, a.streetNumber, ci.cityName FROM [A2POO - AzureDB].[dbo].[Address] a INNER JOIN [A2POO - AzureDB].[dbo].[City] ci ON a.idCity = ci.idCity");
 }
 
+/*
 System::String^ DB::Mapper::searchCities(cityName) {
 
 }
@@ -120,50 +154,52 @@ System::String^ DB::Mapper::searchPaymentMethods(name, firstName) {
 System::String^ DB::Mapper::searchPaymentTypes(typeName) {
 
 }
+*/
 
-/*System::String^ DB::Mapper::createEmployee(name, fistName, startDate, streetName, streetNumber, cityId) {
-	 
+/*
+System::String^ DB::Mapper::createEmployee(name, fistName, startDate, streetName, streetNumber, cityId) {
+
 }
 
 System::String^ DB::Mapper::createEmployeeCity(name, firstName, startDate, streetName, streetNumber, cityName) {
-	 
+
 }
 
 System::String^ DB::Mapper::createClient(name, firstName, birthDate, firstPurchaseDate) {
-	 
+
 }
 
 System::String^ DB::Mapper::createItem(name, reference, quantify, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate) {
-	 
+
 }
 
 System::String^ DB::Mapper::createPurchasedItem(itemid, purchasedQuantity, totalPrice, vatAmount) {
-	 
+
 }
 
 System::String^ DB::Mapper::createPurchase(clientId, paymentMethodId, purchaseDate, payDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice)
 {
-	 
+
 }
 
 System::String^ DB::Mapper::createPurchaseNoPayment(clientId, purchaseDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice) {
-	 
+
 }
 
 System::String^ DB::Mapper::createAddress(streetName, streetNumber, cityId) {
-	 
+
 }
 
 System::String^ DB::Mapper::createAddressCity(streetName, streetNumber, cityName) {
-	 
+
 }
 
 System::String^ DB::Mapper::createCity(cityName) {
-	 
+
 }
 
 System::String^ DB::Mapper::createPaymentMethod(purchaseId, name, firstName, amount, paymentTypeId) {
-	 
+
 }
 
 System::String^ DB::Mapper::createPaymentMethodPaymentType(purchaseId, name, firstName, amount, paymentTypeName) {

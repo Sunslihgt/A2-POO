@@ -1,19 +1,16 @@
 #include "Services.h"
 #include "Mapper.h"
 
-Services::Services::Services(System::String^ login, System::String^ password) {
+Services::Services::Services() {
 	this->dbController = gcnew DB::DBController();
-	bool connectionStatus = this->dbController->connect(login, password);
-
-	if (!connectionStatus) {
-		throw gcnew System::Exception("Impossible de se connecter à la base de données");
-	}
 }
 
-System::Void Services::Services::searchClients(System::String^ name) {
-	throw gcnew System::NotImplementedException();
-	if (name != "") {
-		System::String^ sql = DB::Mapper::searchClients(name, gcnew System::String(""), nullptr, nullptr);
-		this->dbController->getRows(sql, "Clients");
-	}
+bool Services::Services::connectDB(System::String^ login, System::String^ password) {
+	return dbController->connect(login, password);
+}
+
+System::Data::DataSet^ Services::Services::searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
+	System::String^ sql = DB::Mapper::searchClients(name, firstName, birthDate, firstPurchaseDate);
+	System::Data::DataSet^ data = this->dbController->getRows(sql, "Clients");
+	return data;
 }

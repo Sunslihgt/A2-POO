@@ -20,9 +20,9 @@ namespace DB {
 		static System::String^ searchPurchasedItems(int item_id, System::String^ name, System::String^ reference);
 		static System::String^ searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ PurchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate);
 		static System::String^ searchAddresses(System::String^ streetName, System::String^ streetNumber, System::String^ cityName);
-		static System::String^ searchCities(System::String^ cityName);
-		static System::String^ searchPaymentMethods(System::String^ name, System::String^ firstName);
-		static System::String^ searchPaymentTypes(System::String^ typeName);
+		//static System::String^ searchCities(System::String^ cityName);
+		//static System::String^ searchPaymentMethods(System::String^ name, System::String^ firstName);
+		//static System::String^ searchPaymentTypes(System::String^ typeName);
 
 		/*static System::String^ createEmployee(System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int cityId);
 		static System::String^ createEmployeeCity(System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, System::String^ cityName);
@@ -85,5 +85,8 @@ namespace DB {
 			System::System::String^ getNom(void);
 			System::System::String^ getPrenom(void);
 		*/
+
+	private:
+		const static int MIN_YEAR = 1901;
 	};
 }
