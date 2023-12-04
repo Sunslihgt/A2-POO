@@ -85,5 +85,9 @@ namespace DB {
 			System::System::String^ getNom(void);
 			System::System::String^ getPrenom(void);
 		*/
+
+	private:
+		const static int MIN_BIRTHYEAR = 1901;
+		const static int MIN_PURCHASEYEAR = 2000;
 	};
 }

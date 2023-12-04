@@ -79,46 +79,280 @@ System::String^ DB::Mapper::selectPaymentTypeById(int id) {
 
 }*/
 
-System::String^ DB::Mapper::searchEmployee(System::String^ name, System::String^ firtName, System::String^ streetName, System::String^ streetNumber, System::String^ cityName) {
-	throw gcnew System::NotImplementedException("A implémenter");
-	return gcnew System::String(" SELECT e.idEmployee, e.name, e.firstName, e.startDate FROM [A2POO - AzureDB].[dbo].[Employee] e INNER JOIN [A2POO - AzureDB].[dbo].[Address] a ON e.idAddress = a.idAddress INNER JOIN [A2POO - AzureDB].[dbo].[City] c ON a.idCity = c.idCity");
+System::String^ DB::Mapper::searchEmployee(System::String^ name, System::String^ firstName, System::String^ streetName, System::String^ streetNumber, System::String^ cityName) {
+	System::String^ query = gcnew System::String(" SELECT e.idEmployee, e.name, e.firstName, e.startDate, a.streetName, a.streetNumber, ci.cityName FROM [A2POO-AzureDB].[dbo].[Employee] e INNER JOIN [A2POO-AzureDB].[dbo].[Address] a ON e.idAddress = a.idAddress INNER JOIN [A2POO-AzureDB].[dbo].[City] ci ON a.idCity = ci.idCity");
+	
+	bool conditions = false;
+	System::String^ filters = gcnew System::String("WHERE ");
+	if (name != nullptr && name != "") {
+		filters += "e.name = '" + name + "'";
+		conditions = true;
+	}
+	if (firstName != nullptr && firstName != "") {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "e.firstName = '" + firstName + "'";
+		conditions = true;
+	}
+	if (streetName != nullptr && streetName != "") {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "a.streetName = '" + streetName + "'";
+		conditions = true;
+	}
+	if (streetNumber != nullptr && streetNumber != "") {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "a.streetNumber = '" + streetNumber + "'";
+		conditions = true;
+	}
+
+	if (cityName != nullptr && cityName != "") {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "ci.cityName = '" + cityName + "'";
+		conditions = true;
+	}
+
+	if (conditions) {
+		query += filters;
+	}
+
+	return query;
 }
 
 System::String^ DB::Mapper::searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
-	throw gcnew System::NotImplementedException("A implémenter");
-	return gcnew System::String(" SELECT c.idClient, c.name , c.firstName, c.birthDate, c.firstOrderDate FROM[A2POO - AzureDB].[dbo].[Clients] c ");
+	System::String^ query = gcnew System::String(" SELECT cl.idClient, cl.name , cl.firstName, cl.birthDate, cl.firstOrderDate FROM [A2POO-AzureDB].[dbo].[Client] cl ");
+	
+	bool conditions = false;
+	System::String^ filters = gcnew System::String("WHERE ");
+	if (name != nullptr && name != "") {
+		filters += "cl.name = '" + name + "'";
+		conditions = true;
+	}
+	if (firstName != nullptr && firstName != "") {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "cl.firstName = '" + firstName + "'";
+		conditions = true;
+	}
+	if (birthDate != nullptr && birthDate->Year > MIN_BIRTHYEAR) {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "cl.birthDate = '" + birthDate + "'";
+		conditions = true;
+	}
+	if (firstPurchaseDate != nullptr && firstPurchaseDate->Year > MIN_BIRTHYEAR) {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "cl.firstOrderDate = '" + firstPurchaseDate + "'";
+		conditions = true;
+	}
+
+	if (conditions) {
+		query += filters;
+	}
+
+	return query;
 }
 
 System::String^ DB::Mapper::searchItems(System::String^ name, System::String^ reference) {
-	throw gcnew System::NotImplementedException("A implémenter");
-	return gcnew System::String(" SELECT i.name, i.reference FROM [A2POO - AzureDB].[dbo].[Item] i");
+	System::String^ query = gcnew System::String(" SELECT i.name, i.reference, i.quantity, i.availableQuantity, i.quantityThreshold, i.supplierPrice, i.unitPrice, i.vatRate FROM [A2POO-AzureDB].[dbo].[Item] i");
+
+	bool conditions = false;
+	System::String^ filters = gcnew System::String("WHERE ");
+	if (name != nullptr && name != "") {
+		filters += "i.name = '" + name + "'";
+		conditions = true;
+	}
+	if (reference != nullptr && reference != "") {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "i.reference = '" + reference + "'";
+		conditions = true;
+	}
+
+	if (conditions) {
+		query += filters;
+	}
+
+	return query;
 }
 
 System::String^ DB::Mapper::searchPurchasedItems(int item_id, System::String^ name, System::String^ reference) {
-	throw gcnew System::NotImplementedException("A implémenter");
-	return gcnew System::String(" SELECT i.item_id, i.name, i.reference FROM [A2POO - AzureDB].[dbo].[PurchasedItem] pi INNER JOIN [A2POO - AzureDB].[dbo].[Item] i ON pi.idItem = i.idItem");
+	System::String^ query = gcnew System::String(" SELECT pi.idPurchasedItem, pi.idItem, i.name, i.reference, pi.itemAmount, pi.totalPrice, pi.vatAmount, pi.idPurchase FROM [A2POO-AzureDB].[dbo].[PurchasedItem] pi INNER JOIN [A2POO-AzureDB].[dbo].[Item] i ON pi.idItem = i.idItem");
+
+	bool conditions = false;
+	System::String^ filters = gcnew System::String("WHERE ");
+	if (item_id >= 0) {
+		filters += "pi.item_id = '" + item_id + "'";
+		conditions = true;
+	}
+	if (name != nullptr && name != "") {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "i.name = '" + name + "'";
+		conditions = true;
+	}
+	if (reference != nullptr && reference != "") {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "i.reference = '" + reference + "'";
+		conditions = true;
+	}
+
+	if (conditions) {
+		query += filters;
+	}
+
+	return query;
 }
 
 System::String^ DB::Mapper::searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ PurchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate) {
-	throw gcnew System::NotImplementedException("A implémenter");
-	return gcnew System::String(" SELECT c.name, c.firstName, p.purchaseDate, p.payDate, p.deliveryDate FROM [A2POO - AzureDB].[dbo].[Purchase] p INNER JOIN [A2POO - AzureDB].[dbo].[Client] c ON p.idClient = c.idClient");
+	System::String^ query = gcnew System::String(" SELECT p.idPurchase, cl.name, cl.firstName, p.purchaseDate, p.payDate, p.deliveryDate, p.discountAmount, p.dutyFreePrice, p.vatAmount, p.ttcPrice, p.idPaymentAddress, p.idDeliveryAddress, p.idClient FROM [A2POO-AzureDB].[dbo].[Purchase] p INNER JOIN [A2POO-AzureDB].[dbo].[Client] cl ON p.idClient = cl.idClient");
+
+	bool conditions = false;
+	System::String^ filters = gcnew System::String("WHERE ");
+	if (clientName != nullptr && clientName != "") {
+		filters += "cl.name = '" + clientName + "'";
+		conditions = true;
+	}
+	if (clientFirstName != nullptr && clientFirstName != "") {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "cl.firstName = '" + clientFirstName + "'";
+		conditions = true;
+	}
+	if (PurchaseDate != nullptr && PurchaseDate->Year > MIN_PURCHASEYEAR) {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "p.purchaseDate = '" + PurchaseDate + "'";
+		conditions = true;
+	}
+	if (payDate != nullptr && payDate->Year > MIN_PURCHASEYEAR) {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "p.payDate = '" + payDate + "'";
+		conditions = true;
+	}
+	if (deliveryDate != nullptr && deliveryDate->Year > MIN_PURCHASEYEAR) {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "p.deliveryDate = '" + deliveryDate + "'";
+		conditions = true;
+	}
+
+	if (conditions) {
+		query += filters;
+	}
+
+	return query;
 }
 
 System::String^ DB::Mapper::searchAddresses(System::String^ streetName, System::String^ streetNumber, System::String^ cityName) {
-	throw gcnew System::NotImplementedException("A implémenter");
-	return gcnew System::String(" SELECT a.streetName, a.streetNumber, ci.cityName FROM [A2POO - AzureDB].[dbo].[Address] a INNER JOIN [A2POO - AzureDB].[dbo].[City] ci ON a.idCity = ci.idCity");
+	System::String^ query = gcnew System::String(" SELECT a.streetName, a.streetNumber, ci.cityName FROM [A2POO-AzureDB].[dbo].[Address] a INNER JOIN [A2POO-AzureDB].[dbo].[City] ci ON a.idCity = ci.idCity");
+
+	bool conditions = false;
+	System::String^ filters = gcnew System::String("WHERE ");
+	if (streetName != nullptr && streetName != "") {
+		filters += "a.streetName = '" + streetName + "'";
+		conditions = true;
+	}
+	if (streetNumber != nullptr && streetNumber != "") {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "a.streetNumber = '" + streetNumber + "'";
+		conditions = true;
+	}
+	if (cityName != nullptr && cityName != "") {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "ci.cityName = '" + cityName + "'";
+		conditions = true;
+	}
+
+	if (conditions) {
+		query += filters;
+	}
+
+	return query;
 }
 
-System::String^ DB::Mapper::searchCities(cityName) {
+System::String^ DB::Mapper::searchCities(System::String^ cityName) {
+	System::String^ query = gcnew System::String(" SELECT ci.cityName FROM [A2POO-AzureDB].[dbo].[City] ci");
 
+	bool conditions = false;
+	System::String^ filters = gcnew System::String("WHERE ");
+	if (cityName != nullptr && cityName != "") {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "ci.cityName = '" + cityName + "'";
+		conditions = true;
+	}
+
+	if (conditions) {
+		query += filters;
+	}
+
+	return query;
 }
 
-System::String^ DB::Mapper::searchPaymentMethods(name, firstName) {
+System::String^ DB::Mapper::searchPaymentMethods(System::String^ name, System::String^ firstName) {
+	System::String^ query = gcnew System::String(" SELECT pm.name, pm.firstName FROM [A2POO-AzureDB].[dbo].[PaymentMethod] pm");
 
+	bool conditions = false;
+	System::String^ filters = gcnew System::String("WHERE ");
+	if (name != nullptr && name != "") {
+		filters += "c.name = '" + name + "'";
+		conditions = true;
+	}
+	if (firstName != nullptr && firstName != "") {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "c.firstName = '" + firstName + "'";
+		conditions = true;
+	}
+
+	if (conditions) {
+		query += filters;
+	}
+
+	return query;
 }
 
-System::String^ DB::Mapper::searchPaymentTypes(typeName) {
+System::String^ DB::Mapper::searchPaymentTypes(System::String^ typeName) {
+	System::String^ query = gcnew System::String(" SELECT pt.typeName FROM [A2POO-AzureDB].[dbo].[PaymentType] pt");
 
+	bool conditions = false;
+	System::String^ filters = gcnew System::String("WHERE ");
+	if (typeName != nullptr && typeName != "") {
+		filters += "pt.typeName = '" + typeName + "'";
+		conditions = true;
+	}
+
+	if (conditions) {
+		query += filters;
+	}
+
+	return query;
 }
 
 /*System::String^ DB::Mapper::createEmployee(name, fistName, startDate, streetName, streetNumber, cityId) {
