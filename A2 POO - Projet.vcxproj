@@ -120,18 +120,42 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Address.cpp" />
+    <ClCompile Include="City.cpp" />
+    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Employee.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="MainForm.cpp" />
+    <ClCompile Include="PaymentMethod.cpp" />
+    <ClCompile Include="PaymentType.cpp" />
+    <ClCompile Include="Purchase.cpp" />
+    <ClCompile Include="PurchasedItem.cpp" />
+    <ClCompile Include="Services.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Address.h" />
+    <ClInclude Include="BaseObject.h" />
+    <ClInclude Include="City.h" />
+    <ClInclude Include="Client.h" />
+    <ClInclude Include="Employee.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="PaymentMethod.h" />
+    <ClInclude Include="PaymentType.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Purchase.h" />
+    <ClInclude Include="PurchasedItem.h" />
+    <ClInclude Include="Services.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BaseObject.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
