@@ -170,15 +170,6 @@ namespace IHM {
 			this->btnStatistics->UseVisualStyleBackColor = true;
 			this->btnStatistics->Click += gcnew System::EventHandler(this, &MainForm::btnStatisticsClick);
 			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(126, 194);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(30, 13);
-			this->label2->TabIndex = 1;
-			this->label2->Text = L"BDD";
-			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
