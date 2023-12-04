@@ -1,89 +1,89 @@
 #pragma once
-// namespace NS_Comp_Mappage {
-	using namespace System::IO;
-	using namespace System;
 
+namespace DB {
 	ref class Mapper {
-	public: 
-		String selectEmployeeById(int id);
-		String selectClientById(int id);
-		String selectItemById(int id);
-		String selectPurchasedItemById(int id);
-		String selectPurchaseById(int id);
-		String selectAdressById(int id);
-		String selectCityById(int id);
-		String selectPaymentMethodById(int id);
-		String selectPaymentTypeById(int id);
-
-		String searchEmployee(name, firtName, streetName, streetNumber, cityName);
-		String searchClients(name, firstName, birthDate, firstPurchaseDate);
-		String searchItems(name, reference);
-		String searchPurchasedItems(item_id, name, reference);
-		String searchPurchases(clientName, clientFirstName, orderData, payDate, deliveryDate);
-		String searchAddresses(streetName, streetNumber, cityName);
-		String searchCities(cityName);
-		String searchPaymentMethods(name, firstName);
-		String searchPaymentTypes(typeName);
-
-		String createEmployee(name, fistName, startDate, streetName, streetNumber, cityId);
-		String createEmployeeCity(name, firstName, startDate, streetName, streetNumber, cityName);
-		String createClient(name, firstName, birthDate, firstPurchaseDate);
-		String createItem(name, reference, quantify, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate);
-		String createPurchasedItem(itemid, purchasedQuantity, totalPrice, vatAmount);
-		// String createPurchasedItemToPurchase(purchaseID, purchaseItemId);
-		String createPurchase(clientId, paymentMethodId, purchaseDate, payDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice);
-		String createPurchaseNoPayment(clientId, purchaseDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice);
-		String createAddress(streetName, streetNumber, cityId);
-		String createAddressCity(streetName, streetNumber, cityName);
-		String createCity(cityName);
-		String createPaymentMethod(purchaseId, name, firstName, amount, paymentTypeId);
-		String createPaymentMethodPaymentType(purchaseId, name, firstName, amount, paymentTypeName);
-		String createPaymentType(paymentTypeName);
-
-		String updadeEmployee(employeeId, name, firstName, startDate, streetName, streetNumber, cityId);
-		String updadeClient(clientId, name, firstName, birthDate, firstPurchaseDate);
-		String updadeItem(itemId, name, reference, quantity, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate);
-		String updadePurchaseItem(purchasedItemId, itemId, purchasedQuantity, totalPrice, vatAmount);
-		String updadePurchase(purshaseId, clientId, paymentMethodId, purchaseDate, payDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice);
-		String updadePurchaseNoPayment(purchaseId, clientId, purchaseDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice);
-		String updadeAddress(addressId, StreetName, StreetNumber, cityId);
-		String updadeAddressCity(addressId, streetName, streetNumber, cityName);
-		String updadeCity(cityId, cityName);
-		String updadePaymentMethod(paymentMethodId, purchaseId, name, firstName, amount, paymentTypeId);
-		String updadePaymentType(paymentTypeId, paymentTypeName);
-
-		String deleteEmployee(employeeId);
-		String deleteClient(clientId);
-		String deleteItem(itemId);
-		String deletePurchasedItem(purchasedItemId);
-		String deletePurchase(purchaseId);
-		String deletePurchaseNoPayment(purchaseNoPaymentId);
-		String deleteAddress(addressId);
-		String deleteAddressCity(addressCityId);
-		String deleteCity(cityId);
-		String deletePaymentMethod(paymentMethodId);
-		String deletePaymentType(paymentTypeId);
-
-
-
-
-
-
-	/*private:
-		System::String^ sSql;
-		int Id;
-		System::String^ nom;
-		System::String^ prenom;
 	public:
-		System::String^ Select(void);
-		System::String^ Insert(void);
-		System::String^ Delete(void);
-		System::String^ Update(void);
-		void setId(int);
-		void setNom(System::String^);
-		void setPrenom(System::String^);
-		int getId(void);
-		System::String^ getNom(void);
-		System::String^ getPrenom(void);
-	};*/
-// }
+		/*
+		static System::String selectEmployeeById(int id);
+		static System::String selectClientById(int id);
+		static System::String selectItemById(int id);
+		static System::String selectPurchasedItemById(int id);
+		static System::String selectPurchaseById(int id);
+		static System::String selectAdressById(int id);
+		static System::String selectCityById(int id);
+		static System::String selectPaymentMethodById(int id);
+		static System::String selectPaymentTypeById(int id);
+
+		static System::String searchEmployee(System::String name, System::String firstName, System::String streetName, System::String streetNumber, System::String cityName);
+		static System::String searchClients(System::String name, System::String firstName, System::DateTime birthDate, System::DateTime firstPurchaseDate);
+		static System::String searchItems(System::String name, System::String reference);
+		static System::String searchPurchasedItems(int item_id, System::String name, System::String reference);
+		static System::String searchPurchases(System::String clientName, System::String clientFirstName, System::DateTime orderDate, System::DateTime payDate, System::DateTime deliveryDate);
+		static System::String searchAddresses(System::String streetName, System::String streetNumber, System::String cityName);
+		static System::String searchCities(System::String cityName);
+		static System::String searchPaymentMethods(System::String name, System::String firstName);
+		static System::String searchPaymentTypes(System::String typeName);
+
+		static System::String createEmployee(System::String name, System::String firstName, System::DateTime startDate, System::String streetName, int streetNumber, int cityId);
+		static System::String createEmployeeCity(System::String name, System::String firstName, System::DateTime startDate, System::String streetName, int streetNumber, System::String cityName);
+		static System::String createClient(System::String name, System::String firstName, System::DateTime birthDate, System::DateTime firstPurchaseDate);
+		static System::String createItem(System::String name, System::String reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate);
+		static System::String createPurchasedItem(int itemId, int purchasedQuantity, float totalPrice, float vatAmount);
+		// static System::String createPurchasedItemToPurchase(purchaseID, purchaseItemId);
+		static System::String createPurchase(int clientId, int paymentMethodId, System::DateTime purchaseDate, System::DateTime payDate, System::DateTime deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice);
+		static System::String createPurchaseNoPayment(int clientId, System::DateTime purchaseDate, System::DateTime deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice);
+		static System::String createAddress(System::String streetName, int streetNumber, int cityId);
+		static System::String createAddressCity(System::String streetName, int streetNumber, System::String cityName);
+		static System::String createCity(System::String cityName);
+		static System::String createPaymentMethod(int purchaseId, System::String name, System::String firstName, float amount, int paymentTypeId);
+		static System::String createPaymentMethodPaymentType(int purchaseId, System::String name, System::String firstName, float amount, int paymentTypeName);
+		static System::String createPaymentType(System::String paymentTypeName);
+
+		static System::String updadeEmployee(int employeeId, System::String name, System::String firstName, System::DateTime startDate, System::String streetName, int streetNumber, int cityId);
+		static System::String updadeClient(int clientId, System::String name, System::String firstName, System::DateTime birthDate, System::DateTime firstPurchaseDate);
+		static System::String updadeItem(int itemId, System::String name, System::String reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate);
+		static System::String updadePurchaseItem(int purchasedItemId, int itemId, int purchasedQuantity, float totalPrice, float vatAmount);
+		static System::String updadePurchase(int purshaseId, int clientId, int paymentMethodId, System::DateTime purchaseDate, System::DateTime payDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice);
+		static System::String updadePurchaseNoPayment(int purchaseId, int clientId, System::DateTime purchaseDate, System::DateTime deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice);
+		static System::String updadeAddress(int addressId, System::String streetName, int streetNumber, int cityId);
+		static System::String updadeAddressCity(int addressId, System::String streetName, int streetNumber, System::String cityName);
+		static System::String updadeCity(int cityId, System::String cityName);
+		static System::String updadePaymentMethod(int paymentMethodId, int purchaseId, System::String name, System::String firstName, float amount, int paymentTypeId);
+		static System::String updadePaymentType(int paymentTypeId, int paymentTypeName);
+
+		static System::String deleteEmployee(int employeeId);
+		static System::String deleteClient(int clientId);
+		static System::String deleteItem(int itemId);
+		static System::String deletePurchasedItem(int purchasedItemId);
+		static System::String deletePurchase(int purchaseId);
+		static System::String deletePurchaseNoPayment(int purchaseNoPaymentId);
+		static System::String deleteAddress(int addressId);
+		static System::String deleteAddressCity(int addressCityId);
+		static System::String deleteCity(int cityId);
+		static System::String deletePaymentMethod(int paymentMethodId);
+		static System::String deletePaymentType(int paymentTypeId);
+		*/
+
+
+
+
+
+		/*private:
+			System::System::String^ sSql;
+			int Id;
+			System::System::String^ nom;
+			System::System::String^ prenom;
+		public:
+			System::System::String^ Select(void);
+			System::System::String^ Insert(void);
+			System::System::String^ Delete(void);
+			System::System::String^ Update(void);
+			void setId(int);
+			void setNom(System::System::String^);
+			void setPrenom(System::System::String^);
+			int getId(void);
+			System::System::String^ getNom(void);
+			System::System::String^ getPrenom(void);
+		*/
+	};
+}

@@ -121,8 +121,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConnectionForm.cpp" />
+    <ClCompile Include="DBController.cpp" />
+    <ClCompile Include="Employee.cpp" />
     <ClCompile Include="ItemEditorForm.cpp" />
+    <ClCompile Include="Mapper.cpp" />
     <ClCompile Include="PurchaseEditorForm.cpp" />
+    <ClCompile Include="Services.cpp" />
     <ClCompile Include="StatisticsForm.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +139,8 @@
     <ClInclude Include="ConnectionForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="DBController.h" />
+    <ClInclude Include="Employee.h" />
     <ClInclude Include="EmployeeEditorForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -150,7 +156,7 @@
     <ClInclude Include="MainForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="Mapper.h" />
     <ClInclude Include="PurchaseEditorForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -197,6 +203,12 @@
     <EmbeddedResource Include="StatisticsForm.resx">
       <DependentUpon>StatisticsForm.h</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,16 +1,22 @@
 #include "Services.h"
+#include "Mapper.h"
 
-NS_Comp_Svc::Services::Services(System::String^ identifiant, System::String^ mdp) {
-	this->oCAD = gcnew NS_Comp_Data::CAD(identifiant, mdp);
-	this->oMapper = gcnew NS_Comp_Mappage::Mapper();
+Services::Services::Services(System::String^ login, System::String^ password) {
+	this->dbController = gcnew DB::DBController();
+	bool connectionStatus = this->dbController->connect(login, password);
+
+	if (!connectionStatus) {
+		throw gcnew System::Exception("Impossible de se connecter à la base de données");
+	}
 }
-System::Data::DataSet^ NS_Comp_Svc::Services::selectionnerToutesLesPersonnes(System::String^ dataTableName) {
+
+System::Data::DataSet^ Services::Services::selectionnerToutesLesPersonnes(System::String^ dataTableName) {
 	System::String^ sql;
 
-	sql = this->oMapper->Select();
+	sql = DB::Mapper::Select();
 	return this->oCAD->getRows(sql, dataTableName);
 }
-void NS_Comp_Svc::Services::ajouterUnePersonne(int id, System::String^ nom, System::String^ prenom) {
+void Services::Services::ajouterUnePersonne(int id, System::String^ nom, System::String^ prenom) {
 	System::String^ sql;
 
 	this->oMapper->setId(id);
@@ -21,7 +27,7 @@ void NS_Comp_Svc::Services::ajouterUnePersonne(int id, System::String^ nom, Syst
 	this->oCAD->actionRows(sql);
 }
 
-void NS_Comp_Svc::Services::modifierUnePersonne(int id, System::String^ nom, System::String^ prenom) {
+void Services::Services::modifierUnePersonne(int id, System::String^ nom, System::String^ prenom) {
 	System::String^ sql;
 
 	this->oMapper->setId(id);
@@ -32,7 +38,7 @@ void NS_Comp_Svc::Services::modifierUnePersonne(int id, System::String^ nom, Sys
 	this->oCAD->actionRows(sql);
 }
 
-void NS_Comp_Svc::Services::supprimerUnePersonne(int id) {
+void DB::Services::supprimerUnePersonne(int id) {
 	System::String^ sql;
 
 	this->oMapper->setId(id);

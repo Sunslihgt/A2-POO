@@ -1,14 +1,14 @@
 #include "Employee.h"
 
-void Employee::setName(String a) {
-	Name = a;
+System::Void Employee::setName(System::String^ name) {
+	this->name = name;
 }
 
-void Employee::setfirstName(System::String a) {
-	firstName = a;
+System::Void Employee::setfirstName(System::String^ firstName) {
+	this->firstName = firstName;
 }
 
-String Employee::getfirstName() {
+System::String^ Employee::getfirstName() {
 	return firstName;
 }
 
@@ -16,8 +16,8 @@ String Employee::getfirstName() {
 	startDate = DateOnly(a, b, c);
 }*/
 
-void Employee::setIdAddress(String^) {
-
-}
+//void Employee::setIdAddress(String^) {
+//
+//}
 
 

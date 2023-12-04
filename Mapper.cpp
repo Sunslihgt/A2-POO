@@ -1,8 +1,5 @@
 #include "Mapper.h"
 
-using namespace System::IO;
-using namespace System;
-
 /*System::String^ NS_Comp_Mappage::Mapper::Select(void) {
 	return " SELECT c.id IdClient, c.nom Nom, c.prenom Prenom, a.id IdAdresse, a.rue nomRue, a.numero numero, a.ville nomVille " +
 		" FROM [A2POO-AzureDB].[dbo].[Clients] c " +
@@ -46,216 +43,218 @@ System::String^ NS_Comp_Mappage::Mapper::getPrenom(void) {
 	return this->prenom;
 }*/
 
-String Mapper::selectEmployeeById(int id)
+/*
+System::String Mapper::selectEmployeeById(int id)
 {
 	 
 }
 
-String Mapper::selectClientById(int id) {
+System::String Mapper::selectClientById(int id) {
 
 }
 
-String Mapper::selectItemById(int id) {
+System::String Mapper::selectItemById(int id) {
 
 }
 
-String Mapper::selectPurchasedItemById(int id) {
+System::String Mapper::selectPurchasedItemById(int id) {
 
 }
 
-String Mapper::selectPurchaseById(int id) {
+System::String Mapper::selectPurchaseById(int id) {
 
 }
 
-String Mapper::selectAdressById(int id) {
+System::String Mapper::selectAdressById(int id) {
 
 }
 
-String Mapper::selectCityById(int id) {
+System::String Mapper::selectCityById(int id) {
 
 }
 
-String Mapper::selectPaymentMethodById(int id) {
+System::String Mapper::selectPaymentMethodById(int id) {
 
 }
 
-String Mapper::selectPaymentTypeById(int id) {
+System::String Mapper::selectPaymentTypeById(int id) {
 
 }
 
-String Mapper::searchEmployee(name, firtName, streetName, streetNumber, cityName) {
+System::String Mapper::searchEmployee(name, firtName, streetName, streetNumber, cityName) {
 
 }
 
-String Mapper::searchClients(name, firstName, birthDate, firstPurchaseDate) {
+System::String Mapper::searchClients(name, firstName, birthDate, firstPurchaseDate) {
 
 }
 
-String Mapper::searchItems(name, reference) {
+System::String Mapper::searchItems(name, reference) {
 
 }
 
-String Mapper::searchPurchasedItems(item_id, name, reference) {
+System::String Mapper::searchPurchasedItems(item_id, name, reference) {
 
 }
 
-String Mapper::searchPurchases(clientName, clientFirstName, orderData, payDate, deliveryDate) {
+System::String Mapper::searchPurchases(clientName, clientFirstName, orderData, payDate, deliveryDate) {
 
 }
 
-String Mapper::searchAddresses(streetName, streetNumber, cityName) {
+System::String Mapper::searchAddresses(streetName, streetNumber, cityName) {
 
 }
 
-String Mapper::searchCities(cityName) {
+System::String Mapper::searchCities(cityName) {
 
 }
 
-String Mapper::searchPaymentMethods(name, firstName) {
+System::String Mapper::searchPaymentMethods(name, firstName) {
 
 }
 
-String Mapper::searchPaymentTypes(typeName) {
+System::String Mapper::searchPaymentTypes(typeName) {
 
 }
 
-String Mapper::createEmployee(name, fistName, startDate, streetName, streetNumber, cityId) {
+System::String Mapper::createEmployee(name, fistName, startDate, streetName, streetNumber, cityId) {
 	 
 }
 
-String Mapper::createEmployeeCity(name, firstName, startDate, streetName, streetNumber, cityName) {
+System::String Mapper::createEmployeeCity(name, firstName, startDate, streetName, streetNumber, cityName) {
 	 
 }
 
-String Mapper::createClient(name, firstName, birthDate, firstPurchaseDate) {
+System::String Mapper::createClient(name, firstName, birthDate, firstPurchaseDate) {
 	 
 }
 
-String Mapper::createItem(name, reference, quantify, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate) {
+System::String Mapper::createItem(name, reference, quantify, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate) {
 	 
 }
 
-String Mapper::createPurchasedItem(itemid, purchasedQuantity, totalPrice, vatAmount) {
+System::String Mapper::createPurchasedItem(itemid, purchasedQuantity, totalPrice, vatAmount) {
 	 
 }
 
-String Mapper::createPurchase(clientId, paymentMethodId, purchaseDate, payDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice)
+System::String Mapper::createPurchase(clientId, paymentMethodId, purchaseDate, payDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice)
 {
 	 
 }
 
-String Mapper::createPurchaseNoPayment(clientId, purchaseDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice) {
+System::String Mapper::createPurchaseNoPayment(clientId, purchaseDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice) {
 	 
 }
 
-String Mapper::createAddress(streetName, streetNumber, cityId) {
+System::String Mapper::createAddress(streetName, streetNumber, cityId) {
 	 
 }
 
-String Mapper::createAddressCity(streetName, streetNumber, cityName) {
+System::String Mapper::createAddressCity(streetName, streetNumber, cityName) {
 	 
 }
 
-String Mapper::createCity(cityName) {
+System::String Mapper::createCity(cityName) {
 	 
 }
 
-String Mapper::createPaymentMethod(purchaseId, name, firstName, amount, paymentTypeId) {
+System::String Mapper::createPaymentMethod(purchaseId, name, firstName, amount, paymentTypeId) {
 	 
 }
 
-String Mapper::createPaymentMethodPaymentType(purchaseId, name, firstName, amount, paymentTypeName) {
+System::String Mapper::createPaymentMethodPaymentType(purchaseId, name, firstName, amount, paymentTypeName) {
 
 }
 
-String Mapper::createPaymentType(paymentTypeName) {
+System::String Mapper::createPaymentType(paymentTypeName) {
 
 }
 
-String Mapper::updadeEmployee(employeeId, name, firstName, startDate, streetName, streetNumber, cityId) {
+System::String Mapper::updadeEmployee(employeeId, name, firstName, startDate, streetName, streetNumber, cityId) {
 
 }
 
-String Mapper::updadeClient(clientId, name, firstName, birthDate, firstPurchaseDate) {
+System::String Mapper::updadeClient(clientId, name, firstName, birthDate, firstPurchaseDate) {
 
 }
 
-String Mapper::updadeItem(itemId, name, reference, quantity, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate) {
+System::String Mapper::updadeItem(itemId, name, reference, quantity, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate) {
 
 }
 
-String Mapper::updadePurchaseItem(purchasedItemId, itemId, purchasedQuantity, totalPrice, vatAmount) {
+System::String Mapper::updadePurchaseItem(purchasedItemId, itemId, purchasedQuantity, totalPrice, vatAmount) {
 
 }
 
-String Mapper::updadePurchase(purshaseId, clientId, paymentMethodId, purchaseDate, payDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice) {
+System::String Mapper::updadePurchase(purshaseId, clientId, paymentMethodId, purchaseDate, payDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice) {
 
 }
 
-String Mapper::updadePurchaseNoPayment(purchaseId, clientId, purchaseDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice) {
+System::String Mapper::updadePurchaseNoPayment(purchaseId, clientId, purchaseDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice) {
 
 }
 
-String Mapper::updadeAddress(addressId, StreetName, StreetNumber, cityId) {
+System::String Mapper::updadeAddress(addressId, StreetName, StreetNumber, cityId) {
 
 }
 
-String Mapper::updadeAddressCity(addressId, streetName, streetNumber, cityName) {
+System::String Mapper::updadeAddressCity(addressId, streetName, streetNumber, cityName) {
 
 }
 
-String Mapper::updadeCity(cityId, cityName) {
+System::String Mapper::updadeCity(cityId, cityName) {
 
 }
 
-String Mapper::updadePaymentMethod(paymentMethodId, purchaseId, name, firstName, amount, paymentTypeId) {
+System::String Mapper::updadePaymentMethod(paymentMethodId, purchaseId, name, firstName, amount, paymentTypeId) {
 
 }
 
-String Mapper::updadePaymentType(paymentTypeId, paymentTypeName) {
+System::String Mapper::updadePaymentType(paymentTypeId, paymentTypeName) {
 
 }
 
-String Mapper::deleteEmployee(employeeId) {
+System::String Mapper::deleteEmployee(employeeId) {
 
 }
 
-String Mapper::deleteClient(clientId) {
+System::String Mapper::deleteClient(clientId) {
 
 }
 
-String Mapper::deleteItem(itemId) {
+System::String Mapper::deleteItem(itemId) {
 
 }
 
-String Mapper::deletePurchasedItem(purchasedItemId) {
+System::String Mapper::deletePurchasedItem(purchasedItemId) {
 
 }
 
-String Mapper::deletePurchase(purchaseId) {
+System::String Mapper::deletePurchase(purchaseId) {
 
 }
 
-String Mapper::deletePurchaseNoPayment(purchaseNoPaymentId) {
+System::String Mapper::deletePurchaseNoPayment(purchaseNoPaymentId) {
 
 }
 
-String Mapper::deleteAddress(addressId) {
+System::String Mapper::deleteAddress(addressId) {
 
 }
 
-String Mapper::deleteAddressCity(addressCityId) {
+System::String Mapper::deleteAddressCity(addressCityId) {
 
 }
 
-String Mapper::deleteCity(cityId) {
+System::String Mapper::deleteCity(cityId) {
 
 }
 
-String Mapper::deletePaymentMethod(paymentMethodId) {
+System::String Mapper::deletePaymentMethod(paymentMethodId) {
 
 }
 
-String Mapper::deletePaymentType(paymentTypeId) {
+System::String Mapper::deletePaymentType(paymentTypeId) {
 
 }
+*/

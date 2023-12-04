@@ -1,20 +1,18 @@
 #pragma once
-using namespace System::IO;
-using namespace System;
 
 ref class Employee {
 public:
-	void setName(String);
-	void setfirstName(String);
-	// void setstartDate(Int32,Int32, Int32);
-	void setIdAddress(String^);
+	System::Void setName(System::String^ name);
+	System::Void setfirstName(System::String^ firstName);
+	// System::Void setstartDate(Int32,Int32, Int32);
+	// System::Void setIdAddress(System::String^);
 
-	String getfirstName();
+	System::String^ getfirstName();
 
 private:
 	int IdEmployee;
-	String Name;
-	String firstName;
+	System::String^ name;
+	System::String^ firstName;
 	// DateOnly startDate;
 	int IdAddress;
 };

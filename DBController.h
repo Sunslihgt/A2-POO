@@ -1,18 +1,21 @@
 #pragma once
-using namespace System::IO;
-using namespace System;
 
-ref class DBController {
-public:
-	DBController();
-	DataSet^ getRows(String sql);
-	DataSet^ getRow(String sql);
-	void actionRows(String sql);
+namespace DB {
+	ref class DBController {
+	public:
+		DBController();
+		bool connect(System::String^ login, System::String^ password);
+		System::Data::DataSet^ getRows(System::String^ sql, System::String^ dataTableName);
+		//System::Data::DataSet^ getRow(System::String^ sql);
+		System::Void actionRows(System::String^ sql);
 
-private:
-	SqlConnection sqlConnection;
-	SqlCommand sqlCommand;
-	SqlDataAdapter sqlDataAdapter;
-	DataSet sqlDataSet;
-};
+		bool isConnected();
 
+	private:
+		bool connected;
+		System::Data::SqlClient::SqlConnection^ sqlConnection;
+		System::Data::SqlClient::SqlCommand^ sqlCommand;
+		System::Data::SqlClient::SqlDataAdapter^ sqlDataAdapter;
+		System::Data::DataSet^ sqlDataSet;
+	};
+}
