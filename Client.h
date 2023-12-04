@@ -3,30 +3,29 @@
 #include "BaseObject.h"
 #include "Address.h"
 #include "Purchase.h"
-#include <array>
-#include <ctime>
 
-ref class Client {
-private:
+namespace NS_Services {
+	ref class Client : public BaseObject {
+	private:
+		System::String^ name;
+		System::String^ firstName;
 
-	System::String^ name;
-	System::String^ firstName;
+		System::DateTime^ birthDate;
+		System::DateTime^ firstOrderDate;
 
-	DateTime birthDate;
-	DateTime firstOrderDate;
+		array<Address^>^ deliveryAddresses;
+		array<Address^>^ billingAddresses;
+		array<Purchase^>^ purchases;
 
-	typedef std::array<deliveryAddresses, sizeof Address>;
-	typedef std::array<billingAddresses, sizeof Address>;
-	typedef std::array<purchases, sizeof Purchase>;
-	
 
-public:
-	Client(int id, bool isCreated, System::String^ name, System::String^ firstName, DateTime birthDate, DateTime firstOrderDate, std::array<deliveryAddresses, sizeof Address>, std::array<billingAddresses, sizeof Address>, std::array<purchases, sizeof Purchase>);
+	public:
+		Client(int id, bool isCreated, System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstOrderDate, array<Address^>^ deliveryAddresses, array<Address^>^ billingAddresses, array<Purchase^>^ purchases);
 
-	void getClientByid(int id);
-	void getClients(System::String^ name, System::String^ firstName, DateTime birthDate, DateTime firstOrderDate, std::array<deliveryAddresses, sizeof Address>, std::array<billingAddresses, sizeof Address>, std::array<purchases, sizeof Purchase>);
+		static Client^ getClientByid(int id);
+		static array<Client^>^ getClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstOrderDate, array<Address^>^ deliveryAddresses, array<Address^>^ billingAddresses, array<Purchase^>^ purchases);
 
-	virtual bool create() = 0;
-	virtual bool update() = 0;
-	virtual bool delete() = 0;
-};
+		virtual bool create() override;
+		virtual bool update() override;
+		virtual bool deleteObject() override;
+	};
+}

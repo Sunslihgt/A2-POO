@@ -1,6 +1,10 @@
 #include <iostream>
 
-int main()
-{
-    std::cout << "Hello World!\n";
+#include "BaseObject.h"
+
+namespace NS_Services {
+	BaseObject::BaseObject(int id, bool isCreated) {
+		this->id = id;
+		this->isCreated = isCreated;
+	}
 }

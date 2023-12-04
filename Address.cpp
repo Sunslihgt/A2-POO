@@ -1,16 +1,25 @@
 #include "Address.h"
 
-Address::Address(int id, bool isCreated, System::String^ streetName, int streetNumber)
-{
-    throw gcnew System::NotImplementedException();
-}
+namespace NS_Services {
+	Address::Address(int id, bool isCreated, System::String^ streetName, int streetNumber) : BaseObject(id, isCreated) {
+		this->streetName = streetName;
+		this->streetNumber = streetNumber;
+	}
 
-void Address::getAddressByid(int id)
-{
-    throw gcnew System::NotImplementedException();
-}
+	Address^ Address::getAddressByid(int id) {
+		throw gcnew System::NotImplementedException();
+	}
 
-void Address::getAddresses(int id, System::String^ streetName, int streetNumber)
-{
-    throw gcnew System::NotImplementedException();
+	array<Address^>^ Address::getAddresses(int id, System::String^ streetName, int streetNumber) {
+		throw gcnew System::NotImplementedException();
+	}
+	bool Address::create() {
+		throw gcnew System::NotImplementedException();
+	}
+	bool Address::update() {
+		throw gcnew System::NotImplementedException();
+	}
+	bool Address::deleteObject() {
+		throw gcnew System::NotImplementedException();
+	}
 }

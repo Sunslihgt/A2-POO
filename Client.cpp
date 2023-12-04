@@ -1,16 +1,33 @@
 #include "Client.h"
 
-Client::Client(int id, bool isCreated, System::String^ name, System::String^ firstName, DateTime birthDate, DateTime firstOrderDate, std::array<deliveryAddresses, sizeof Address>, std::array<billingAddresses, sizeof Address>, std::array<purchases, sizeof Purchase>)
-{
-    throw gcnew System::NotImplementedException();
-}
+namespace NS_Services {
+	Client::Client(int id, bool isCreated, System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstOrderDate, array<Address^>^ deliveryAddresses, array<Address^>^ billingAddresses, array<Purchase^>^ purchases) : BaseObject(id, isCreated) {
+		this->name = name;
+		this->firstName = firstName;
+		this->birthDate = birthDate;
+		this->firstOrderDate = firstOrderDate;
+		this->deliveryAddresses = deliveryAddresses;
+		this->billingAddresses = billingAddresses;
+		this->purchases = purchases;
+	}
 
-void Client::getClientByid(int id)
-{
-    throw gcnew System::NotImplementedException();
-}
+	Client^ Client::getClientByid(int id) {
+		throw gcnew System::NotImplementedException();
+	}
 
-void Client::getClients(System::String^ name, System::String^ firstName, DateTime birthDate, DateTime firstOrderDate, std::array<deliveryAddresses, sizeof Address>, std::array<billingAddresses, sizeof Address>, std::array<purchases, sizeof Purchase>)
-{
-    throw gcnew System::NotImplementedException();
+	array<Client^>^ Client::getClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstOrderDate, array<Address^>^ deliveryAddresses, array<Address^>^ billingAddresses, array<Purchase^>^ purchases) {
+		throw gcnew System::NotImplementedException();
+	}
+
+	bool Client::create() {
+		throw gcnew System::NotImplementedException();
+	}
+
+	bool Client::update() {
+		throw gcnew System::NotImplementedException();
+	}
+
+	bool Client::deleteObject() {
+		throw gcnew System::NotImplementedException();
+	}
 }

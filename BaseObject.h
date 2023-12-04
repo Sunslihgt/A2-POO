@@ -1,13 +1,15 @@
 #pragma once
-#include <iostream>
 
-class BaseObject {
-protected:
-	int id;
-	bool isCreated;
+namespace NS_Services {
+	ref class BaseObject abstract {
+	protected:
+		int id;
+		bool isCreated;
 
-public:
-	virtual bool create() = 0;
-	virtual bool update() = 0;
-	virtual bool delete() = 0;
-};
+	public:
+		BaseObject(int id, bool isCreated);
+		virtual bool create() = 0;
+		virtual bool update() = 0;
+		virtual bool deleteObject() = 0;
+	};
+}

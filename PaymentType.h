@@ -3,19 +3,19 @@
 
 #include "BaseObject.h"
 
+namespace NS_Services {
+	ref class PaymentType : public BaseObject {
+	private:
+		System::String^ typeName;
 
-ref class PaymentType {
-private:
+	public:
+		PaymentType(int id, bool isCreated, System::String^ typeName);
 
-	System::String^ typeName;
+		static PaymentType^ getPaymentTypeByid(int id);
+		static array<PaymentType^>^ getPaymentTypes(System::String^ typeName);
 
-public:
-	PaymentType(int id, bool isCreated, System::String^ typeName);
-
-	void getPaymentMethodByid(int id);
-	void getPaymentMethods(System::String^ typeName);
-
-	virtual bool create() = 0;
-	virtual bool update() = 0;
-	virtual bool delete() = 0;
-};
+		virtual bool create() override;
+		virtual bool update() override;
+		virtual bool deleteObject() override;
+	};
+}

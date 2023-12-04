@@ -3,23 +3,22 @@
 #include "BaseObject.h"
 #include "Address.h"
 
-ref class Employee {
-private:
+namespace NS_Services {
+	ref class Employee : public BaseObject {
+	private:
+		System::String^ name;
+		System::String^ firstName;
+		System::DateTime^ startDate;
+		Address^ address;
 
-	System::String^ name;
-	System::String^ firstName;
+	public:
+		Employee(int id, bool isCreated, System::String^ name, System::String^ firstName, System::DateTime^ startDate, Address^ address);
 
-	DateTime startDate;
+		static Employee^ getEmployeeByid(int id);
+		static array<Employee^>^ getEmployees(System::String^ name, System::String^ firstName, System::DateTime^ startDate, Address^ address);
 
-	Address address;
-
-public:
-	Employee(int id, bool isCreated, System::String^ name, System::String^ firstName, DateTime startDate, Address address);
-
-	void getEmployeeByid(int id);
-	void getEmployees(System::String^ name, System::String^ firstName, DateTime startDate, Address address);
-
-	virtual bool create() = 0;
-	virtual bool update() = 0;
-	virtual bool delete() = 0;
-};
+		virtual bool create() override;
+		virtual bool update() override;
+		virtual bool deleteObject() override;
+	};
+}

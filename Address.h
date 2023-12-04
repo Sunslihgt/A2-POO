@@ -3,21 +3,21 @@
 #include "BaseObject.h"
 #include "City.h"
 
-ref class Address {
-private:
+namespace NS_Services {
+	ref class Address : public BaseObject {
+	private:
+		System::String^ streetName;
+		int streetNumber;
 
-	System::String^ streetName;
 
-	int streetNumber;
+	public:
+		Address(int id, bool isCreated, System::String^ streetName, int streetNumber);
 
+		static Address^ getAddressByid(int id);
+		static array<Address^>^ getAddresses(int id, System::String^ streetName, int streetNumber);
 
-public:
-	Address(int id, bool isCreated, System::String^ streetName, int streetNumber);
-
-	void getAddressByid(int id);
-	void getAddresses(int id, System::String^ streetName, int streetNumber);
-
-	virtual bool create() = 0;
-	virtual bool update() = 0;
-	virtual bool delete() = 0;
-};
+		virtual bool create() override;
+		virtual bool update() override;
+		virtual bool deleteObject() override;
+	};
+}

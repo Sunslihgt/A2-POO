@@ -1,16 +1,30 @@
 #include "PurchasedItem.h"
 
-PurchasedItem::PurchasedItem(int id, bool isCreated, int itemAmount, float totalPrice, float vatAmount, Item::item)
-{
-    throw gcnew System::NotImplementedException();
-}
+namespace NS_Services {
+	PurchasedItem::PurchasedItem(int id, bool isCreated, int itemAmount, float totalPrice, float vatAmount, Item^ item) : BaseObject(id, isCreated) {
+		this->itemAmount = itemAmount;
+		this->totalPrice = totalPrice;
+		this->vatAmount = vatAmount;
+		this->item = item;
+	}
 
-void PurchasedItem::getItemByid(int id)
-{
-    throw gcnew System::NotImplementedException();
-}
+	PurchasedItem^ PurchasedItem::getPurchasedItemByid(int id) {
+		throw gcnew System::NotImplementedException();
+	}
 
-void PurchasedItem::getItems(int itemAmount, float totalPrice, float vatAmount)
-{
-    throw gcnew System::NotImplementedException();
+	array<PurchasedItem^>^ PurchasedItem::getPurchasedItems(int itemAmount, float totalPrice, float vatAmount, Item^ item) {
+		throw gcnew System::NotImplementedException();
+	}
+
+	bool PurchasedItem::create() {
+		throw gcnew System::NotImplementedException();
+	}
+
+	bool PurchasedItem::update() {
+		throw gcnew System::NotImplementedException();
+	}
+
+	bool PurchasedItem::deleteObject() {
+		throw gcnew System::NotImplementedException();
+	}
 }

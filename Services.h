@@ -1,43 +1,47 @@
 #pragma once
 
-#include "DBController"
+//#include "DBController"
 
-ref class Services {
-private:
-	dbController;
+namespace NS_Services {
+	ref class Services {
+	private:
+		//dbController;
 
-public:
-	DataSet^ searchEmployees(System::String name, System::String firstName, System::String streetName, int streetNumber, System::String cityName);
+	public:
+		/*
+		DataSet^ searchEmployees(System::String name, System::String firstName, System::String streetName, int streetNumber, System::String cityName);
 
-	DataSet^ getEmployeeAdress(int employeeId);
+		DataSet^ getEmployeeAdress(int employeeId);
 
-	DataSet^ searchClientDeliveryAdresses(int clientId);
+		DataSet^ searchClientDeliveryAdresses(int clientId);
 
-	DataSet^ searchClientBillingAdresses(int clientId);
+		DataSet^ searchClientBillingAdresses(int clientId);
 
-	DataSet^ searchItems();
+		DataSet^ searchItems();
 
-	DataSet^ searchPurchases();
+		DataSet^ searchPurchases();
 
-	DataSet^ searchAddresses();
+		DataSet^ searchAddresses();
 
-	DataSet^ searchStatistics();
+		DataSet^ searchStatistics();
 
-	float getAveragePurchasePrice();
+		float getAveragePurchasePrice();
 
-	float getTurnoverMonth(int year, int month);
+		float getTurnoverMonth(int year, int month);
 
-	float getClientTotalSpending(int clientId);
+		float getClientTotalSpending(int clientId);
 
-	DataSet^ searchThresholdItems();
+		DataSet^ searchThresholdItems();
 
-	DataSet^ searchMostSoldItems();
+		DataSet^ searchMostSoldItems();
 
-	DataSet^ searchLeastSoldItems();
+		DataSet^ searchLeastSoldItems();
 
-	float getStoredSupplierPrice();
+		float getStoredSupplierPrice();
 
-	float getStoredSellPrice();
+		float getStoredSellPrice();
 
-	float getStoredValue(float vatPercent, float profitPercent, float unknownShrinkagePercent);
-};
+		float getStoredValue(float vatPercent, float profitPercent, float unknownShrinkagePercent);
+		*/
+	};
+}

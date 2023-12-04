@@ -3,22 +3,22 @@
 #include "BaseObject.h"
 #include "Item.h"
 
-ref class PurchasedItem {
-private:
+namespace NS_Services {
+	ref class PurchasedItem : public BaseObject {
+	private:
+		int itemAmount;
+		float totalPrice;
+		float vatAmount;
+		Item^ item;
 
-	int itemAmount;
+	public:
+		PurchasedItem(int id, bool isCreated, int itemAmount, float totalPrice, float vatAmount, Item^ item);
 
-	float totalPrice;
-	float vatAmount;
+		static PurchasedItem^ getPurchasedItemByid(int id);
+		static array<PurchasedItem^>^ getPurchasedItems(int itemAmount, float totalPrice, float vatAmount, Item^ item);
 
-
-public:
-	PurchasedItem(int id, bool isCreated, int itemAmount, float totalPrice, float vatAmount, Item::item);
-
-	void getItemByid(int id);
-	void getItems(int itemAmount, float totalPrice, float vatAmount);
-
-	virtual bool create() = 0;
-	virtual bool update() = 0;
-	virtual bool delete() = 0;
-};
+		virtual bool create() override;
+		virtual bool update() override;
+		virtual bool deleteObject() override;
+	};
+}

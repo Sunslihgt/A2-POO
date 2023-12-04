@@ -1,16 +1,38 @@
 #include "Purchase.h"
 
-Purchase::Purchase(int id, bool isCreated, DateTime orderDate, DateTime payDate, DateTime deliveryDate, float discountAmount, float dutyFreePrice, float vatPrice, float ttcPrice, Address deliveryAddress, Address paymentAddress, PaymentMethod::paymentMethod, std::array<PurchasedItem, sizeof items>)
-{
-    throw gcnew System::NotImplementedException();
-}
+namespace NS_Services {
+    Purchase::Purchase(int id, bool isCreated, System::DateTime^ orderDate, System::DateTime^ payDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatPrice, float ttcPrice, Address^ deliveryAddress, Address^ paymentAddress, PaymentMethod^ paymentMethod, array<PurchasedItem^>^ purchasedItems) : BaseObject(id, isCreated) {
+		this->orderDate = orderDate;
+		this->payDate = payDate;
+		this->deliveryDate = deliveryDate;
+		this->discountAmount = discountAmount;
+		this->dutyFreePrice = dutyFreePrice;
+		this->vatPrice = vatPrice;
+		this->ttcPrice = ttcPrice;
+		this->deliveryAddress = deliveryAddress;
+		this->paymentAddress = paymentAddress;
+		this->paymentMethod = paymentMethod;
+		this->purchasedItems = purchasedItems;
+	}
 
-void Purchase::getPurchaseByid(int id)
-{
-    throw gcnew System::NotImplementedException();
-}
+	Purchase^ Purchase::getPurchaseByid(int id) {
+		throw gcnew System::NotImplementedException();
+		// TODO: insérer une instruction return ici
+	}
 
-void Purchase::getPurchases(int id, DateTime orderDate, DateTime payDate, DateTime deliveryDate, float discountAmount, float dutyFreePrice, float vatPrice, float ttcPrice, Address deliveryAddress, Address paymentAddress, PaymentMethod::paymentMethod, std::array<PurchasedItem, sizeof items>)
-{
-    throw gcnew System::NotImplementedException();
+	array<Purchase^>^ Purchase::getPurchases(int id, System::DateTime^ orderDate, System::DateTime^ payDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatPrice, float ttcPrice, Address^ deliveryAddress, Address^ paymentAddress, PaymentMethod^ paymentMethod, array<PurchasedItem^>^ purchasedItems) {
+		throw gcnew System::NotImplementedException();
+	}
+
+	bool Purchase::create() {
+		throw gcnew System::NotImplementedException();
+	}
+
+	bool Purchase::update() {
+		throw gcnew System::NotImplementedException();
+	}
+
+	bool Purchase::deleteObject() {
+		throw gcnew System::NotImplementedException();
+	}
 }
