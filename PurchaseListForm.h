@@ -36,7 +36,7 @@ namespace IHM {
 		}
 
 	private:
-		Services::Services^ services = gcnew Services::Services();
+		Services::Services^ services;
 
 	private: System::Windows::Forms::DataGridView^ dgvPurchases;
 	private: System::Windows::Forms::TextBox^ txtName;

@@ -9,9 +9,6 @@ namespace Services {
 
 	public:
 		Services(System::String^ login, System::String^ password);
-		System::Data::DataSet^ selectionnerToutesLesPersonnes(System::String^);
-		void ajouterUnePersonne(int, System::String^, System::String^);
-		void modifierUnePersonne(int, System::String^, System::String^);
-		void supprimerUnePersonne(int);
+		System::Void Services::Services::searchClients(System::String^ name);
 	};
 }

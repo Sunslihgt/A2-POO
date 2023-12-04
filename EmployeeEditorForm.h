@@ -41,7 +41,7 @@ namespace IHM {
 		}
 
 	private:
-		Services::Services^ services = gcnew Services::Services();
+		Services::Services^ services;
 		bool alreadyExists;
 
 	private: System::Windows::Forms::Label^ lblTitle;

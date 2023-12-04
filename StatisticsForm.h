@@ -35,7 +35,7 @@ namespace IHM {
 		}
 
 	private:
-		Services::Services^ services = gcnew Services::Services();
+		Services::Services^ services;
 
 	private: System::Windows::Forms::DataGridView^ dgvItems;
 	private: System::Windows::Forms::TextBox^ txtFloatProfitPercent;

@@ -84,11 +84,12 @@ System::String Mapper::selectPaymentTypeById(int id) {
 System::String Mapper::searchEmployee(name, firtName, streetName, streetNumber, cityName) {
 
 }
-
-System::String Mapper::searchClients(name, firstName, birthDate, firstPurchaseDate) {
-
+*/
+System::String^ DB::Mapper::searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
+	throw gcnew System::NotImplementedException("A implémenter");
+	return gcnew System::String(" SELECT c.id, c.name , c.prenom Prenom, a.id IdAdresse, a.rue nomRue, a.numero numero, a.ville nomVille FROM[A2POO - AzureDB].[dbo].[Clients] c ");
 }
-
+/*
 System::String Mapper::searchItems(name, reference) {
 
 }
