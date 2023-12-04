@@ -3,8 +3,8 @@
 namespace DB {
 	ref class Mapper {
 	public:
-		/*
-		static System::String^ selectEmployeeById(int id);
+		
+		/*static System::String^ selectEmployeeById(int id);
 		static System::String^ selectClientById(int id);
 		static System::String^ selectItemById(int id);
 		static System::String^ selectPurchasedItemById(int id);
@@ -12,21 +12,19 @@ namespace DB {
 		static System::String^ selectAdressById(int id);
 		static System::String^ selectCityById(int id);
 		static System::String^ selectPaymentMethodById(int id);
-		static System::String^ selectPaymentTypeById(int id);
+		static System::String^ selectPaymentTypeById(int id);*/
 
 		static System::String^ searchEmployee(System::String^ name, System::String^ firstName, System::String^ streetName, System::String^ streetNumber, System::String^ cityName);
-		*/
 		static System::String^ searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
-		/*
 		static System::String^ searchItems(System::String^ name, System::String^ reference);
 		static System::String^ searchPurchasedItems(int item_id, System::String^ name, System::String^ reference);
-		static System::String^ searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ orderDate, System::DateTime^ payDate, System::DateTime^ deliveryDate);
+		static System::String^ searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ PurchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate);
 		static System::String^ searchAddresses(System::String^ streetName, System::String^ streetNumber, System::String^ cityName);
 		static System::String^ searchCities(System::String^ cityName);
 		static System::String^ searchPaymentMethods(System::String^ name, System::String^ firstName);
 		static System::String^ searchPaymentTypes(System::String^ typeName);
 
-		static System::String^ createEmployee(System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int cityId);
+		/*static System::String^ createEmployee(System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int cityId);
 		static System::String^ createEmployeeCity(System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, System::String^ cityName);
 		static System::String^ createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
 		static System::String^ createItem(System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate);
@@ -63,8 +61,8 @@ namespace DB {
 		static System::String^ deleteAddressCity(int addressCityId);
 		static System::String^ deleteCity(int cityId);
 		static System::String^ deletePaymentMethod(int paymentMethodId);
-		static System::String^ deletePaymentType(int paymentTypeId);
-		*/
+		static System::String^ deletePaymentType(int paymentTypeId);*/
+		
 
 
 
@@ -87,5 +85,9 @@ namespace DB {
 			System::System::String^ getNom(void);
 			System::System::String^ getPrenom(void);
 		*/
+
+	private:
+		const static int MIN_BIRTHYEAR = 1901;
+		const static int MIN_PURCHASEYEAR = 2000;
 	};
 }
