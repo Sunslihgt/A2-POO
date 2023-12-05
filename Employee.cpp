@@ -1,7 +1,9 @@
 #include "Employee.h"
 
 namespace NS_Services {
-    Employee::Employee(int id, bool isCreated, System::String^ name, System::String^ firstName, System::DateTime^ startDate, Address^ address) : BaseObject(id, isCreated) {
+    Employee::Employee(int id, bool isCreated, System::String^ name, System::String^ firstName, System::DateTime^ startDate, Address^ address) {
+        this->id = id;
+        this->isCreated = isCreated;
         this->name = name;
 		this->firstName = firstName;
 		this->startDate = startDate;

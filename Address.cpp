@@ -1,7 +1,9 @@
 #include "Address.h"
 
 namespace NS_Services {
-	Address::Address(int id, bool isCreated, System::String^ streetName, int streetNumber) : BaseObject(id, isCreated) {
+	Address::Address(int id, bool isCreated, System::String^ streetName, int streetNumber) {
+		this->id = id;
+		this->isCreated = isCreated;
 		this->streetName = streetName;
 		this->streetNumber = streetNumber;
 	}

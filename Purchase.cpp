@@ -1,7 +1,9 @@
 #include "Purchase.h"
 
 namespace NS_Services {
-    Purchase::Purchase(int id, bool isCreated, System::DateTime^ orderDate, System::DateTime^ payDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatPrice, float ttcPrice, Address^ deliveryAddress, Address^ paymentAddress, PaymentMethod^ paymentMethod, array<PurchasedItem^>^ purchasedItems) : BaseObject(id, isCreated) {
+    Purchase::Purchase(int id, bool isCreated, System::DateTime^ orderDate, System::DateTime^ payDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatPrice, float ttcPrice, Address^ deliveryAddress, Address^ paymentAddress, PaymentMethod^ paymentMethod, array<PurchasedItem^>^ purchasedItems) {
+		this->id = id;
+		this->isCreated = isCreated;
 		this->orderDate = orderDate;
 		this->payDate = payDate;
 		this->deliveryDate = deliveryDate;

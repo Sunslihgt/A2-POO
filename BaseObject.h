@@ -7,7 +7,7 @@ namespace NS_Services {
 		bool isCreated;
 
 	public:
-		BaseObject(int id, bool isCreated);
+		//BaseObject(int id, bool isCreated);
 		virtual bool create() = 0;
 		virtual bool update() = 0;
 		virtual bool deleteObject() = 0;

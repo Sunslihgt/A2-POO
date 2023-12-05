@@ -1,7 +1,9 @@
 #include "Item.h"
 
 namespace NS_Services {
-    Item::Item(int id, bool isCreated, System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate) : BaseObject(id, isCreated) {
+    Item::Item(int id, bool isCreated, System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate) {
+        this->id = id;
+        this->isCreated = isCreated;
         this->name = name;
 		this->reference = reference;
 		this->quantity = quantity;

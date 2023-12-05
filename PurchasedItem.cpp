@@ -1,7 +1,9 @@
 #include "PurchasedItem.h"
 
 namespace NS_Services {
-	PurchasedItem::PurchasedItem(int id, bool isCreated, int itemAmount, float totalPrice, float vatAmount, Item^ item) : BaseObject(id, isCreated) {
+	PurchasedItem::PurchasedItem(int id, bool isCreated, int itemAmount, float totalPrice, float vatAmount, Item^ item) {
+		this->id = id;
+		this->isCreated = isCreated;
 		this->itemAmount = itemAmount;
 		this->totalPrice = totalPrice;
 		this->vatAmount = vatAmount;

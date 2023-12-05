@@ -144,7 +144,6 @@
     </ClInclude>
     <ClInclude Include="PaymentMethod.h" />
     <ClInclude Include="PaymentType.h" />
-    <ClInclude Include="pch.h" />
     <ClInclude Include="Purchase.h" />
     <ClInclude Include="PurchasedItem.h" />
     <ClInclude Include="Services.h" />

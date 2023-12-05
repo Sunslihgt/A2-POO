@@ -1,7 +1,9 @@
 #include "City.h"
 
 namespace NS_Services {
-	City::City(int id, bool isCreated, System::String^ cityName) : BaseObject(id, isCreated) {
+	City::City(int id, bool isCreated, System::String^ cityName) {
+		this->id = id;
+		this->isCreated = isCreated;
 		this->cityName = cityName;
 	}
 

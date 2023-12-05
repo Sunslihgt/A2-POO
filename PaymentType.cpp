@@ -1,7 +1,9 @@
 #include "PaymentType.h"
 
 namespace NS_Services {
-    PaymentType::PaymentType(int id, bool isCreated, System::String^ typeName) : BaseObject(id, isCreated) {
+    PaymentType::PaymentType(int id, bool isCreated, System::String^ typeName) {
+        this->id = id;
+        this->isCreated = isCreated;
         this->typeName = typeName;
     }
 
