@@ -51,7 +51,7 @@ namespace DB {
 		static System::String^ updadePaymentMethod(int idPaymentMethod, int idPurchase, System::String^ name, System::String^ firstName, float amount, int idPaymentType);
 		static System::String^ updadePaymentType(int idPaymentType, System::String^ paymentTypeName);
 
-		/*static System::String^ deleteEmployee(int idEmployee);
+		static System::String^ deleteEmployee(int idEmployee);
 		static System::String^ deleteClient(int idClient);
 		static System::String^ deleteItem(int idItem);
 		static System::String^ deletePurchasedItem(int idPurchasedItem);
@@ -61,9 +61,9 @@ namespace DB {
 		static System::String^ deleteAddressCity(int idCity);
 		static System::String^ deleteCity(int idCity);
 		static System::String^ deletePaymentMethod(int idPaymentMethod);
-		static System::String^ deletePaymentType(int idPaymentType);*/
+		static System::String^ deletePaymentType(int idPaymentType);
 		
-
+		
 
 
 

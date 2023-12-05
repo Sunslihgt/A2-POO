@@ -796,47 +796,57 @@ System::String^ DB::Mapper::updadePaymentType(int idPaymentType, System::String^
 	return query;
 }
 
-/*System::String^ DB::Mapper::deleteEmployee(int idEmployee) {
-	
+System::String^ DB::Mapper::deleteEmployee(int idEmployee) {
+	System::String^ query = gcnew System::String("DELETE FROM Employee WHERE idEmployee = " + idEmployee + " ; DELETE FROM manage WHERE subordinate = " + idEmployee + " ; DELETE FROM manage WHERE superior = " + idEmployee);
+	return query;
 }
 
-System::String^ DB::Mapper::deleteClient(idClient) {
-
+System::String^ DB::Mapper::deleteClient(int idClient) {
+	System::String^ query = gcnew System::String("DELETE FROM Client WHERE idClient = " + idClient + " ; DELETE FROM Purchase WHERE idClient = " + idClient + " ; DELETE FROM live WHERE idClient = " + idClient + " ; DELETE FROM billing_address WHERE idClient = " + idClient);
+	return query;
 }
 
-System::String^ DB::Mapper::deleteItem(idItem) {
-
+System::String^ DB::Mapper::deleteItem(int idItem) {
+	System::String^ query = gcnew System::String("DELETE FROM Item WHERE idItem = " + idItem + " ; DELETE FROM PurchasedItem WHERE idItem = " + idItem);
+	return query;
 }
 
-System::String^ DB::Mapper::deletePurchasedItem(idPurchasedItem) {
-
+System::String^ DB::Mapper::deletePurchasedItem(int idPurchasedItem) {
+	System::String^ query = gcnew System::String("DELETE FROM PurchasedItem WHERE idPurchasedItem = " + idPurchasedItem);
+	return query;
 }
 
-System::String^ DB::Mapper::deletePurchase(idPurchase) {
-
+System::String^ DB::Mapper::deletePurchase(int idPurchase) {
+	System::String^ query = gcnew System::String("DELETE FROM Purchase WHERE idPurchase = " + idPurchase + " ; DELETE FROM PurchasedItem WHERE idPurchase = " + idPurchase);
+	return query;
 }
 
-System::String^ DB::Mapper::deletePurchaseNoPayment(purchaseNoPaymentId) {
-
+System::String^ DB::Mapper::deletePurchaseNoPayment(int idPurchaseNoPayment) {
+	System::String^ query = gcnew System::String("DELETE FROM ? WHERE ? = " + idPurchaseNoPayment);
+	return query;
 }
 
-System::String^ DB::Mapper::deleteAddress(idAddress) {
-
+System::String^ DB::Mapper::deleteAddress(int idAddress) {
+	System::String^ query = gcnew System::String("DELETE FROM Address WHERE idAddress = " + idAddress + " ; DELETE FROM Client WHERE idAddress = " + idAddress + " ; DELETE FROM Purchase WHERE idPaymentAddress = " + idAddress + " ; DELETE FROM Purchase WHERE idDeliveryAddress = " + idAddress + " ; DELETE FROM live WHERE idClient = " + idAddress + " ; DELETE FROM billing_address WHERE idClient = " + idAddress);
+	return query;
 }
 
-System::String^ DB::Mapper::deleteAddressCity(idAddressCity) {
-
+System::String^ DB::Mapper::deleteAddressCity(int idAddressCity) {
+	System::String^ query = gcnew System::String("DELETE FROM ? WHERE ? = " + idAddressCity);
+	return query;
 }
 
-System::String^ DB::Mapper::deleteCity(idCity) {
-
+System::String^ DB::Mapper::deleteCity(int idCity) {
+	System::String^ query = gcnew System::String("DELETE FROM City WHERE idCity = " + idCity + " ; DELETE FROM Address WHERE idCity = " + idCity);
+	return query;
 }
 
-System::String^ DB::Mapper::deletePaymentMethod(idPaymentMethod) {
-
+System::String^ DB::Mapper::deletePaymentMethod(int idPaymentMethod) {
+	System::String^ query = gcnew System::String("DELETE FROM PaymentMethod WHERE idPaymentMethod = " + idPaymentMethod + "DELETE FROM Purchase WHERE idPaymentMethod = " + idPaymentMethod);
+	return query;
 }
 
-System::String^ DB::Mapper::deletePaymentType(idPaymentType) {
-	
+System::String^ DB::Mapper::deletePaymentType(int idPaymentType) {
+	System::String^ query = gcnew System::String("DELETE FROM PaymentType WHERE idPaymentType = " + idPaymentType + " ; DELETE FROM PaymentMethod WHERE idPaymentType = " + idPaymentType);
+	return query;
 }
-*/
