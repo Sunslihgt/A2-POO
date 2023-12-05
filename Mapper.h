@@ -14,12 +14,12 @@ namespace DB {
 		static System::String^ selectPaymentMethodById(int id);
 		static System::String^ selectPaymentTypeById(int id);*/
 
-		static System::String^ searchEmployee(System::String^ name, System::String^ firstName, System::String^ streetName, System::String^ streetNumber, System::String^ cityName);
+		static System::String^ searchEmployee(System::String^ name, System::String^ firstName, System::String^ streetName, int streetNumber, System::String^ cityName);
 		static System::String^ searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
 		static System::String^ searchItems(System::String^ name, System::String^ reference);
 		static System::String^ searchPurchasedItems(int item_id, System::String^ name, System::String^ reference);
 		static System::String^ searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ PurchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate);
-		static System::String^ searchAddresses(System::String^ streetName, System::String^ streetNumber, System::String^ cityName);
+		static System::String^ searchAddresses(System::String^ streetName, int streetNumber, System::String^ cityName);
 		static System::String^ searchCities(System::String^ cityName);
 		static System::String^ searchPaymentMethods(System::String^ name, System::String^ firstName);
 		static System::String^ searchPaymentTypes(System::String^ typeName);
@@ -37,10 +37,10 @@ namespace DB {
 		static System::String^ createCity(System::String^ cityName);
 		static System::String^ createPaymentMethod(int purchaseId, System::String^ name, System::String^ firstName, float amount, int paymentTypeId);
 		static System::String^ createPaymentMethodPaymentType(int purchaseId, System::String^ name, System::String^ firstName, float amount, int paymentTypeName);
-		static System::String^ createPaymentType(System::String^ paymentTypeName);
+		static System::String^ createPaymentType(System::String^ paymentTypeName);*/
 							 
 		static System::String^ updadeEmployee(int employeeId, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int cityId);
-		static System::String^ updadeClient(int clientId, System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
+		/*static System::String^ updadeClient(int clientId, System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
 		static System::String^ updadeItem(int itemId, System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate);
 		static System::String^ updadePurchaseItem(int purchasedItemId, int itemId, int purchasedQuantity, float totalPrice, float vatAmount);
 		static System::String^ updadePurchase(int purshaseId, int clientId, int paymentMethodId, System::DateTime^ purchaseDate, System::DateTime^ payDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice);

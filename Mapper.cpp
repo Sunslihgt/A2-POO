@@ -44,7 +44,7 @@ System::String^ NS_Comp_Mappage::DB::Mapper::getPrenom(void) {
 }*/
 
 /*System::String^ DB::Mapper::selectEmployeeById(int id) {
-	 
+
 }
 
 System::String^ DB::Mapper::selectClientById(int id) {
@@ -79,11 +79,11 @@ System::String^ DB::Mapper::selectPaymentTypeById(int id) {
 
 }*/
 
-System::String^ DB::Mapper::searchEmployee(System::String^ name, System::String^ firstName, System::String^ streetName, System::String^ streetNumber, System::String^ cityName) {
+System::String^ DB::Mapper::searchEmployee(System::String^ name, System::String^ firstName, System::String^ streetName, int streetNumber, System::String^ cityName) {
 	System::String^ query = gcnew System::String(" SELECT e.idEmployee, e.name, e.firstName, e.startDate, a.streetName, a.streetNumber, ci.cityName FROM [A2POO-AzureDB].[dbo].[Employee] e INNER JOIN [A2POO-AzureDB].[dbo].[Address] a ON e.idAddress = a.idAddress INNER JOIN [A2POO-AzureDB].[dbo].[City] ci ON a.idCity = ci.idCity");
-	
+
 	bool conditions = false;
-	System::String^ filters = gcnew System::String("WHERE ");
+	System::String^ filters = gcnew System::String(" WHERE ");
 	if (name != nullptr && name != "") {
 		filters += "e.name = '" + name + "'";
 		conditions = true;
@@ -102,7 +102,7 @@ System::String^ DB::Mapper::searchEmployee(System::String^ name, System::String^
 		filters += "a.streetName = '" + streetName + "'";
 		conditions = true;
 	}
-	if (streetNumber != nullptr && streetNumber != "") {
+	if (streetNumber >= 1) {
 		if (conditions) {
 			filters += " AND ";
 		}
@@ -127,9 +127,9 @@ System::String^ DB::Mapper::searchEmployee(System::String^ name, System::String^
 
 System::String^ DB::Mapper::searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
 	System::String^ query = gcnew System::String(" SELECT cl.idClient, cl.name , cl.firstName, cl.birthDate, cl.firstOrderDate FROM [A2POO-AzureDB].[dbo].[Client] cl ");
-	
+
 	bool conditions = false;
-	System::String^ filters = gcnew System::String("WHERE ");
+	System::String^ filters = gcnew System::String(" WHERE ");
 	if (name != nullptr && name != "") {
 		filters += "cl.name = '" + name + "'";
 		conditions = true;
@@ -167,7 +167,7 @@ System::String^ DB::Mapper::searchItems(System::String^ name, System::String^ re
 	System::String^ query = gcnew System::String(" SELECT i.name, i.reference, i.quantity, i.availableQuantity, i.quantityThreshold, i.supplierPrice, i.unitPrice, i.vatRate FROM [A2POO-AzureDB].[dbo].[Item] i");
 
 	bool conditions = false;
-	System::String^ filters = gcnew System::String("WHERE ");
+	System::String^ filters = gcnew System::String(" WHERE ");
 	if (name != nullptr && name != "") {
 		filters += "i.name = '" + name + "'";
 		conditions = true;
@@ -191,8 +191,8 @@ System::String^ DB::Mapper::searchPurchasedItems(int item_id, System::String^ na
 	System::String^ query = gcnew System::String(" SELECT pi.idPurchasedItem, pi.idItem, i.name, i.reference, pi.itemAmount, pi.totalPrice, pi.vatAmount, pi.idPurchase FROM [A2POO-AzureDB].[dbo].[PurchasedItem] pi INNER JOIN [A2POO-AzureDB].[dbo].[Item] i ON pi.idItem = i.idItem");
 
 	bool conditions = false;
-	System::String^ filters = gcnew System::String("WHERE ");
-	if (item_id >= 0) {
+	System::String^ filters = gcnew System::String(" WHERE ");
+	if (item_id >= 1) {
 		filters += "pi.item_id = '" + item_id + "'";
 		conditions = true;
 	}
@@ -222,7 +222,7 @@ System::String^ DB::Mapper::searchPurchases(System::String^ clientName, System::
 	System::String^ query = gcnew System::String(" SELECT p.idPurchase, cl.name, cl.firstName, p.purchaseDate, p.payDate, p.deliveryDate, p.discountAmount, p.dutyFreePrice, p.vatAmount, p.ttcPrice, p.idPaymentAddress, p.idDeliveryAddress, p.idClient FROM [A2POO-AzureDB].[dbo].[Purchase] p INNER JOIN [A2POO-AzureDB].[dbo].[Client] cl ON p.idClient = cl.idClient");
 
 	bool conditions = false;
-	System::String^ filters = gcnew System::String("WHERE ");
+	System::String^ filters = gcnew System::String(" WHERE ");
 	if (clientName != nullptr && clientName != "") {
 		filters += "cl.name = '" + clientName + "'";
 		conditions = true;
@@ -263,16 +263,16 @@ System::String^ DB::Mapper::searchPurchases(System::String^ clientName, System::
 	return query;
 }
 
-System::String^ DB::Mapper::searchAddresses(System::String^ streetName, System::String^ streetNumber, System::String^ cityName) {
+System::String^ DB::Mapper::searchAddresses(System::String^ streetName, int streetNumber, System::String^ cityName) {
 	System::String^ query = gcnew System::String(" SELECT a.streetName, a.streetNumber, ci.cityName FROM [A2POO-AzureDB].[dbo].[Address] a INNER JOIN [A2POO-AzureDB].[dbo].[City] ci ON a.idCity = ci.idCity");
 
 	bool conditions = false;
-	System::String^ filters = gcnew System::String("WHERE ");
+	System::String^ filters = gcnew System::String(" WHERE ");
 	if (streetName != nullptr && streetName != "") {
 		filters += "a.streetName = '" + streetName + "'";
 		conditions = true;
 	}
-	if (streetNumber != nullptr && streetNumber != "") {
+	if (streetNumber >= 1) {
 		if (conditions) {
 			filters += " AND ";
 		}
@@ -298,7 +298,7 @@ System::String^ DB::Mapper::searchCities(System::String^ cityName) {
 	System::String^ query = gcnew System::String(" SELECT ci.cityName FROM [A2POO-AzureDB].[dbo].[City] ci");
 
 	bool conditions = false;
-	System::String^ filters = gcnew System::String("WHERE ");
+	System::String^ filters = gcnew System::String(" WHERE ");
 	if (cityName != nullptr && cityName != "") {
 		if (conditions) {
 			filters += " AND ";
@@ -318,7 +318,7 @@ System::String^ DB::Mapper::searchPaymentMethods(System::String^ name, System::S
 	System::String^ query = gcnew System::String(" SELECT pm.name, pm.firstName FROM [A2POO-AzureDB].[dbo].[PaymentMethod] pm");
 
 	bool conditions = false;
-	System::String^ filters = gcnew System::String("WHERE ");
+	System::String^ filters = gcnew System::String(" WHERE ");
 	if (name != nullptr && name != "") {
 		filters += "c.name = '" + name + "'";
 		conditions = true;
@@ -342,7 +342,7 @@ System::String^ DB::Mapper::searchPaymentTypes(System::String^ typeName) {
 	System::String^ query = gcnew System::String(" SELECT pt.typeName FROM [A2POO-AzureDB].[dbo].[PaymentType] pt");
 
 	bool conditions = false;
-	System::String^ filters = gcnew System::String("WHERE ");
+	System::String^ filters = gcnew System::String(" WHERE ");
 	if (typeName != nullptr && typeName != "") {
 		filters += "pt.typeName = '" + typeName + "'";
 		conditions = true;
@@ -355,49 +355,49 @@ System::String^ DB::Mapper::searchPaymentTypes(System::String^ typeName) {
 	return query;
 }
 
-/*System::String^ DB::Mapper::createEmployee(name, fistName, startDate, streetName, streetNumber, cityId) {
-	 
+/*System::String^ DB::Mapper::createEmployee(System::String^ name, System::String^ fistName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int cityId) {
+
 }
 
 System::String^ DB::Mapper::createEmployeeCity(name, firstName, startDate, streetName, streetNumber, cityName) {
-	 
+
 }
 
 System::String^ DB::Mapper::createClient(name, firstName, birthDate, firstPurchaseDate) {
-	 
+
 }
 
 System::String^ DB::Mapper::createItem(name, reference, quantify, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate) {
-	 
+
 }
 
 System::String^ DB::Mapper::createPurchasedItem(itemid, purchasedQuantity, totalPrice, vatAmount) {
-	 
+
 }
 
 System::String^ DB::Mapper::createPurchase(clientId, paymentMethodId, purchaseDate, payDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice)
 {
-	 
+
 }
 
 System::String^ DB::Mapper::createPurchaseNoPayment(clientId, purchaseDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice) {
-	 
+
 }
 
 System::String^ DB::Mapper::createAddress(streetName, streetNumber, cityId) {
-	 
+
 }
 
 System::String^ DB::Mapper::createAddressCity(streetName, streetNumber, cityName) {
-	 
+
 }
 
 System::String^ DB::Mapper::createCity(cityName) {
-	 
+
 }
 
 System::String^ DB::Mapper::createPaymentMethod(purchaseId, name, firstName, amount, paymentTypeId) {
-	 
+
 }
 
 System::String^ DB::Mapper::createPaymentMethodPaymentType(purchaseId, name, firstName, amount, paymentTypeName) {
@@ -406,13 +406,67 @@ System::String^ DB::Mapper::createPaymentMethodPaymentType(purchaseId, name, fir
 
 System::String^ DB::Mapper::createPaymentType(paymentTypeName) {
 
+}*/
+
+System::String^ DB::Mapper::updadeEmployee(int employeeId, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int cityId) {
+	// UPDATE table SET nom_colonne = 'nouvelle valeur' WHERE condition;
+	// System::String^ query = gcnew System::String(" UPDATE Employee e SET e.name = '" + name + "', e.firstName = '" + firstName + "', e.startDate = '" + startDate + "', e.streetName = '" + streetName + "', e.streetNumber = '" + streetNumber + "', e.cityId = " + cityId + "WHERE e.idEmployee = employeeId");
+
+	bool ajout = false;
+	System::String^ query = gcnew System::String(" UPDATE Employee e ");
+
+	query += "SET ";
+
+	if (name != nullptr && name != "") {
+		query += "e.name = '" + name + "'";
+		ajout = true;
+	}
+
+	if (firstName != nullptr && firstName != "") {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "e.name = '" + name + "'";
+		ajout = true;
+	}
+
+	/*if (startDate != nullptr && startDate != "01/01/1900") {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "e.startDate = '" + startDate + "'";
+		ajout = true;
+	}*/
+
+	if (streetName != nullptr && streetName != "") {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "e.streetName = '" + streetName + "'";
+		ajout = true;
+	}
+
+	if (cityId >= 1) {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "e.cityId = '" + cityId + "'";
+	}
+
+	query += "WHERE e.employeeId = " + employeeId;
+
+	/*if (name != nullptr && name != "" && firstName != nullptr && firstName != "" && startDate != nullptr && startDate != "01/01/1900" && streetName != nullptr && streetName != "" && cityId >= 1) {
+		query = "";
+	}*/
+
+	return query;
 }
 
-System::String^ DB::Mapper::updadeEmployee(employeeId, name, firstName, startDate, streetName, streetNumber, cityId) {
-
-}
-
-System::String^ DB::Mapper::updadeClient(clientId, name, firstName, birthDate, firstPurchaseDate) {
+/*System::String^ DB::Mapper::updadeClient(clientId, name, firstName, birthDate, firstPurchaseDate) {
 
 }
 
