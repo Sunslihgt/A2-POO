@@ -16,7 +16,7 @@ namespace IHM {
 	/// </summary>
 	public ref class StatisticsForm : public System::Windows::Forms::Form {
 	public:
-		StatisticsForm(Services::Services^ services) {
+		StatisticsForm(NS_Services::Services^ services) {
 			this->services = services;
 			InitializeComponent();
 			//
@@ -35,7 +35,7 @@ namespace IHM {
 		}
 
 	private:
-		Services::Services^ services;
+		NS_Services::Services^ services;
 
 	private: System::Windows::Forms::DataGridView^ dgvItems;
 	private: System::Windows::Forms::TextBox^ txtFloatProfitPercent;

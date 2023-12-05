@@ -16,7 +16,7 @@ namespace IHM {
 	/// </summary>
 	public ref class EmployeeEditorForm : public System::Windows::Forms::Form {
 	public:
-		EmployeeEditorForm(Services::Services^ services, bool alreadyExists) {
+		EmployeeEditorForm(NS_Services::Services^ services, bool alreadyExists) {
 			this->services = services;
 			this->alreadyExists = alreadyExists;
 
@@ -41,7 +41,7 @@ namespace IHM {
 		}
 
 	private:
-		Services::Services^ services;
+		NS_Services::Services^ services;
 		bool alreadyExists;
 
 	private: System::Windows::Forms::Label^ lblTitle;

@@ -19,9 +19,8 @@ namespace IHM {
 	public:
 		ConnectionForm(void) {
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+			
+			services = gcnew NS_Services::Services();
 		}
 
 	protected:
@@ -35,7 +34,7 @@ namespace IHM {
 		}
 
 	private:
-		Services::Services^ services;
+		NS_Services::Services^ services;
 
 	private: System::Windows::Forms::TextBox^ txtLogin;
 	private: System::Windows::Forms::Label^ lblLogin;

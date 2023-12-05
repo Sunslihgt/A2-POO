@@ -1,6 +1,7 @@
 #include "Services.h"
 #include "Mapper.h"
 
+/*
 Services::Services::Services(System::String^ login, System::String^ password) {
 	this->dbController = gcnew DB::DBController();
 	bool connectionStatus = this->dbController->connect(login, password);
@@ -17,3 +18,4 @@ System::Void Services::Services::searchClients(System::String^ name) {
 		this->dbController->getRows(sql, "Clients");
 	}
 }
+*/

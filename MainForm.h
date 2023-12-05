@@ -20,7 +20,7 @@ namespace IHM {
 	/// </summary>
 	public ref class MainForm : public System::Windows::Forms::Form {
 	public:
-		MainForm(Services::Services^ services) {
+		MainForm(NS_Services::Services^ services) {
 			this->services = services;
 			InitializeComponent();
 			//
@@ -39,7 +39,7 @@ namespace IHM {
 		}
 
 	private:
-		Services::Services^ services;
+		NS_Services::Services^ services;
 
 	private: System::Windows::Forms::Label^ lblTitle;
 	private: System::Windows::Forms::Button^ btnClient;

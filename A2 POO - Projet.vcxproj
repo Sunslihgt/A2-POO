@@ -120,16 +120,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Address.cpp" />
+    <ClCompile Include="BaseObject.cpp" />
+    <ClCompile Include="City.cpp" />
+    <ClCompile Include="Client.cpp" />
     <ClCompile Include="ConnectionForm.cpp" />
     <ClCompile Include="DBController.cpp" />
     <ClCompile Include="Employee.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemEditorForm.cpp" />
     <ClCompile Include="Mapper.cpp" />
+    <ClCompile Include="PaymentMethod.cpp" />
+    <ClCompile Include="PaymentType.cpp" />
+    <ClCompile Include="Purchase.cpp" />
+    <ClCompile Include="PurchasedItem.cpp" />
     <ClCompile Include="PurchaseEditorForm.cpp" />
     <ClCompile Include="Services.cpp" />
     <ClCompile Include="StatisticsForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Address.h" />
+    <ClInclude Include="BaseObject.h" />
+    <ClInclude Include="City.h" />
+    <ClInclude Include="Client.h" />
     <ClInclude Include="ClientEditorForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -147,6 +160,7 @@
     <ClInclude Include="EmployeeListForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Item.h" />
     <ClInclude Include="ItemEditorForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -157,16 +171,16 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Mapper.h" />
+    <ClInclude Include="PaymentMethod.h" />
+    <ClInclude Include="PaymentType.h" />
+    <ClInclude Include="Purchase.h" />
+    <ClInclude Include="PurchasedItem.h" />
     <ClInclude Include="PurchaseEditorForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="PurchaseListForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="PaymentMethod.h" />
-    <ClInclude Include="PaymentType.h" />
-    <ClInclude Include="Purchase.h" />
-    <ClInclude Include="PurchasedItem.h" />
     <ClInclude Include="Services.h" />
     <ClInclude Include="StatisticsForm.h">
       <FileType>CppForm</FileType>

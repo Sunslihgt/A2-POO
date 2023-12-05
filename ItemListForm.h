@@ -17,7 +17,7 @@ namespace IHM {
 	/// </summary>
 	public ref class ItemListForm : public System::Windows::Forms::Form {
 	public:
-		ItemListForm(Services::Services^ services) {
+		ItemListForm(NS_Services::Services^ services) {
 			this->services = services;
 			InitializeComponent();
 			//
@@ -36,7 +36,7 @@ namespace IHM {
 		}
 
 	private:
-		Services::Services^ services;
+		NS_Services::Services^ services;
 
 	private: System::Windows::Forms::DataGridView^ dgvItems;
 	private: System::Windows::Forms::TextBox^ txtName;
