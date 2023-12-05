@@ -1,37 +1,9 @@
 USE [A2POO-AzureDB];
 
-CREATE TABLE Client(
-   idClient INT IDENTITY(1,1) NOT NULL,
-   name VARCHAR(50) NOT NULL,
-   firstName VARCHAR(50) NOT NULL,
-   birthDate DATE NOT NULL,
-   firstOrderDate DATE,
-   PRIMARY KEY(idClient)
-);
-
-CREATE TABLE Item(
-   idItem INT IDENTITY(1,1) NOT NULL,
-   name VARCHAR(50) NOT NULL,
-   reference VARCHAR(50) NOT NULL,
-   quantity INT NOT NULL,
-   availableQuantity INT NOT NULL,
-   quantityThreshold INT NOT NULL,
-   supplierPrice DECIMAL(15,2) NOT NULL,
-   unitPrice DECIMAL(15,2) NOT NULL,
-   vatRate DECIMAL(15,2) NOT NULL,
-   PRIMARY KEY(idItem)
-);
-
 CREATE TABLE City(
    idCity INT IDENTITY(1,1) NOT NULL,
    cityName VARCHAR(50) NOT NULL,
    PRIMARY KEY(idCity)
-);
-
-CREATE TABLE PaymentType(
-   idPaymentType INT IDENTITY(1,1) NOT NULL,
-   typeName VARCHAR(50) NOT NULL,
-   PRIMARY KEY(idPaymentType)
 );
 
 CREATE TABLE Address(
@@ -41,6 +13,12 @@ CREATE TABLE Address(
    idCity INT NOT NULL,
    PRIMARY KEY(idAddress),
    FOREIGN KEY(idCity) REFERENCES City(idCity)
+);
+
+CREATE TABLE PaymentType(
+   idPaymentType INT IDENTITY(1,1) NOT NULL,
+   typeName VARCHAR(50) NOT NULL,
+   PRIMARY KEY(idPaymentType)
 );
 
 CREATE TABLE PaymentMethod(
@@ -61,6 +39,28 @@ CREATE TABLE Employee(
    idAddress INT NOT NULL,
    PRIMARY KEY(idEmployee),
    FOREIGN KEY(idAddress) REFERENCES Address(idAddress)
+);
+
+CREATE TABLE Client(
+   idClient INT IDENTITY(1,1) NOT NULL,
+   name VARCHAR(50) NOT NULL,
+   firstName VARCHAR(50) NOT NULL,
+   birthDate DATE NOT NULL,
+   firstOrderDate DATE,
+   PRIMARY KEY(idClient)
+);
+
+CREATE TABLE Item(
+   idItem INT IDENTITY(1,1) NOT NULL,
+   name VARCHAR(50) NOT NULL,
+   reference VARCHAR(50) NOT NULL,
+   quantity INT NOT NULL,
+   availableQuantity INT NOT NULL,
+   quantityThreshold INT NOT NULL,
+   supplierPrice DECIMAL(15,2) NOT NULL,
+   unitPrice DECIMAL(15,2) NOT NULL,
+   vatRate DECIMAL(15,2) NOT NULL,
+   PRIMARY KEY(idItem)
 );
 
 CREATE TABLE Purchase(
@@ -103,7 +103,7 @@ CREATE TABLE manage(
    FOREIGN KEY(superior) REFERENCES Employee(idEmployee)
 );
 
-CREATE TABLE live(
+CREATE TABLE billing_address(
    idClient INT NOT NULL,
    idAddress INT NOT NULL,
    PRIMARY KEY(idClient, idAddress),
@@ -111,7 +111,7 @@ CREATE TABLE live(
    FOREIGN KEY(idAddress) REFERENCES Address(idAddress)
 );
 
-CREATE TABLE billing_address(
+CREATE TABLE delivery_address(
    idClient INT NOT NULL,
    idAddress INT NOT NULL,
    PRIMARY KEY(idClient, idAddress),
