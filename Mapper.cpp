@@ -187,13 +187,13 @@ System::String^ DB::Mapper::searchItems(System::String^ name, System::String^ re
 	return query;
 }
 
-System::String^ DB::Mapper::searchPurchasedItems(int item_id, System::String^ name, System::String^ reference) {
+System::String^ DB::Mapper::searchPurchasedItems(int idItem, System::String^ name, System::String^ reference) {
 	System::String^ query = gcnew System::String(" SELECT pi.idPurchasedItem, pi.idItem, i.name, i.reference, pi.itemAmount, pi.totalPrice, pi.vatAmount, pi.idPurchase FROM [A2POO-AzureDB].[dbo].[PurchasedItem] pi INNER JOIN [A2POO-AzureDB].[dbo].[Item] i ON pi.idItem = i.idItem");
 
 	bool conditions = false;
 	System::String^ filters = gcnew System::String(" WHERE ");
-	if (item_id >= 1) {
-		filters += "pi.item_id = '" + item_id + "'";
+	if (idItem >= 1) {
+		filters += "pi.idItem = '" + idItem + "'";
 		conditions = true;
 	}
 	if (name != nullptr && name != "") {
@@ -355,7 +355,7 @@ System::String^ DB::Mapper::searchPaymentTypes(System::String^ typeName) {
 	return query;
 }
 
-/*System::String^ DB::Mapper::createEmployee(System::String^ name, System::String^ fistName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int cityId) {
+/*System::String^ DB::Mapper::createEmployee(System::String^ name, System::String^ fistName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity) {
 
 }
 
@@ -371,20 +371,20 @@ System::String^ DB::Mapper::createItem(name, reference, quantify, availableQuant
 
 }
 
-System::String^ DB::Mapper::createPurchasedItem(itemid, purchasedQuantity, totalPrice, vatAmount) {
+System::String^ DB::Mapper::createPurchasedItem(idItem, purchasedQuantity, totalPrice, vatAmount) {
 
 }
 
-System::String^ DB::Mapper::createPurchase(clientId, paymentMethodId, purchaseDate, payDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice)
+System::String^ DB::Mapper::createPurchase(idClient, idPaymentMethod, purchaseDate, payDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice)
 {
 
 }
 
-System::String^ DB::Mapper::createPurchaseNoPayment(clientId, purchaseDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice) {
+System::String^ DB::Mapper::createPurchaseNoPayment(idClient, purchaseDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice) {
 
 }
 
-System::String^ DB::Mapper::createAddress(streetName, streetNumber, cityId) {
+System::String^ DB::Mapper::createAddress(streetName, streetNumber, idCity) {
 
 }
 
@@ -396,11 +396,11 @@ System::String^ DB::Mapper::createCity(cityName) {
 
 }
 
-System::String^ DB::Mapper::createPaymentMethod(purchaseId, name, firstName, amount, paymentTypeId) {
+System::String^ DB::Mapper::createPaymentMethod(idPurchase, name, firstName, amount, idPaymentType) {
 
 }
 
-System::String^ DB::Mapper::createPaymentMethodPaymentType(purchaseId, name, firstName, amount, paymentTypeName) {
+System::String^ DB::Mapper::createPaymentMethodPaymentType(idPurchase, name, firstName, amount, paymentTypeName) {
 
 }
 
@@ -408,17 +408,17 @@ System::String^ DB::Mapper::createPaymentType(paymentTypeName) {
 
 }*/
 
-System::String^ DB::Mapper::updadeEmployee(int employeeId, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int cityId) {
+System::String^ DB::Mapper::updadeEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity) {
 	// UPDATE table SET nom_colonne = 'nouvelle valeur' WHERE condition;
-	// System::String^ query = gcnew System::String(" UPDATE Employee e SET e.name = '" + name + "', e.firstName = '" + firstName + "', e.startDate = '" + startDate + "', e.streetName = '" + streetName + "', e.streetNumber = '" + streetNumber + "', e.cityId = " + cityId + "WHERE e.idEmployee = employeeId");
+	// System::String^ query = gcnew System::String(" UPDATE Employee e SET e.name = '" + name + "', e.firstName = '" + firstName + "', e.startDate = '" + startDate + "', e.streetName = '" + streetName + "', e.streetNumber = '" + streetNumber + "', e.idCity = " + idCity + "WHERE e.idEmployee = idEmployee");
 
 	bool ajout = false;
-	System::String^ query = gcnew System::String(" UPDATE Employee e ");
+	System::String^ query = gcnew System::String(" UPDATE Employee ");
 
 	query += "SET ";
 
 	if (name != nullptr && name != "") {
-		query += "e.name = '" + name + "'";
+		query += "name = '" + name + "'";
 		ajout = true;
 	}
 
@@ -427,7 +427,7 @@ System::String^ DB::Mapper::updadeEmployee(int employeeId, System::String^ name,
 			query += ", ";
 		}
 
-		query += "e.name = '" + name + "'";
+		query += "firstName = '" + firstName + "'";
 		ajout = true;
 	}
 
@@ -436,7 +436,7 @@ System::String^ DB::Mapper::updadeEmployee(int employeeId, System::String^ name,
 			query += ", ";
 		}
 
-		query += "e.startDate = '" + startDate + "'";
+		query += "startDate = '" + startDate + "'";
 		ajout = true;
 	}*/
 
@@ -445,84 +445,374 @@ System::String^ DB::Mapper::updadeEmployee(int employeeId, System::String^ name,
 			query += ", ";
 		}
 
-		query += "e.streetName = '" + streetName + "'";
+		query += "streetName = '" + streetName + "'";
 		ajout = true;
 	}
 
-	if (cityId >= 1) {
+	if (idCity >= 1) {
 		if (ajout) {
 			query += ", ";
 		}
 
-		query += "e.cityId = '" + cityId + "'";
+		query += "idCity = '" + idCity + "'";
 	}
 
-	query += "WHERE e.employeeId = " + employeeId;
+	query += "WHERE idEmployee = " + idEmployee;
 
-	/*if (name != nullptr && name != "" && firstName != nullptr && firstName != "" && startDate != nullptr && startDate != "01/01/1900" && streetName != nullptr && streetName != "" && cityId >= 1) {
+	/*if (name != nullptr && name != "" && firstName != nullptr && firstName != "" && startDate != nullptr && startDate != "01/01/1900" && streetName != nullptr && streetName != "" && idCity >= 1) {
 		query = "";
 	}*/
 
 	return query;
 }
 
-/*System::String^ DB::Mapper::updadeClient(clientId, name, firstName, birthDate, firstPurchaseDate) {
+System::String^ DB::Mapper::updadeClient(int idClient, System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
+	bool ajout = false;
+	System::String^ query = gcnew System::String(" UPDATE Client ");
+
+	query += "SET ";
+
+	if (name != nullptr && name != "") {
+		query += "name = '" + name + "'";
+		ajout = true;
+	}
+
+	if (firstName != nullptr && firstName != "") {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "firstName = '" + firstName + "'";
+		ajout = true;
+	}
+
+	/*if (birthDate != nullptr && birthDate != "01/01/1900") {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "birthDate = '" + birthDate + "'";
+		ajout = true;
+	}*/
+
+	/*if (firstPurchaseDate != nullptr && firstPurchaseDate != "01/01/1900") {
+			if (ajout) {
+				query += ", ";
+			}
+
+			query += "firstPurchaseDate = '" + firstPurchaseDate + "'";
+	}*/
+
+	query += "WHERE idClient = " + idClient;
+
+	/*if (name != nullptr && name != "" && firstName != nullptr && firstName != "" && birthDate != nullptr && birthDate != "01/01/1900" && firstPurchaseDate != nullptr && firstPurchaseDate != "01/01/1900") {
+		query = "";
+	}*/
+
+	return query;
+}
+
+System::String^ DB::Mapper::updadeItem(int idItem, System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate) {
+	bool ajout = false;
+	System::String^ query = gcnew System::String(" UPDATE Item ");
+
+	query += "SET ";
+
+	if (name != nullptr && name != "") {
+		query += "name = '" + name + "'";
+		ajout = true;
+	}
+
+	if (reference != nullptr && reference != "") {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "reference = '" + reference + "'";
+		ajout = true;
+	}
+
+	/*if (birthDate != nullptr && birthDate != "01/01/1900") {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "birthDate = '" + birthDate + "'";
+		ajout = true;
+	}*/
+
+	/*if (firstPurchaseDate != nullptr && firstPurchaseDate != "01/01/1900") {
+			if (ajout) {
+				query += ", ";
+			}
+
+			query += "firstPurchaseDate = '" + firstPurchaseDate + "'";
+	}*/
+
+	query += "WHERE idItem = " + idItem;
+
+	/*if (name != nullptr && name != "" && firstName != nullptr && firstName != "" && birthDate != nullptr && birthDate != "01/01/1900" && firstPurchaseDate != nullptr && firstPurchaseDate != "01/01/1900") {
+		query = "";
+	}*/
+
+	return query;
+}
+
+System::String^ DB::Mapper::updadePurchasedItem(int idPurchasedItem, int idItem, int purchasedQuantity, float totalPrice, float vatAmount) {
+	bool ajout = false;
+	System::String^ query = gcnew System::String(" UPDATE PurchasedItem ");
+
+	query += "SET ";
+
+	if (idItem >= 1) {
+		query += "idItem = '" + idItem + "'";
+		ajout = true;
+	}
+
+	if (purchasedQuantity > 0) {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "purchasedQuantity = '" + purchasedQuantity + "'";
+		ajout = true;
+	}
+
+	if (totalPrice > 0) {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "totalPrice = '" + totalPrice + "'";
+		ajout = true;
+	}
+
+	if (vatAmount > 0) {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "vatAmount = '" + vatAmount + "'";
+	}
+
+	query += "WHERE idPurchasedItem = " + idPurchasedItem;
+
+	/*if (name != nullptr && name != "" && firstName != nullptr && firstName != "" && birthDate != nullptr && birthDate != "01/01/1900" && firstPurchaseDate != nullptr && firstPurchaseDate != "01/01/1900") {
+		query = "";
+	}*/
+
+	return query;
+}
+
+System::String^ DB::Mapper::updadePurchase(int idPurchase, int idClient, int idPaymentMethod, System::DateTime^ purchaseDate, System::DateTime^ payDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice) {
+	bool ajout = false;
+	System::String^ query = gcnew System::String(" UPDATE Purchase ");
+
+	query += "SET ";
+
+	if (idClient >= 1) {
+		query += "idCLient = '" + idClient + "'";
+		ajout = true;
+	}
+
+	if (idPaymentMethod >= 1) {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "idPaymentMethod = '" + idPaymentMethod + "'";
+		ajout = true;
+	}
+
+	/*if (purchaseDate != nullptr && purchaseDate != "01/01/1900") {
+			if (ajout) {
+				query += ", ";
+			}
+
+			query += "purchaseDate = '" + purchaseDate + "'";
+	}*/
+
+	/*if (payDate != nullptr && payDate != "01/01/1900") {
+			if (ajout) {
+				query += ", ";
+			}
+
+			query += "payDate = '" + payDate + "'";
+	}*/
+
+	if (discountAmount > 0) {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "discountAmount = '" + discountAmount + "'";
+		ajout = true;
+	}
+
+	if (dutyFreePrice > 0) {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "dutyFreePrice = '" + dutyFreePrice + "'";
+	}
+
+	if (vatAmount > 0) {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "vatAmount = '" + vatAmount + "'";
+	}
+
+	if (ttcPrice > 0) {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "ttcPrice = '" + ttcPrice + "'";
+	}
+
+	query += "WHERE idPurchase = " + idPurchase;
+
+	/*if (name != nullptr && name != "" && firstName != nullptr && firstName != "" && birthDate != nullptr && birthDate != "01/01/1900" && firstPurchaseDate != nullptr && firstPurchaseDate != "01/01/1900") {
+		query = "";
+	}*/
+
+	return query;
+}
+
+System::String^ DB::Mapper::updadePurchaseNoPayment(int idPurchase, int idClient, System::DateTime^ purchaseDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice) {
+bool ajout = false;
+	System::String^ query = gcnew System::String(" UPDATE Purchase ");
+
+	query += "SET ";
+
+	if (idClient >= 1) {
+		query += "idCLient = '" + idClient + "'";
+		ajout = true;
+	}
+
+	if (idPurchase >= 1) {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "idPurchase = '" + idPurchase + "'";
+		ajout = true;
+	}
+
+	/*if (purchaseDate != nullptr && purchaseDate != "01/01/1900") {
+			if (ajout) {
+				query += ", ";
+			}
+
+			query += "purchaseDate = '" + purchaseDate + "'";
+	}*/
+
+	/*if (payDate != nullptr && payDate != "01/01/1900") {
+			if (ajout) {
+				query += ", ";
+			}
+
+			query += "payDate = '" + payDate + "'";
+	}*/
+
+if (discountAmount > 0) {
+	if (ajout) {
+		query += ", ";
+	}
+
+	query += "discountAmount = '" + discountAmount + "'";
+	ajout = true;
+}
+
+if (dutyFreePrice > 0) {
+	if (ajout) {
+		query += ", ";
+	}
+
+	query += "dutyFreePrice = '" + dutyFreePrice + "'";
+}
+
+if (vatAmount > 0) {
+	if (ajout) {
+		query += ", ";
+	}
+
+	query += "vatAmount = '" + vatAmount + "'";
+}
+
+if (ttcPrice > 0) {
+	if (ajout) {
+		query += ", ";
+	}
+
+	query += "ttcPrice = '" + ttcPrice + "'";
+}
+
+query += "WHERE idPurchase = " + idPurchase;
+
+/*if (name != nullptr && name != "" && firstName != nullptr && firstName != "" && birthDate != nullptr && birthDate != "01/01/1900" && firstPurchaseDate != nullptr && firstPurchaseDate != "01/01/1900") {
+	query = "";
+}*/
+
+return query;
+}
+
+System::String^ DB::Mapper::updadeAddress(int idAddress, System::String^ StreetName, int StreetNumber, int idCity) {
 
 }
 
-System::String^ DB::Mapper::updadeItem(itemId, name, reference, quantity, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate) {
+System::String^ DB::Mapper::updadeAddressCity(int idAddress, System::String^ streetName, int streetNumber, System::String^ cityName) {
 
 }
 
-System::String^ DB::Mapper::updadePurchaseItem(purchasedItemId, itemId, purchasedQuantity, totalPrice, vatAmount) {
+System::String^ DB::Mapper::updadeCity(int idCity, System::String^ cityName) {
 
 }
 
-System::String^ DB::Mapper::updadePurchase(purshaseId, clientId, paymentMethodId, purchaseDate, payDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice) {
+System::String^ DB::Mapper::updadePaymentMethod(int idPaymentMethod, int idPurchase, System::String^ name, System::String^ firstName, float amount, int idPaymentType) {
 
 }
 
-System::String^ DB::Mapper::updadePurchaseNoPayment(purchaseId, clientId, purchaseDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice) {
+System::String^ DB::Mapper::updadePaymentType(int idPaymentType, System::String^ typeName) {
+	bool ajout = false;
+	System::String^ query = gcnew System::String(" UPDATE PaymentType ");
+
+	query += "SET ";
+
+	if (typeName != nullptr && typeName != "") {
+		query += "typeName = '" + typeName + "'";
+		ajout = true;
+	}
+
+	query += "WHERE idPaymentType = " + idPaymentType;
+
+	/*if (name != nullptr && name != "" && firstName != nullptr && firstName != "" && birthDate != nullptr && birthDate != "01/01/1900" && firstPurchaseDate != nullptr && firstPurchaseDate != "01/01/1900") {
+		query = "";
+	}*/
+
+	return query;
+}
+
+/*System::String^ DB::Mapper::deleteEmployee(int idEmployee) {
+	
+}
+
+System::String^ DB::Mapper::deleteClient(idClient) {
 
 }
 
-System::String^ DB::Mapper::updadeAddress(addressId, StreetName, StreetNumber, cityId) {
+System::String^ DB::Mapper::deleteItem(idItem) {
 
 }
 
-System::String^ DB::Mapper::updadeAddressCity(addressId, streetName, streetNumber, cityName) {
+System::String^ DB::Mapper::deletePurchasedItem(idPurchasedItem) {
 
 }
 
-System::String^ DB::Mapper::updadeCity(cityId, cityName) {
-
-}
-
-System::String^ DB::Mapper::updadePaymentMethod(paymentMethodId, purchaseId, name, firstName, amount, paymentTypeId) {
-
-}
-
-System::String^ DB::Mapper::updadePaymentType(paymentTypeId, paymentTypeName) {
-
-}
-
-System::String^ DB::Mapper::deleteEmployee(employeeId) {
-
-}
-
-System::String^ DB::Mapper::deleteClient(clientId) {
-
-}
-
-System::String^ DB::Mapper::deleteItem(itemId) {
-
-}
-
-System::String^ DB::Mapper::deletePurchasedItem(purchasedItemId) {
-
-}
-
-System::String^ DB::Mapper::deletePurchase(purchaseId) {
+System::String^ DB::Mapper::deletePurchase(idPurchase) {
 
 }
 
@@ -530,23 +820,23 @@ System::String^ DB::Mapper::deletePurchaseNoPayment(purchaseNoPaymentId) {
 
 }
 
-System::String^ DB::Mapper::deleteAddress(addressId) {
+System::String^ DB::Mapper::deleteAddress(idAddress) {
 
 }
 
-System::String^ DB::Mapper::deleteAddressCity(addressCityId) {
+System::String^ DB::Mapper::deleteAddressCity(idAddressCity) {
 
 }
 
-System::String^ DB::Mapper::deleteCity(cityId) {
+System::String^ DB::Mapper::deleteCity(idCity) {
 
 }
 
-System::String^ DB::Mapper::deletePaymentMethod(paymentMethodId) {
+System::String^ DB::Mapper::deletePaymentMethod(idPaymentMethod) {
 
 }
 
-System::String^ DB::Mapper::deletePaymentType(paymentTypeId) {
-
+System::String^ DB::Mapper::deletePaymentType(idPaymentType) {
+	
 }
 */
