@@ -163,6 +163,10 @@
     <ClInclude Include="PurchaseListForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="PaymentMethod.h" />
+    <ClInclude Include="PaymentType.h" />
+    <ClInclude Include="Purchase.h" />
+    <ClInclude Include="PurchasedItem.h" />
     <ClInclude Include="Services.h" />
     <ClInclude Include="StatisticsForm.h">
       <FileType>CppForm</FileType>
