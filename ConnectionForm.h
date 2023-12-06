@@ -4,7 +4,6 @@
 #include "Services.h"
 
 namespace IHM {
-
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -198,7 +197,12 @@ namespace IHM {
 		//MessageBox::Show("Création de l'application en cours", "Connexion (WIP)", MessageBoxButtons::OK, MessageBoxIcon::Information);
 
 		// Connexion à la base de données
-		// DB::DBController dbController = gcnew DB::DBController(this->txtLogin->Text, this->txtPassword->Text);
+		bool connected = services->connectDB(txtLogin->Text, txtPassword->Text);
+
+		if (!connected) {
+			MessageBox::Show("Impossible de se connecter à la base de données", "Connexion", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
 
 		// Création du MainForm
 		IHM::MainForm^ mainForm = gcnew MainForm(services);

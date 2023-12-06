@@ -122,9 +122,14 @@ namespace IHM {
 			this->dgvItems->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
+			this->dgvItems->AutoSizeColumnsMode = System::Windows::Forms::DataGridViewAutoSizeColumnsMode::AllCells;
+			this->dgvItems->AutoSizeRowsMode = System::Windows::Forms::DataGridViewAutoSizeRowsMode::AllCells;
+			this->dgvItems->BackgroundColor = System::Drawing::SystemColors::Window;
 			this->dgvItems->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dgvItems->Location = System::Drawing::Point(12, 151);
 			this->dgvItems->Name = L"dgvItems";
+			this->dgvItems->ReadOnly = true;
+			this->dgvItems->RowHeadersVisible = false;
 			this->dgvItems->Size = System::Drawing::Size(612, 274);
 			this->dgvItems->TabIndex = 0;
 			// 

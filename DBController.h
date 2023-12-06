@@ -8,7 +8,6 @@ namespace DB {
 		bool connect(System::String^ login, System::String^ password);
 
 		System::Data::DataSet^ getRows(System::String^ sql, System::String^ dataTableName);
-		//System::Data::DataSet^ getRow(System::String^ sql);
 		System::Void actionRows(System::String^ sql);
 
 		bool isConnected();

@@ -1,13 +1,18 @@
 #pragma once
 
-//#include "DBController"
+#include "DBController.h"
 
 namespace NS_Services {
-	ref class Services {
+	public ref class Services {
 	private:
-		//dbController;
+		DB::DBController^ dbController = gcnew DB::DBController();
 
 	public:
+		Services();
+
+		bool connectDB(System::String^ login, System::String^ password);
+
+		System::Data::DataSet^ Services::Services::searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
 		/*
 		DataSet^ searchEmployees(System::String name, System::String firstName, System::String streetName, int streetNumber, System::String cityName);
 		DataSet^ getEmployeeAdress(int employeeId);
