@@ -331,14 +331,6 @@ namespace IHM {
 		this->dgvClients->DataSource = data->Tables[0];
 	}
 
-	private: System::Void btnCreateClientClick(System::Object^ sender, System::EventArgs^ e) {
-		ClientEditorForm^ clientEditorForm = gcnew ClientEditorForm(services, false);
-		clientEditorForm->ShowDialog();
-	}
 
-	private: System::Void btnUpdateClientClick(System::Object^ sender, System::EventArgs^ e) {
-		//ClientEditorForm^ clientEditorForm = gcnew ClientEditorForm(services, true);
-		//clientEditorForm->ShowDialog();
-	}
 	};
 }

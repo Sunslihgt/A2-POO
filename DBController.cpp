@@ -27,7 +27,7 @@ bool DB::DBController::connect(System::String^ login, System::String^ password) 
 	return this->connected;
 }
 
-System::Data::DataSet^ DB::DBController::getRows(System::String^ sql, System::String^ dataTableName) {
+System::Data::DataSet^ DB::DBController::getRows(System::String^ sql) {
 	this->sqlDataSet->Clear();
 	this->sqlCommand->CommandText = sql;
 	this->sqlDataAdapter->SelectCommand = this->sqlCommand;

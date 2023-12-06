@@ -218,7 +218,7 @@ System::String^ DB::Mapper::searchPurchasedItems(int idItem, System::String^ nam
 	return query;
 }
 
-System::String^ DB::Mapper::searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ PurchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate) {
+System::String^ DB::Mapper::searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ purchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate) {
 	System::String^ query = gcnew System::String(" SELECT p.idPurchase, cl.name, cl.firstName, p.purchaseDate, p.payDate, p.deliveryDate, p.discountAmount, p.dutyFreePrice, p.vatAmount, p.ttcPrice, p.idPaymentAddress, p.idDeliveryAddress, p.idClient FROM [A2POO-AzureDB].[dbo].[Purchase] p INNER JOIN [A2POO-AzureDB].[dbo].[Client] cl ON p.idClient = cl.idClient");
 
 	bool conditions = false;
@@ -234,11 +234,11 @@ System::String^ DB::Mapper::searchPurchases(System::String^ clientName, System::
 		filters += "cl.firstName LIKE '%" + clientFirstName + "%'";
 		conditions = true;
 	}
-	if (PurchaseDate != nullptr && PurchaseDate->Year > MIN_PURCHASEYEAR) {
+	if (purchaseDate != nullptr && purchaseDate->Year > MIN_PURCHASEYEAR) {
 		if (conditions) {
 			filters += " AND ";
 		}
-		filters += "p.purchaseDate = '" + PurchaseDate + "'";
+		filters += "p.purchaseDate = '" + purchaseDate + "'";
 		conditions = true;
 	}
 	if (payDate != nullptr && payDate->Year > MIN_PURCHASEYEAR) {

@@ -348,18 +348,14 @@ namespace IHM {
 		}
 #pragma endregion
 	private: System::Void employeeListLoad(System::Object^ sender, System::EventArgs^ e) {
-		//DataSet^ data = services->searchEmployees(this->txtName->Text, this->txtFirstName->Text, this->dtpStart->Value, this->dtpFirstPurchase->Value);
-		//this->dgvEmployees->DataSource = data->Tables[0];
+		DataSet^ data = services->searchEmployees(this->txtName->Text, this->txtFirstName->Text, this->txtStreetName->Text, this->numStreetNumber->Value, this->txtCityName->Text);
+		this->dgvEmployees->DataSource = data->Tables[0];
 	}
-
 	private: System::Void btnSearchEmployeesClick(System::Object^ sender, System::EventArgs^ e) {
-		//DataSet^ data = services->searchEmployees(this->txtName->Text, this->txtFirstName->Text, this->dtpStart->Value, this->dtpFirstPurchase->Value);
-		//this->dgvEmployees->DataSource = data->Tables[0];
+		DataSet^ data = services->searchEmployees(this->txtName->Text, this->txtFirstName->Text, this->txtStreetName->Text, this->numStreetNumber->Value, this->txtCityName->Text);
+		this->dgvEmployees->DataSource = data->Tables[0];
 	}
 
-	private: System::Void btnCreateEmployeeClick(System::Object^ sender, System::EventArgs^ e) {
-		EmployeeEditorForm^ employeeEditorForm = gcnew EmployeeEditorForm(services, false);
-		employeeEditorForm->ShowDialog();
-	}
 	};
+
 }
