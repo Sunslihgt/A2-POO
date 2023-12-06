@@ -104,9 +104,14 @@ namespace IHM {
 			this->dgvEmployees->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
+			this->dgvEmployees->AutoSizeColumnsMode = System::Windows::Forms::DataGridViewAutoSizeColumnsMode::AllCells;
+			this->dgvEmployees->AutoSizeRowsMode = System::Windows::Forms::DataGridViewAutoSizeRowsMode::AllCells;
+			this->dgvEmployees->BackgroundColor = System::Drawing::SystemColors::Window;
 			this->dgvEmployees->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dgvEmployees->Location = System::Drawing::Point(12, 131);
 			this->dgvEmployees->Name = L"dgvEmployees";
+			this->dgvEmployees->ReadOnly = true;
+			this->dgvEmployees->RowHeadersVisible = false;
 			this->dgvEmployees->Size = System::Drawing::Size(513, 294);
 			this->dgvEmployees->TabIndex = 0;
 			// 
@@ -142,6 +147,7 @@ namespace IHM {
 			this->btnSearchEmployees->TabIndex = 6;
 			this->btnSearchEmployees->Text = L"Chercher";
 			this->btnSearchEmployees->UseVisualStyleBackColor = true;
+			this->btnSearchEmployees->Click += gcnew System::EventHandler(this, &EmployeeListForm::btnSearchEmployeesClick);
 			// 
 			// lblCityName
 			// 
@@ -341,13 +347,19 @@ namespace IHM {
 
 		}
 #pragma endregion
-		private: System::Void employeeListLoad(System::Object^ sender, System::EventArgs^ e) {
-		
-		}
+	private: System::Void employeeListLoad(System::Object^ sender, System::EventArgs^ e) {
+		//DataSet^ data = services->searchEmployees(this->txtName->Text, this->txtFirstName->Text, this->dtpStart->Value, this->dtpFirstPurchase->Value);
+		//this->dgvEmployees->DataSource = data->Tables[0];
+	}
 
-		private: System::Void btnCreateEmployeeClick(System::Object^ sender, System::EventArgs^ e) {
-			EmployeeEditorForm^ employeeEditorForm = gcnew EmployeeEditorForm(services, false);
-			employeeEditorForm->ShowDialog();
-		}
+	private: System::Void btnSearchEmployeesClick(System::Object^ sender, System::EventArgs^ e) {
+		//DataSet^ data = services->searchEmployees(this->txtName->Text, this->txtFirstName->Text, this->dtpStart->Value, this->dtpFirstPurchase->Value);
+		//this->dgvEmployees->DataSource = data->Tables[0];
+	}
+
+	private: System::Void btnCreateEmployeeClick(System::Object^ sender, System::EventArgs^ e) {
+		EmployeeEditorForm^ employeeEditorForm = gcnew EmployeeEditorForm(services, false);
+		employeeEditorForm->ShowDialog();
+	}
 	};
 }

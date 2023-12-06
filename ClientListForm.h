@@ -50,7 +50,7 @@ namespace IHM {
 	private: System::Windows::Forms::Label^ lblId;
 	private: System::Windows::Forms::GroupBox^ gpbCreate;
 	private: System::Windows::Forms::Button^ btnCreateEmployee;
-	private: System::Windows::Forms::Button^ btnSearchEmployees;
+	private: System::Windows::Forms::Button^ btnSearchClients;
 	private: System::Windows::Forms::DateTimePicker^ dtpBirth;
 	private: System::Windows::Forms::Label^ lblBirth;
 	private: System::Windows::Forms::Label^ lblFirstPurchase;
@@ -75,7 +75,7 @@ namespace IHM {
 			this->dtpFirstPurchase = (gcnew System::Windows::Forms::DateTimePicker());
 			this->lblBirth = (gcnew System::Windows::Forms::Label());
 			this->dtpBirth = (gcnew System::Windows::Forms::DateTimePicker());
-			this->btnSearchEmployees = (gcnew System::Windows::Forms::Button());
+			this->btnSearchClients = (gcnew System::Windows::Forms::Button());
 			this->lblFirstName = (gcnew System::Windows::Forms::Label());
 			this->txtFirstName = (gcnew System::Windows::Forms::TextBox());
 			this->lblName = (gcnew System::Windows::Forms::Label());
@@ -99,10 +99,15 @@ namespace IHM {
 			this->dgvClients->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
+			this->dgvClients->AutoSizeColumnsMode = System::Windows::Forms::DataGridViewAutoSizeColumnsMode::AllCells;
+			this->dgvClients->AutoSizeRowsMode = System::Windows::Forms::DataGridViewAutoSizeRowsMode::AllCells;
+			this->dgvClients->BackgroundColor = System::Drawing::SystemColors::Window;
 			this->dgvClients->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dgvClients->Location = System::Drawing::Point(12, 131);
 			this->dgvClients->Name = L"dgvClients";
-			this->dgvClients->Size = System::Drawing::Size(443, 225);
+			this->dgvClients->ReadOnly = true;
+			this->dgvClients->RowHeadersVisible = false;
+			this->dgvClients->Size = System::Drawing::Size(392, 225);
 			this->dgvClients->TabIndex = 0;
 			// 
 			// gpbSearch
@@ -113,14 +118,14 @@ namespace IHM {
 			this->gpbSearch->Controls->Add(this->dtpFirstPurchase);
 			this->gpbSearch->Controls->Add(this->lblBirth);
 			this->gpbSearch->Controls->Add(this->dtpBirth);
-			this->gpbSearch->Controls->Add(this->btnSearchEmployees);
+			this->gpbSearch->Controls->Add(this->btnSearchClients);
 			this->gpbSearch->Controls->Add(this->lblFirstName);
 			this->gpbSearch->Controls->Add(this->txtFirstName);
 			this->gpbSearch->Controls->Add(this->lblName);
 			this->gpbSearch->Controls->Add(this->txtName);
 			this->gpbSearch->Location = System::Drawing::Point(12, 35);
 			this->gpbSearch->Name = L"gpbSearch";
-			this->gpbSearch->Size = System::Drawing::Size(611, 90);
+			this->gpbSearch->Size = System::Drawing::Size(560, 90);
 			this->gpbSearch->TabIndex = 4;
 			this->gpbSearch->TabStop = false;
 			this->gpbSearch->Text = L"Rechercher";
@@ -163,16 +168,17 @@ namespace IHM {
 			this->dtpBirth->TabIndex = 9;
 			this->dtpBirth->Value = System::DateTime(1900, 1, 1, 0, 0, 0, 0);
 			// 
-			// btnSearchEmployees
+			// btnSearchClients
 			// 
-			this->btnSearchEmployees->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
-			this->btnSearchEmployees->Location = System::Drawing::Point(455, 56);
-			this->btnSearchEmployees->Margin = System::Windows::Forms::Padding(3, 10, 3, 3);
-			this->btnSearchEmployees->Name = L"btnSearchEmployees";
-			this->btnSearchEmployees->Size = System::Drawing::Size(150, 23);
-			this->btnSearchEmployees->TabIndex = 6;
-			this->btnSearchEmployees->Text = L"Chercher";
-			this->btnSearchEmployees->UseVisualStyleBackColor = true;
+			this->btnSearchClients->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
+			this->btnSearchClients->Location = System::Drawing::Point(404, 56);
+			this->btnSearchClients->Margin = System::Windows::Forms::Padding(3, 10, 3, 3);
+			this->btnSearchClients->Name = L"btnSearchClients";
+			this->btnSearchClients->Size = System::Drawing::Size(150, 23);
+			this->btnSearchClients->TabIndex = 6;
+			this->btnSearchClients->Text = L"Chercher";
+			this->btnSearchClients->UseVisualStyleBackColor = true;
+			this->btnSearchClients->Click += gcnew System::EventHandler(this, &ClientListForm::btnSearchClientsClick);
 			// 
 			// lblFirstName
 			// 
@@ -213,7 +219,7 @@ namespace IHM {
 			// 
 			this->gpbCreate->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 			this->gpbCreate->Controls->Add(this->btnCreateEmployee);
-			this->gpbCreate->Location = System::Drawing::Point(461, 224);
+			this->gpbCreate->Location = System::Drawing::Point(410, 224);
 			this->gpbCreate->Name = L"gpbCreate";
 			this->gpbCreate->Size = System::Drawing::Size(162, 52);
 			this->gpbCreate->TabIndex = 11;
@@ -238,7 +244,7 @@ namespace IHM {
 			this->gpbOpen->Controls->Add(this->numIdEmployee);
 			this->gpbOpen->Controls->Add(this->lblId);
 			this->gpbOpen->Controls->Add(this->btnOpenEmployee);
-			this->gpbOpen->Location = System::Drawing::Point(461, 131);
+			this->gpbOpen->Location = System::Drawing::Point(410, 131);
 			this->gpbOpen->Name = L"gpbOpen";
 			this->gpbOpen->Size = System::Drawing::Size(162, 87);
 			this->gpbOpen->TabIndex = 10;
@@ -284,7 +290,7 @@ namespace IHM {
 			this->lblTitle->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
 			this->lblTitle->Location = System::Drawing::Point(12, 9);
 			this->lblTitle->Name = L"lblTitle";
-			this->lblTitle->Size = System::Drawing::Size(611, 23);
+			this->lblTitle->Size = System::Drawing::Size(560, 23);
 			this->lblTitle->TabIndex = 13;
 			this->lblTitle->Text = L"Gestion des clients";
 			this->lblTitle->TextAlign = System::Drawing::ContentAlignment::TopCenter;
@@ -293,13 +299,13 @@ namespace IHM {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(635, 368);
+			this->ClientSize = System::Drawing::Size(584, 368);
 			this->Controls->Add(this->lblTitle);
 			this->Controls->Add(this->gpbCreate);
 			this->Controls->Add(this->gpbOpen);
 			this->Controls->Add(this->gpbSearch);
 			this->Controls->Add(this->dgvClients);
-			this->MinimumSize = System::Drawing::Size(600, 325);
+			this->MinimumSize = System::Drawing::Size(600, 407);
 			this->Name = L"ClientListForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Clients";
@@ -316,7 +322,13 @@ namespace IHM {
 		}
 #pragma endregion
 	private: System::Void clientListLoad(System::Object^ sender, System::EventArgs^ e) {
+		DataSet^ data = services->searchClients(this->txtName->Text, this->txtFirstName->Text, this->dtpBirth->Value, this->dtpFirstPurchase->Value);
+		this->dgvClients->DataSource = data->Tables[0];
+	}
 
+	private: System::Void btnSearchClientsClick(System::Object^ sender, System::EventArgs^ e) {
+		DataSet^ data = services->searchClients(this->txtName->Text, this->txtFirstName->Text, this->dtpBirth->Value, this->dtpFirstPurchase->Value);
+		this->dgvClients->DataSource = data->Tables[0];
 	}
 
 	private: System::Void btnCreateClientClick(System::Object^ sender, System::EventArgs^ e) {

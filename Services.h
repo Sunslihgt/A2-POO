@@ -8,7 +8,10 @@ namespace Services {
 		DB::DBController^ dbController;
 
 	public:
-		Services(System::String^ login, System::String^ password);
-		System::Void Services::Services::searchClients(System::String^ name);
+		Services();
+
+		bool connectDB(System::String^ login, System::String^ password);
+
+		System::Data::DataSet^ Services::Services::searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
 	};
 }

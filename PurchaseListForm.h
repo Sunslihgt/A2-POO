@@ -103,9 +103,14 @@ namespace IHM {
 			this->dgvPurchases->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				| System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
+			this->dgvPurchases->AutoSizeColumnsMode = System::Windows::Forms::DataGridViewAutoSizeColumnsMode::AllCells;
+			this->dgvPurchases->AutoSizeRowsMode = System::Windows::Forms::DataGridViewAutoSizeRowsMode::AllCells;
+			this->dgvPurchases->BackgroundColor = System::Drawing::SystemColors::Window;
 			this->dgvPurchases->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dgvPurchases->Location = System::Drawing::Point(12, 131);
 			this->dgvPurchases->Name = L"dgvPurchases";
+			this->dgvPurchases->ReadOnly = true;
+			this->dgvPurchases->RowHeadersVisible = false;
 			this->dgvPurchases->Size = System::Drawing::Size(657, 302);
 			this->dgvPurchases->TabIndex = 0;
 			// 
