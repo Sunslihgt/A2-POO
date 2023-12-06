@@ -14,7 +14,7 @@ namespace DB {
 		static System::String^ selectPaymentMethodById(int id);
 		static System::String^ selectPaymentTypeById(int id);*/
 
-		static System::String^ searchEmployee(System::String^ name, System::String^ firstName, System::String^ streetName, int streetNumber, System::String^ cityName);
+		static System::String^ searchEmployees(System::String^ name, System::String^ firstName, System::String^ streetName, int streetNumber, System::String^ cityName);
 		static System::String^ searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
 		static System::String^ searchItems(System::String^ name, System::String^ reference);
 		static System::String^ searchPurchasedItems(int idItem, System::String^ name, System::String^ reference);
