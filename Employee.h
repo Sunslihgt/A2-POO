@@ -4,7 +4,7 @@
 #include "Address.h"
 
 namespace NS_Services {
-	ref class Employee : public BaseObject {
+	public ref class Employee : public BaseObject {
 	private:
 		System::String^ name;
 		System::String^ firstName;

@@ -7,8 +7,9 @@ namespace DB {
 		
 		bool connect(System::String^ login, System::String^ password);
 
-		System::Data::DataSet^ getRows(System::String^ sql, System::String^ dataTableName);
-		System::Void actionRows(System::String^ sql);
+		System::Data::DataSet^ getRows(System::String^ sql);
+		int createObject(System::String^ sql);
+		bool actionRows(System::String^ sql);
 
 		bool isConnected();
 

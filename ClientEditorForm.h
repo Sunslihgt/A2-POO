@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Services.h"
+#include "Client.h"
 
 namespace IHM {
 
@@ -16,18 +17,14 @@ namespace IHM {
 	/// </summary>
 	public ref class ClientEditorForm : public System::Windows::Forms::Form {
 	public:
-		ClientEditorForm(NS_Services::Services^ services, bool alreadyExists) {
-			this->services = services;
-			this->alreadyExists = alreadyExists;
-
+		ClientEditorForm(NS_Services::Services^ services, bool alreadyExists, NS_Services::Client^ client) {
 			InitializeComponent();
 
-			if (alreadyExists) {
-				this->btnUpdateClient->Enabled = false;
-				this->btnDeleteClient->Enabled = false;
-			} else {
-				this->btnCreateClient->Enabled = false;
-			}
+			this->services = services;
+			this->alreadyExists = alreadyExists;
+			this->client = client;
+			fillFieldsFromObject();
+			enableButtons();
 		}
 
 	protected:
@@ -43,6 +40,7 @@ namespace IHM {
 	private:
 		NS_Services::Services^ services;
 		bool alreadyExists;
+		NS_Services::Client^ client;
 
 	private: System::Windows::Forms::Button^ btnDeleteClient;
 	private: System::Windows::Forms::Button^ btnCreateClient;
@@ -108,6 +106,7 @@ namespace IHM {
 			this->btnCreateClient->TabIndex = 30;
 			this->btnCreateClient->Text = L"Créer";
 			this->btnCreateClient->UseVisualStyleBackColor = true;
+			this->btnCreateClient->Click += gcnew System::EventHandler(this, &ClientEditorForm::btnCreateClientClick);
 			// 
 			// txtFirstName
 			// 
@@ -251,5 +250,58 @@ namespace IHM {
 
 		}
 #pragma endregion
+	private:
+		System::Void btnCreateClientClick(System::Object^ sender, System::EventArgs^ e) {
+			if (this->alreadyExists) {
+				MessageBox::Show("Ouvrez l'éditeur de client en mode création pour créer un nouveu client", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;  // Ne pas permettre la création si le client existe déjà
+			}
+			if (this->txtName->Text->Length == 0) {
+				MessageBox::Show("Le nom ne peut pas être vide.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			if (this->txtFirstName->Text->Length == 0) {
+				MessageBox::Show("Le prénom ne peut pas être vide.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			if (System::DateTime::Compare(this->dtpBirth->Value, *NS_Services::Services::MIN_DATETIME) <= 0) {
+				MessageBox::Show("La date de naissance ne peut pas être antérieure au 01/01/1900.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			// Création du client
+			this->client = this->services->createClient(this->txtName->Text, this->txtFirstName->Text, this->dtpBirth->Value, this->dtpFirstPurchase->Value);
+			if (client != nullptr) {
+				MessageBox::Show("Le client a bien été créé.", "Succès", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				this->alreadyExists = true;
+				fillFieldsFromObject();
+				enableButtons();
+			} else {
+				MessageBox::Show("Une erreur est survenue lors de la création du client.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+
+		// Désactive le bouton de création si le client existe déjà
+		// Désactive les boutons de modification et de suppression si le client n'existe pas encore
+		System::Void enableButtons() {
+			if (alreadyExists) {
+				this->btnCreateClient->Enabled = false;
+				this->btnUpdateClient->Enabled = true;
+				this->btnDeleteClient->Enabled = true;
+			} else {
+				this->btnCreateClient->Enabled = true;
+				this->btnUpdateClient->Enabled = false;
+				this->btnDeleteClient->Enabled = false;
+			}
+		}
+
+		System::Void fillFieldsFromObject() {
+			if (this->client != nullptr) {
+				this->txtName->Text = this->client->getName();
+				this->txtFirstName->Text = this->client->getFirstName();
+				this->dtpBirth->Value = *this->client->getBirthDate();
+				this->dtpFirstPurchase->Value = *this->client->getFirstOrderDate();
+			}
+		}
 	};
 }

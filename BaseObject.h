@@ -1,7 +1,7 @@
 #pragma once
 
 namespace NS_Services {
-	ref class BaseObject abstract {
+	public ref class BaseObject abstract {
 	protected:
 		int id;
 		bool isCreated;

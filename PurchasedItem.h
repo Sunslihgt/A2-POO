@@ -4,7 +4,7 @@
 #include "Item.h"
 
 namespace NS_Services {
-	ref class PurchasedItem : public BaseObject {
+	public ref class PurchasedItem : public BaseObject {
 	private:
 		int itemAmount;
 		float totalPrice;

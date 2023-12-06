@@ -1,6 +1,18 @@
 #pragma once
 
 #include "DBController.h"
+#include "Mapper.h"
+
+#include "Address.h"
+#include "BaseObject.h"
+#include "City.h"
+#include "Client.h"
+#include "Employee.h"
+#include "Item.h"
+#include "PaymentMethod.h"
+#include "PaymentType.h"
+#include "Purchase.h"
+#include "PurchasedItem.h"
 
 namespace NS_Services {
 	public ref class Services {
@@ -13,6 +25,10 @@ namespace NS_Services {
 		bool connectDB(System::String^ login, System::String^ password);
 
 		System::Data::DataSet^ Services::Services::searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
+		NS_Services::Client^ createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
+		NS_Services::Client^ getClientById(int idClient);
+
+		
 		/*
 		DataSet^ searchEmployees(System::String name, System::String firstName, System::String streetName, int streetNumber, System::String cityName);
 		DataSet^ getEmployeeAdress(int employeeId);
@@ -32,5 +48,6 @@ namespace NS_Services {
 		float getStoredSellPrice();
 		float getStoredValue(float vatPercent, float profitPercent, float unknownShrinkagePercent);
 		*/
+		const static System::DateTime^ MIN_DATETIME = DB::Mapper::MIN_DATETIME;
 	};
 }

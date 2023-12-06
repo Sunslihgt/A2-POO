@@ -79,6 +79,11 @@ System::String^ DB::Mapper::selectPaymentTypeById(int id) {
 
 }*/
 
+System::String^ DB::Mapper::selectClientById(int idClient) {
+	System::String^ query = gcnew System::String(" SELECT * FROM [A2POO-AzureDB].[dbo].[Client] c WHERE c.idClient = " + idClient);
+	return query;
+}
+
 System::String^ DB::Mapper::searchEmployees(System::String^ name, System::String^ firstName, System::String^ streetName, int streetNumber, System::String^ cityName) {
 	System::String^ query = gcnew System::String(" SELECT e.idEmployee, e.name, e.firstName, e.startDate, a.streetName, a.streetNumber, ci.cityName FROM [A2POO-AzureDB].[dbo].[Employee] e INNER JOIN [A2POO-AzureDB].[dbo].[Address] a ON e.idAddress = a.idAddress INNER JOIN [A2POO-AzureDB].[dbo].[City] ci ON a.idCity = ci.idCity");
 
@@ -360,8 +365,8 @@ System::String^ DB::Mapper::createEmployee(System::String^ name, System::String^
 	return query;
 }
 
-System::String^ DB::Mapper::createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
-	System::String^ query = gcnew System::String(" INSERT INTO Client (name, firstName, birthDate, firstPurchaseDate) OUTPUT Inserted.idClient VALUES('" + name + "', '" + firstName + "', '" + birthDate->ToString("yyyy-MM-dd") + "', '" + firstPurchaseDate->ToString("yyyy-MM-dd") + "')");
+System::String^ DB::Mapper::createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstOrderDate) {
+	System::String^ query = gcnew System::String(" INSERT INTO Client (name, firstName, birthDate, firstOrderDate) OUTPUT Inserted.idClient VALUES('" + name + "', '" + firstName + "', '" + birthDate->ToString("yyyy-MM-dd") + "', '" + firstOrderDate->ToString("yyyy-MM-dd") + "')");
 	return query;
 }
 

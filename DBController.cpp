@@ -28,7 +28,7 @@ namespace DB {
 		return this->connected;
 	}
 
-	System::Data::DataSet^ DBController::getRows(System::String^ sql, System::String^ dataTableName) {
+	System::Data::DataSet^ DBController::getRows(System::String^ sql) {
 		this->sqlDataSet->Clear();
 		this->sqlCommand->CommandText = sql;
 		this->sqlDataAdapter->SelectCommand = this->sqlCommand;
@@ -42,12 +42,36 @@ namespace DB {
 	//	// TODO: insérer une instruction return ici
 	//}
 
-	System::Void DBController::actionRows(System::String^ sql) {
+	// Exécute une requête de type "INSERT INTO"
+	// Renvoit l'id de l'objet créé ou -1 en cas d'erreur
+	int DBController::createObject(System::String^ sql) {
 		this->sqlCommand->CommandText = sql;
 		this->sqlDataAdapter->SelectCommand = this->sqlCommand;
-		this->sqlConnection->Open();
-		this->sqlCommand->ExecuteNonQuery();
-		this->sqlConnection->Close();
+		int newId = -1;
+		try {
+			this->sqlConnection->Open();
+			newId = System::Convert::ToInt32(this->sqlCommand->ExecuteScalar());
+			this->sqlConnection->Close();
+		} catch (System::Exception^ ex) {
+			return -1;
+		}
+
+		return newId;
+	}
+
+	// Exécute une requête de type "INSERT INTO" ou "UPDATE"
+	// Renvoit false en cas d'erreur
+	bool DBController::actionRows(System::String^ sql) {
+		this->sqlCommand->CommandText = sql;
+		this->sqlDataAdapter->SelectCommand = this->sqlCommand;
+		try {
+			this->sqlConnection->Open();
+			this->sqlCommand->ExecuteNonQuery();
+			this->sqlConnection->Close();
+		} catch (System::Exception^ ex) {
+			return false;
+		}
+		return true;
 	}
 
 	bool DBController::isConnected() {
