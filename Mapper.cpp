@@ -131,14 +131,14 @@ System::String^ DB::Mapper::searchClients(System::String^ name, System::String^ 
 	bool conditions = false;
 	System::String^ filters = gcnew System::String(" WHERE ");
 	if (name != nullptr && name != "") {
-		filters += "cl.name = '" + name + "'";
+		filters += "cl.name LIKE '%" + name + "%'";
 		conditions = true;
 	}
 	if (firstName != nullptr && firstName != "") {
 		if (conditions) {
 			filters += " AND ";
 		}
-		filters += "cl.firstName = '" + firstName + "'";
+		filters += "cl.firstName LIKE '%" + firstName + "%'";
 		conditions = true;
 	}
 	if (birthDate != nullptr && birthDate->Year > MIN_BIRTHYEAR) {
@@ -169,14 +169,14 @@ System::String^ DB::Mapper::searchItems(System::String^ name, System::String^ re
 	bool conditions = false;
 	System::String^ filters = gcnew System::String(" WHERE ");
 	if (name != nullptr && name != "") {
-		filters += "i.name = '" + name + "'";
+		filters += "i.name LIKE '%" + name + "%'";
 		conditions = true;
 	}
 	if (reference != nullptr && reference != "") {
 		if (conditions) {
 			filters += " AND ";
 		}
-		filters += "i.reference = '" + reference + "'";
+		filters += "i.reference LIKE '%" + reference + "%'";
 		conditions = true;
 	}
 
@@ -193,21 +193,21 @@ System::String^ DB::Mapper::searchPurchasedItems(int idItem, System::String^ nam
 	bool conditions = false;
 	System::String^ filters = gcnew System::String(" WHERE ");
 	if (idItem >= 1) {
-		filters += "pi.idItem = '" + idItem + "'";
+		filters += "pi.idItem LIKE '%" + idItem + "%'";
 		conditions = true;
 	}
 	if (name != nullptr && name != "") {
 		if (conditions) {
 			filters += " AND ";
 		}
-		filters += "i.name = '" + name + "'";
+		filters += "i.name LIKE '%" + name + "%'";
 		conditions = true;
 	}
 	if (reference != nullptr && reference != "") {
 		if (conditions) {
 			filters += " AND ";
 		}
-		filters += "i.reference = '" + reference + "'";
+		filters += "i.reference LIKE '%" + reference + "%'";
 		conditions = true;
 	}
 
@@ -224,14 +224,14 @@ System::String^ DB::Mapper::searchPurchases(System::String^ clientName, System::
 	bool conditions = false;
 	System::String^ filters = gcnew System::String(" WHERE ");
 	if (clientName != nullptr && clientName != "") {
-		filters += "cl.name = '" + clientName + "'";
+		filters += "cl.name LIKE '%" + clientName + "%'";
 		conditions = true;
 	}
 	if (clientFirstName != nullptr && clientFirstName != "") {
 		if (conditions) {
 			filters += " AND ";
 		}
-		filters += "cl.firstName = '" + clientFirstName + "'";
+		filters += "cl.firstName LIKE '%" + clientFirstName + "%'";
 		conditions = true;
 	}
 	if (PurchaseDate != nullptr && PurchaseDate->Year > MIN_PURCHASEYEAR) {
@@ -269,7 +269,7 @@ System::String^ DB::Mapper::searchAddresses(System::String^ streetName, int stre
 	bool conditions = false;
 	System::String^ filters = gcnew System::String(" WHERE ");
 	if (streetName != nullptr && streetName != "") {
-		filters += "a.streetName = '" + streetName + "'";
+		filters += "a.streetName LIKE '%" + streetName + "%'";
 		conditions = true;
 	}
 	if (streetNumber >= 1) {
@@ -283,7 +283,7 @@ System::String^ DB::Mapper::searchAddresses(System::String^ streetName, int stre
 		if (conditions) {
 			filters += " AND ";
 		}
-		filters += "ci.cityName = '" + cityName + "'";
+		filters += "ci.cityName LIKE '%" + cityName + "%'";
 		conditions = true;
 	}
 
@@ -303,7 +303,7 @@ System::String^ DB::Mapper::searchCities(System::String^ cityName) {
 		if (conditions) {
 			filters += " AND ";
 		}
-		filters += "ci.cityName = '" + cityName + "'";
+		filters += "ci.cityName LIKE '%" + cityName + "%'";
 		conditions = true;
 	}
 
@@ -320,14 +320,14 @@ System::String^ DB::Mapper::searchPaymentMethods(System::String^ name, System::S
 	bool conditions = false;
 	System::String^ filters = gcnew System::String(" WHERE ");
 	if (name != nullptr && name != "") {
-		filters += "c.name = '" + name + "'";
+		filters += "pm.name LIKE '%" + name + "%'";
 		conditions = true;
 	}
 	if (firstName != nullptr && firstName != "") {
 		if (conditions) {
 			filters += " AND ";
 		}
-		filters += "c.firstName = '" + firstName + "'";
+		filters += "pm.firstName LIKE '%" + firstName + "%'";
 		conditions = true;
 	}
 
@@ -344,7 +344,7 @@ System::String^ DB::Mapper::searchPaymentTypes(System::String^ typeName) {
 	bool conditions = false;
 	System::String^ filters = gcnew System::String(" WHERE ");
 	if (typeName != nullptr && typeName != "") {
-		filters += "pt.typeName = '" + typeName + "'";
+		filters += "pt.typeName LIKE '%" + typeName + "%'";
 		conditions = true;
 	}
 
@@ -408,10 +408,15 @@ System::String^ DB::Mapper::createPaymentType(paymentTypeName) {
 
 }*/
 
-System::String^ DB::Mapper::updadeEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity) {
-	// UPDATE table SET nom_colonne = 'nouvelle valeur' WHERE condition;
-	// System::String^ query = gcnew System::String(" UPDATE Employee e SET e.name = '" + name + "', e.firstName = '" + firstName + "', e.startDate = '" + startDate + "', e.streetName = '" + streetName + "', e.streetNumber = '" + streetNumber + "', e.idCity = " + idCity + "WHERE e.idEmployee = idEmployee");
 
+
+
+
+
+
+
+
+System::String^ DB::Mapper::updadeEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity) {
 	bool ajout = false;
 	System::String^ query = gcnew System::String(" UPDATE Employee ");
 
@@ -431,14 +436,14 @@ System::String^ DB::Mapper::updadeEmployee(int idEmployee, System::String^ name,
 		ajout = true;
 	}
 
-	/*if (startDate != nullptr && startDate != "01/01/1900") {
+	if (startDate != nullptr && (startDate->System::DateTime::Compare(*startDate, *MIN_DATETIME) > 0)) {
 		if (ajout) {
 			query += ", ";
 		}
 
-		query += "startDate = '" + startDate + "'";
+		query += "startDate = '" + startDate->ToString("yyyy-MM-dd") + "'";
 		ajout = true;
-	}*/
+	}
 
 	if (streetName != nullptr && streetName != "") {
 		if (ajout) {
@@ -486,22 +491,23 @@ System::String^ DB::Mapper::updadeClient(int idClient, System::String^ name, Sys
 		ajout = true;
 	}
 
-	/*if (birthDate != nullptr && birthDate != "01/01/1900") {
+	if (birthDate != nullptr && (birthDate->System::DateTime::Compare(*birthDate, *MIN_DATETIME) > 0) ){
 		if (ajout) {
 			query += ", ";
 		}
 
-		query += "birthDate = '" + birthDate + "'";
+		query += "birthDate = '" + birthDate->ToString("yyyy-MM-dd") + "'";
 		ajout = true;
-	}*/
+	}
 
-	/*if (firstPurchaseDate != nullptr && firstPurchaseDate != "01/01/1900") {
-			if (ajout) {
-				query += ", ";
-			}
+	if (firstPurchaseDate != nullptr && (firstPurchaseDate->System::DateTime::Compare(*firstPurchaseDate, *MIN_DATETIME) > 0)) {
+		if (ajout) {
+			query += ", ";
+		}
 
-			query += "firstPurchaseDate = '" + firstPurchaseDate + "'";
-	}*/
+		query += "firstPurchaseDate = '" + firstPurchaseDate->ToString("yyyy-MM-dd") + "'";
+		ajout = true;
+	}
 
 	query += "WHERE idClient = " + idClient;
 
@@ -532,22 +538,8 @@ System::String^ DB::Mapper::updadeItem(int idItem, System::String^ name, System:
 		ajout = true;
 	}
 
-	/*if (birthDate != nullptr && birthDate != "01/01/1900") {
-		if (ajout) {
-			query += ", ";
-		}
 
-		query += "birthDate = '" + birthDate + "'";
-		ajout = true;
-	}*/
-
-	/*if (firstPurchaseDate != nullptr && firstPurchaseDate != "01/01/1900") {
-			if (ajout) {
-				query += ", ";
-			}
-
-			query += "firstPurchaseDate = '" + firstPurchaseDate + "'";
-	}*/
+	
 
 	query += "WHERE idItem = " + idItem;
 
@@ -624,21 +616,23 @@ System::String^ DB::Mapper::updadePurchase(int idPurchase, int idClient, int idP
 		ajout = true;
 	}
 
-	/*if (purchaseDate != nullptr && purchaseDate != "01/01/1900") {
-			if (ajout) {
-				query += ", ";
-			}
+	if (purchaseDate != nullptr && (purchaseDate->System::DateTime::Compare(*purchaseDate, *MIN_DATETIME) > 0)) {
+		if (ajout) {
+			query += ", ";
+		}
 
-			query += "purchaseDate = '" + purchaseDate + "'";
-	}*/
+		query += "purchaseDate = '" + purchaseDate->ToString("yyyy-MM-dd") + "'";
+		ajout = true;
+	}
 
-	/*if (payDate != nullptr && payDate != "01/01/1900") {
-			if (ajout) {
-				query += ", ";
-			}
+	if (payDate != nullptr && (payDate->System::DateTime::Compare(*payDate, *MIN_DATETIME) > 0)) {
+		if (ajout) {
+			query += ", ";
+		}
 
-			query += "payDate = '" + payDate + "'";
-	}*/
+		query += "payDate = '" + payDate->ToString("yyyy-MM-dd") + "'";
+		ajout = true;
+	}
 
 	if (discountAmount > 0) {
 		if (ajout) {
@@ -682,7 +676,7 @@ System::String^ DB::Mapper::updadePurchase(int idPurchase, int idClient, int idP
 	return query;
 }
 
-System::String^ DB::Mapper::updadePurchaseNoPayment(int idPurchase, int idClient, System::DateTime^ purchaseDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice) {
+/*System::String^ DB::Mapper::updadePurchaseNoPayment(int idPurchase, int idClient, System::DateTime^ purchaseDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice) {
 bool ajout = false;
 	System::String^ query = gcnew System::String(" UPDATE Purchase ");
 
@@ -702,21 +696,23 @@ bool ajout = false;
 		ajout = true;
 	}
 
-	/*if (purchaseDate != nullptr && purchaseDate != "01/01/1900") {
-			if (ajout) {
-				query += ", ";
-			}
+	if (purchaseDate != nullptr && (purchaseDate->System::DateTime::Compare(*purchaseDate, *MIN_DATETIME) > 0)) {
+		if (ajout) {
+			query += ", ";
+		}
 
-			query += "purchaseDate = '" + purchaseDate + "'";
-	}*/
+		query += "purchaseDate = '" + purchaseDate->ToString("yyyy-MM-dd") + "'";
+		ajout = true;
+	}
 
-	/*if (payDate != nullptr && payDate != "01/01/1900") {
-			if (ajout) {
-				query += ", ";
-			}
+	if (deliveryDate != nullptr && (deliveryDate->System::DateTime::Compare(*deliveryDate, *MIN_DATETIME) > 0)) {
+		if (ajout) {
+			query += ", ";
+		}
 
-			query += "payDate = '" + payDate + "'";
-	}*/
+		query += "deliveryDate = '" + deliveryDate->ToString("yyyy-MM-dd") + "'";
+		ajout = true;
+	}
 
 if (discountAmount > 0) {
 	if (ajout) {
@@ -753,48 +749,56 @@ if (ttcPrice > 0) {
 
 query += "WHERE idPurchase = " + idPurchase;
 
-/*if (name != nullptr && name != "" && firstName != nullptr && firstName != "" && birthDate != nullptr && birthDate != "01/01/1900" && firstPurchaseDate != nullptr && firstPurchaseDate != "01/01/1900") {
-	query = "";
-}*/
+//if (name != nullptr && name != "" && firstName != nullptr && firstName != "" && birthDate != nullptr && birthDate != "01/01/1900" && firstPurchaseDate != nullptr && firstPurchaseDate != "01/01/1900") {
+//	query = "";
+//}
 
 return query;
-}
+}*/
 
-System::String^ DB::Mapper::updadeAddress(int idAddress, System::String^ StreetName, int StreetNumber, int idCity) {
+//System::String^ DB::Mapper::updadeAddress(int idAddress, System::String^ StreetName, int StreetNumber, int idCity) {
+//
+//}
+//
+//System::String^ DB::Mapper::updadeAddressCity(int idAddress, System::String^ streetName, int streetNumber, System::String^ cityName) {
+//
+//}
+//
+//System::String^ DB::Mapper::updadeCity(int idCity, System::String^ cityName) {
+//
+//}
+//
+//System::String^ DB::Mapper::updadePaymentMethod(int idPaymentMethod, int idPurchase, System::String^ name, System::String^ firstName, float amount, int idPaymentType) {
+//
+//}
 
-}
+//System::String^ DB::Mapper::updadePaymentType(int idPaymentType, System::String^ typeName) {
+//	bool ajout = false;
+//	System::String^ query = gcnew System::String(" UPDATE PaymentType ");
+//
+//	query += "SET ";
+//
+//	if (typeName != nullptr && typeName != "") {
+//		query += "typeName = '" + typeName + "'";
+//		ajout = true;
+//	}
+//
+//	query += "WHERE idPaymentType = " + idPaymentType;
+//
+//	/*if (name != nullptr && name != "" && firstName != nullptr && firstName != "" && birthDate != nullptr && birthDate != "01/01/1900" && firstPurchaseDate != nullptr && firstPurchaseDate != "01/01/1900") {
+//		query = "";
+//	}*/
+//
+//	return query;
+//}
 
-System::String^ DB::Mapper::updadeAddressCity(int idAddress, System::String^ streetName, int streetNumber, System::String^ cityName) {
 
-}
 
-System::String^ DB::Mapper::updadeCity(int idCity, System::String^ cityName) {
 
-}
 
-System::String^ DB::Mapper::updadePaymentMethod(int idPaymentMethod, int idPurchase, System::String^ name, System::String^ firstName, float amount, int idPaymentType) {
 
-}
 
-System::String^ DB::Mapper::updadePaymentType(int idPaymentType, System::String^ typeName) {
-	bool ajout = false;
-	System::String^ query = gcnew System::String(" UPDATE PaymentType ");
 
-	query += "SET ";
-
-	if (typeName != nullptr && typeName != "") {
-		query += "typeName = '" + typeName + "'";
-		ajout = true;
-	}
-
-	query += "WHERE idPaymentType = " + idPaymentType;
-
-	/*if (name != nullptr && name != "" && firstName != nullptr && firstName != "" && birthDate != nullptr && birthDate != "01/01/1900" && firstPurchaseDate != nullptr && firstPurchaseDate != "01/01/1900") {
-		query = "";
-	}*/
-
-	return query;
-}
 
 System::String^ DB::Mapper::deleteEmployee(int idEmployee) {
 	System::String^ query = gcnew System::String("DELETE FROM Employee WHERE idEmployee = " + idEmployee + " ; DELETE FROM manage WHERE subordinate = " + idEmployee + " ; DELETE FROM manage WHERE superior = " + idEmployee);

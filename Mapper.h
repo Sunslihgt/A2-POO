@@ -3,7 +3,7 @@
 namespace DB {
 	ref class Mapper {
 	public:
-		
+
 		/*static System::String^ selectEmployeeById(int id);
 		static System::String^ selectClientById(int id);
 		static System::String^ selectItemById(int id);
@@ -38,18 +38,18 @@ namespace DB {
 		static System::String^ createPaymentMethod(int idPurchase, System::String^ name, System::String^ firstName, float amount, int idPaymentType);
 		static System::String^ createPaymentMethodPaymentType(int idPurchase, System::String^ name, System::String^ firstName, float amount, int paymentTypeName);
 		static System::String^ createPaymentType(System::String^ paymentTypeName);*/
-						 
+
 		static System::String^ updadeEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity);
 		static System::String^ updadeClient(int idClient, System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
 		static System::String^ updadeItem(int idItem, System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate);
 		static System::String^ updadePurchasedItem(int idPurchasedItem, int idItem, int purchasedQuantity, float totalPrice, float vatAmount);
 		static System::String^ updadePurchase(int idPurchase, int idClient, int idPaymentMethod, System::DateTime^ purchaseDate, System::DateTime^ payDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice);
-		static System::String^ updadePurchaseNoPayment(int idPurchase, int idClient, System::DateTime^ purchaseDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice);
+		/*static System::String^ updadePurchaseNoPayment(int idPurchase, int idClient, System::DateTime^ purchaseDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice);
 		static System::String^ updadeAddress(int idAddress, System::String^ streetName, int streetNumber, int idCity);
 		static System::String^ updadeAddressCity(int idAddress, System::String^ streetName, int streetNumber, System::String^ cityName);
 		static System::String^ updadeCity(int idCity, System::String^ cityName);
 		static System::String^ updadePaymentMethod(int idPaymentMethod, int idPurchase, System::String^ name, System::String^ firstName, float amount, int idPaymentType);
-		static System::String^ updadePaymentType(int idPaymentType, System::String^ paymentTypeName);
+		static System::String^ updadePaymentType(int idPaymentType, System::String^ paymentTypeName);*/
 
 		static System::String^ deleteEmployee(int idEmployee);
 		static System::String^ deleteClient(int idClient);
@@ -62,8 +62,8 @@ namespace DB {
 		static System::String^ deleteCity(int idCity);
 		static System::String^ deletePaymentMethod(int idPaymentMethod);
 		static System::String^ deletePaymentType(int idPaymentType);
-		
-		
+
+
 
 
 
@@ -89,5 +89,6 @@ namespace DB {
 	private:
 		const static int MIN_BIRTHYEAR = 1901;
 		const static int MIN_PURCHASEYEAR = 2000;
+		const static System::DateTime^ MIN_DATETIME = gcnew System::DateTime(1900, 01, 01);
 	};
 }
