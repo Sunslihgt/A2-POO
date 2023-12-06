@@ -355,36 +355,56 @@ System::String^ DB::Mapper::searchPaymentTypes(System::String^ typeName) {
 	return query;
 }
 
-/*System::String^ DB::Mapper::createEmployee(System::String^ name, System::String^ fistName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity) {
+System::String^ DB::Mapper::createEmployee(System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity) {
+	System::String^ query = gcnew System::String(" INSERT INTO Employee (name, firstName, startDate, streetName, streetNumber, idCity) OUTPUT Inserted.idEmployee VALUES('" + name +"', '" + firstName + "', '" + startDate + "', '" + streetName + "', " + streetNumber + ")");
+}
+
+System::String^ DB::Mapper::createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
+	System::String^ query = gcnew System::String(" INSERT INTO Client (name, firstName, birthDate, firstPurchaseDate) OUTPUT Inserted.idClient VALUES('" + name + "', '" + firstName + "', '" + birthDate->ToString("yyyy-MM-dd") + "', '" + firstPurchaseDate->ToString("yyyy-MM-dd") + "')");
 
 }
 
-System::String^ DB::Mapper::createEmployeeCity(name, firstName, startDate, streetName, streetNumber, cityName) {
+System::String^ DB::Mapper::createItem(System::String^ name, int reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate) {
+	System::String^ query = gcnew System::String(" INSERT INTO Item (name, reference, quantity, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate) OUTPUT Inserted.idItem VALUES('" + name + "', " + reference + ", " + quantity + ", " + availableQuantity + ", " + availableQuantity + ", " + quantityThreshold + ", " + supplierPrice + ", " + unitPrice + ", " + vatRate + ")");
 
 }
 
-System::String^ DB::Mapper::createClient(name, firstName, birthDate, firstPurchaseDate) {
+System::String^ DB::Mapper::createPurchasedItem(int itemAmount, float totalPrice, float vatAmount, int idPurchase, int idItem) {
+	System::String^ query = gcnew System::String(" INSERT INTO PurchasedItem (itemAmount, totalPrice, vatAmount, idPurchase, idItem) OUTPUT Inserted.idPurchasedItem VALUES(" + itemAmount + ", " + totalPrice + ", " + vatAmount + ", " + idPurchase + ", " + idItem + ")");
 
 }
 
-System::String^ DB::Mapper::createItem(name, reference, quantify, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate) {
+System::String^ DB::Mapper::createPurchase(System::DateTime^ purchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice, int idPaymentMethod, int idClient){
+	System::String^ query = gcnew System::String(" INSERT INTO Purchase (purchaseDate, payDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice, idPaymentMethod, idClient) OUTPUT Inserted.idPurchase VALUES(" + purchaseDate->ToString("yyyy-MM-dd") + ", " + payDate->ToString("yyyy-MM-dd") + ", " + deliveryDate->ToString("yyyy-MM-dd") + ", " + discountAmount + ", " + dutyFreePrice + ", " + vatAmount + ", " + ttcPrice + ", " + idPaymentMethod + ", " + idClient + ")");
 
 }
 
-System::String^ DB::Mapper::createPurchasedItem(idItem, purchasedQuantity, totalPrice, vatAmount) {
+System::String^ DB::Mapper::createAddress(System::String^ streetName, int streetNumber, int idCity) {
+	System::String^ query = gcnew System::String(" INSERT INTO Address (streetName, streetNumber, idCity) OUTPUT Inserted.idAddress VALUES('" + streetName + "', " + streetNumber + ", " + idCity + ")");
 
 }
 
-System::String^ DB::Mapper::createPurchase(idClient, idPaymentMethod, purchaseDate, payDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice)
-{
+System::String^ DB::Mapper::createCity(System::String^ cityName) {
+	System::String^ query = gcnew System::String(" INSERT INTO City (cityName) OUTPUT Inserted.idCity VALUES('" + cityName + "')");
+ 
+}
+
+System::String^ DB::Mapper::createPaymentMethod(System::String^ name, System::String^ firstName, float amount, int idPaymentType) {
+	System::String^ query = gcnew System::String(" INSERT INTO PaymentMethod (name, firstName, amount, idPaymentType) OUTPUT Inserted.idPaymentMethod VALUES('" + name + "', '" + firstName + "', " + amount + ", " + idPaymentType + ")");
 
 }
 
-System::String^ DB::Mapper::createPurchaseNoPayment(idClient, purchaseDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice) {
+System::String^ DB::Mapper::createPaymentType(System::String^ typeName) {
+	System::String^ query = gcnew System::String(" INSERT INTO PaymentType (typeName) OUTPUT Inserted.idPaymentType VALUES('" + typeName + "')");
 
 }
 
-System::String^ DB::Mapper::createAddress(streetName, streetNumber, idCity) {
+/*
+System::String^ DB::Mapper::createEmployeeCity(System::String^ name, System::String^ firstName, startDate, System::String^ streetName, int streetNumber, cityName) {
+
+}
+
+System::String^ DB::Mapper::createPurchaseNoPayment(clientId, purchaseDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice) {
 
 }
 
@@ -392,19 +412,7 @@ System::String^ DB::Mapper::createAddressCity(streetName, streetNumber, cityName
 
 }
 
-System::String^ DB::Mapper::createCity(cityName) {
-
-}
-
-System::String^ DB::Mapper::createPaymentMethod(idPurchase, name, firstName, amount, idPaymentType) {
-
-}
-
-System::String^ DB::Mapper::createPaymentMethodPaymentType(idPurchase, name, firstName, amount, paymentTypeName) {
-
-}
-
-System::String^ DB::Mapper::createPaymentType(paymentTypeName) {
+System::String^ DB::Mapper::createPaymentMethodPaymentType(purchaseId, name, firstName, amount, paymentTypeName) {
 
 }*/
 

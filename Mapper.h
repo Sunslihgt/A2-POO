@@ -24,17 +24,32 @@ namespace DB {
 		static System::String^ searchPaymentMethods(System::String^ name, System::String^ firstName);
 		static System::String^ searchPaymentTypes(System::String^ typeName);
 
-		/*static System::String^ createEmployee(System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity);
-		static System::String^ createEmployeeCity(System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, System::String^ cityName);
+		static System::String^ createEmployee(System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity);
 		static System::String^ createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
-		static System::String^ createItem(System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate);
-		static System::String^ createPurchasedItem(int idItem, int purchasedQuantity, float totalPrice, float vatAmount);
-		// static System::String^ createPurchasedItemToPurchase(idPurchase, idPurchaseItem);
-		static System::String^ createPurchase(int idClient, int idPaymentMethod, System::DateTime^ purchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice);
-		static System::String^ createPurchaseNoPayment(int idClient, System::DateTime^ purchaseDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice);
+		static System::String^ createItem(System::String^ name, int reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate);
+		static System::String^ createPurchasedItem(int itemAmount, float totalPrice, float vatAmount, int idPurchase, int idItem);
+		static System::String^ createPurchase(System::DateTime^ purchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice, int idPaymentMethod, int idClient);		
 		static System::String^ createAddress(System::String^ streetName, int streetNumber, int idCity);
-		static System::String^ createAddressCity(System::String^ streetName, int streetNumber, System::String^ cityName);
 		static System::String^ createCity(System::String^ cityName);
+		static System::String^ createPaymentMethod(System::String^ name, System::String^ firstName, float amount, int idPaymentType);
+		static System::String^ createPaymentType(System::String^ paymentTypeName);
+		//static System::String^ createEmployeeCity(System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, System::String^ cityName);
+		//static System::String^ createPurchaseNoPayment(int clientId, System::DateTime^ purchaseDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice);
+		//static System::String^ createAddressCity(System::String^ streetName, int streetNumber, System::String^ cityName);
+		//static System::String^ createPaymentMethodPaymentType(int purchaseId, System::String^ name, System::String^ firstName, float amount, int paymentTypeName);
+		
+		/*
+		static System::String^ updadeEmployee(int employeeId, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int cityId);
+		static System::String^ updadeClient(int clientId, System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
+		static System::String^ updadeItem(int itemId, System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate);
+		static System::String^ updadePurchaseItem(int purchasedItemId, int itemId, int purchasedQuantity, float totalPrice, float vatAmount);
+		static System::String^ updadePurchase(int purshaseId, int clientId, int paymentMethodId, System::DateTime^ purchaseDate, System::DateTime^ payDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice);
+		static System::String^ updadePurchaseNoPayment(int purchaseId, int clientId, System::DateTime^ purchaseDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice);
+		static System::String^ updadeAddress(int addressId, System::String^ streetName, int streetNumber, int cityId);
+		static System::String^ updadeAddressCity(int addressId, System::String^ streetName, int streetNumber, System::String^ cityName);
+		static System::String^ updadeCity(int cityId, System::String^ cityName);
+		static System::String^ updadePaymentMethod(int paymentMethodId, int purchaseId, System::String^ name, System::String^ firstName, float amount, int paymentTypeId);
+		static System::String^ updadePaymentType(int paymentTypeId, int paymentTypeName);
 		static System::String^ createPaymentMethod(int idPurchase, System::String^ name, System::String^ firstName, float amount, int idPaymentType);
 		static System::String^ createPaymentMethodPaymentType(int idPurchase, System::String^ name, System::String^ firstName, float amount, int paymentTypeName);
 		static System::String^ createPaymentType(System::String^ paymentTypeName);*/
