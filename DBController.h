@@ -18,6 +18,5 @@ namespace DB {
 		System::Data::SqlClient::SqlConnection^ sqlConnection;
 		System::Data::SqlClient::SqlCommand^ sqlCommand;
 		System::Data::SqlClient::SqlDataAdapter^ sqlDataAdapter;
-		System::Data::DataSet^ sqlDataSet;
 	};
 }

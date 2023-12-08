@@ -44,3 +44,15 @@ NS_Services::Client^ NS_Services::Services::getClientById(int idClient) {
 		return nullptr;
 	}
 }
+
+System::Data::DataSet^ NS_Services::Services::selectClientDeliveryAddressesByIdClient(int idClient) {
+	System::String^ sql = DB::Mapper::selectClientDeliveryAddressesByIdClient(idClient);
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+	return dataSet;
+}
+
+System::Data::DataSet^ NS_Services::Services::selectClientBillingAddressesByIdClient(int idClient) {
+	System::String^ sql = DB::Mapper::selectClientBillingAddressesByIdClient(idClient);
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+	return dataSet;
+}

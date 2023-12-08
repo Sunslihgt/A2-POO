@@ -27,6 +27,8 @@ namespace NS_Services {
 		System::Data::DataSet^ Services::Services::searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
 		NS_Services::Client^ createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
 		NS_Services::Client^ getClientById(int idClient);
+		System::Data::DataSet^ selectClientDeliveryAddressesByIdClient(int idClient);
+		System::Data::DataSet^ selectClientBillingAddressesByIdClient(int idClient);
 
 		
 		/*

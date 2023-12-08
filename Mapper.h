@@ -4,7 +4,7 @@ namespace DB {
 	ref class Mapper {
 	public:
 
-		static System::String^ selectClientById(int id);
+		static System::String^ selectClientById(int idClient);
 		/*static System::String^ selectEmployeeById(int id);
 		static System::String^ selectItemById(int id);
 		static System::String^ selectPurchasedItemById(int id);
@@ -13,6 +13,10 @@ namespace DB {
 		static System::String^ selectCityById(int id);
 		static System::String^ selectPaymentMethodById(int id);
 		static System::String^ selectPaymentTypeById(int id);*/
+
+		static System::String^ selectClientDeliveryAddressesByIdClient(int idClient);
+		static System::String^ selectClientBillingAddressesByIdClient(int idClient);
+
 
 		static System::String^ searchEmployees(System::String^ name, System::String^ firstName, System::String^ streetName, int streetNumber, System::String^ cityName);
 		static System::String^ searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);

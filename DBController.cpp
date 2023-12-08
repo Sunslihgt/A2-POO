@@ -11,7 +11,6 @@ namespace DB {
 		this->sqlConnection = gcnew System::Data::SqlClient::SqlConnection(connectionString);
 		this->sqlCommand = gcnew System::Data::SqlClient::SqlCommand(gcnew System::String("Rien"), this->sqlConnection);
 		this->sqlDataAdapter = gcnew System::Data::SqlClient::SqlDataAdapter();
-		this->sqlDataSet = gcnew System::Data::DataSet();
 
 		this->sqlCommand->CommandType = System::Data::CommandType::Text;
 
@@ -29,18 +28,13 @@ namespace DB {
 	}
 
 	System::Data::DataSet^ DBController::getRows(System::String^ sql) {
-		this->sqlDataSet->Clear();
+		System::Data::DataSet^ dataSet = gcnew System::Data::DataSet();
 		this->sqlCommand->CommandText = sql;
 		this->sqlDataAdapter->SelectCommand = this->sqlCommand;
-		this->sqlDataAdapter->Fill(this->sqlDataSet);
+		this->sqlDataAdapter->Fill(dataSet);
 
-		return this->sqlDataSet;
+		return dataSet;
 	}
-
-	//System::Data::DataSet^ DBController::getRow(System::String^ sql) {
-	//	throw gcnew System::NotImplementedException();
-	//	// TODO: insérer une instruction return ici
-	//}
 
 	// Exécute une requête de type "INSERT INTO"
 	// Renvoit l'id de l'objet créé ou -1 en cas d'erreur

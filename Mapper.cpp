@@ -84,6 +84,16 @@ System::String^ DB::Mapper::selectClientById(int idClient) {
 	return query;
 }
 
+System::String^ DB::Mapper::selectClientDeliveryAddressesByIdClient(int idClient) {
+	System::String^ query = gcnew System::String(" SELECT a.idAddress, a.streetNumber, a.streetName, c.cityName FROM [A2POO-AzureDB].[dbo].[delivery_address] da INNER JOIN [A2POO-AzureDB].[dbo].[Address] a ON da.idAddress = a.idAddress INNER JOIN [A2POO-AzureDB].[dbo].[City] c ON a.idCity = c.idCity WHERE da.idClient = " + idClient);
+	return query;
+}
+
+System::String^ DB::Mapper::selectClientBillingAddressesByIdClient(int idClient) {
+	System::String^ query = gcnew System::String(" SELECT a.idAddress, a.streetNumber, a.streetName, c.cityName FROM [A2POO-AzureDB].[dbo].[billing_address] ba INNER JOIN [A2POO-AzureDB].[dbo].[Address] a ON ba.idAddress = a.idAddress INNER JOIN [A2POO-AzureDB].[dbo].[City] c ON a.idCity = c.idCity WHERE ba.idClient = " + idClient);
+	return query;
+}
+
 System::String^ DB::Mapper::searchEmployees(System::String^ name, System::String^ firstName, System::String^ streetName, int streetNumber, System::String^ cityName) {
 	System::String^ query = gcnew System::String(" SELECT e.idEmployee, e.name, e.firstName, e.startDate, a.streetName, a.streetNumber, ci.cityName FROM [A2POO-AzureDB].[dbo].[Employee] e INNER JOIN [A2POO-AzureDB].[dbo].[Address] a ON e.idAddress = a.idAddress INNER JOIN [A2POO-AzureDB].[dbo].[City] ci ON a.idCity = ci.idCity");
 

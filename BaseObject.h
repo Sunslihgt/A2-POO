@@ -11,5 +11,7 @@ namespace NS_Services {
 		virtual bool create() = 0;
 		virtual bool update() = 0;
 		virtual bool deleteObject() = 0;
+
+		int getId();
 	};
 }
