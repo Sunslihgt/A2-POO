@@ -3,7 +3,7 @@
 #include "EmployeeEditorForm.h"
 #include "Services.h"
 
-namespace IHM {
+namespace NS_IHM {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -261,7 +261,7 @@ namespace IHM {
 			this->btnCreateEmployee->TabIndex = 2;
 			this->btnCreateEmployee->Text = L"Créer";
 			this->btnCreateEmployee->UseVisualStyleBackColor = true;
-			this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &EmployeeListForm::btnCreateEmployeeClick);
+			//this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &EmployeeListForm::btnCreateEmployeeClick);
 			// 
 			// gpbOpen
 			// 
@@ -348,11 +348,11 @@ namespace IHM {
 		}
 #pragma endregion
 	private: System::Void employeeListLoad(System::Object^ sender, System::EventArgs^ e) {
-		DataSet^ data = services->searchEmployees(this->txtName->Text, this->txtFirstName->Text, this->txtStreetName->Text, this->numStreetNumber->Value, this->txtCityName->Text);
+		DataSet^ data = services->searchEmployees(this->txtName->Text, this->txtFirstName->Text, this->txtStreetName->Text, System::Convert::ToInt32(this->numStreetNumber->Value), this->txtCityName->Text);
 		this->dgvEmployees->DataSource = data->Tables[0];
 	}
 	private: System::Void btnSearchEmployeesClick(System::Object^ sender, System::EventArgs^ e) {
-		DataSet^ data = services->searchEmployees(this->txtName->Text, this->txtFirstName->Text, this->txtStreetName->Text, this->numStreetNumber->Value, this->txtCityName->Text);
+		DataSet^ data = services->searchEmployees(this->txtName->Text, this->txtFirstName->Text, this->txtStreetName->Text, System::Convert::ToInt32(this->numStreetNumber->Value), this->txtCityName->Text);
 		this->dgvEmployees->DataSource = data->Tables[0];
 	}
 

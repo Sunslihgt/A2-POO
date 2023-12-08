@@ -1,6 +1,6 @@
 #pragma once
 
-namespace DB {
+namespace NS_DB {
 	ref class DBController {
 	public:
 		DBController();

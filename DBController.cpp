@@ -1,6 +1,6 @@
 #include "DBController.h"
 
-namespace DB {
+namespace NS_DB {
 	DBController::DBController() {
 		this->connected = false;
 	}

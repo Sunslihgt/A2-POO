@@ -11,6 +11,6 @@ int __clrcall WinMain(array<String^>^ args) {
 
 	System::DateTime::Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-	IHM::ConnectionForm connectionForm;
+	NS_IHM::ConnectionForm connectionForm;
 	Application::Run(% connectionForm);
 }

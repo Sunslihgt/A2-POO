@@ -3,7 +3,7 @@
 #include "ItemEditorForm.h"
 #include "Services.h"
 
-namespace IHM {
+namespace NS_IHM {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -183,7 +183,7 @@ namespace IHM {
 			this->btnCreateEmployee->TabIndex = 2;
 			this->btnCreateEmployee->Text = L"Créer";
 			this->btnCreateEmployee->UseVisualStyleBackColor = true;
-			this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &ItemListForm::btnCreateItemClick);
+			//this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &ItemListForm::btnCreateItemClick);
 			// 
 			// gpbOpen
 			// 

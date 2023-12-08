@@ -2,7 +2,7 @@
 
 #include "Services.h"
 
-namespace IHM {
+namespace NS_IHM {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -479,6 +479,6 @@ namespace IHM {
 	private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {}
 
 	private:
-		System::Void IHM::StatisticsForm::addFloatTextBoxConstraints();
+		System::Void StatisticsForm::addFloatTextBoxConstraints();
 	};
 }

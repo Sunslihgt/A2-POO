@@ -2,7 +2,7 @@
 #include "Mapper.h"
 
 NS_Services::Services::Services() {
-	this->dbController = gcnew DB::DBController();
+	this->dbController = gcnew NS_DB::DBController();
 }
 
 bool NS_Services::Services::connectDB(System::String^ login, System::String^ password) {
@@ -15,19 +15,19 @@ System::Data::DataSet^ NS_Services::Services::searchClients(System::String^ name
 	return data;
 }
 
-System::Data::DataSet^ Services::Services::searchEmployees(System::String^ name, System::String^ firstName, System::String^ streetName, int streetNumber, System::String^ cityName) {
+System::Data::DataSet^ NS_Services::Services::searchEmployees(System::String^ name, System::String^ firstName, System::String^ streetName, int streetNumber, System::String^ cityName) {
 	System::String^ sql = DB::Mapper::searchEmployees(name, firstName, streetName, streetNumber, cityName);
 	System::Data::DataSet^ data = this->dbController->getRows(sql);
 	return data;
 }
 
-System::Data::DataSet^ Services::Services::searchItems(System::String^ name, System::String^ reference) {
+System::Data::DataSet^ NS_Services::Services::searchItems(System::String^ name, System::String^ reference) {
 	System::String^ sql = DB::Mapper::searchItems(name, reference);
 	System::Data::DataSet^ data = this->dbController->getRows(sql);
 	return data;
 }
 
-System::Data::DataSet^ Services::Services::searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ purchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate) {
+System::Data::DataSet^ NS_Services::Services::searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ purchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate) {
 	System::String^ sql = DB::Mapper::searchPurchases(clientName, clientFirstName, purchaseDate, payDate, deliveryDate);
 	System::Data::DataSet^ data = this->dbController->getRows(sql);
 	return data;

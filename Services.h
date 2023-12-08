@@ -17,17 +17,17 @@
 namespace NS_Services {
 	public ref class Services {
 	private:
-		DB::DBController^ dbController = gcnew DB::DBController();
+		NS_DB::DBController^ dbController = gcnew NS_DB::DBController();
 
 	public:
 		Services();
 
 		bool connectDB(System::String^ login, System::String^ password);
 
-		System::Data::DataSet^ Services::Services::searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
-		System::Data::DataSet^ Services::Services::searchEmployees(System::String^ name, System::String^ firstName, System::String^ streetName, int streetNumber, System::String^ cityName);
-		System::Data::DataSet^ Services::Services::searchItems(System::String^ name, System::String^ reference);
-		System::Data::DataSet^ Services::Services::searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ PurchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate);
+		System::Data::DataSet^ searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
+		System::Data::DataSet^ searchEmployees(System::String^ name, System::String^ firstName, System::String^ streetName, int streetNumber, System::String^ cityName);
+		System::Data::DataSet^ searchItems(System::String^ name, System::String^ reference);
+		System::Data::DataSet^ searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ PurchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate);
 
 		NS_Services::Client^ createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
 

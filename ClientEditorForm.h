@@ -3,7 +3,7 @@
 #include "Services.h"
 #include "Client.h"
 
-namespace IHM {
+namespace NS_IHM {
 
 	using namespace System;
 	using namespace System::ComponentModel;

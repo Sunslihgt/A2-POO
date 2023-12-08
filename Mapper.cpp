@@ -206,7 +206,7 @@ System::String^ DB::Mapper::searchItems(System::String^ name, System::String^ re
 	return query;
 }
 
-System::String^ DB::Mapper::searchPurchasedItems(System::String^ name, System::String^ reference) {
+System::String^ DB::Mapper::searchPurchasedItems(int idItem, System::String^ name, System::String^ reference) {
 	System::String^ query = gcnew System::String(" SELECT pi.idPurchasedItem, pi.itemAmount, pi.totalPrice, pi.vatAmount, pi.idPurchase, pi.idItem, i.name, i.reference FROM [A2POO-AzureDB].[dbo].[PurchasedItem] pi INNER JOIN [A2POO-AzureDB].[dbo].[Item] i ON pi.idItem = i.idItem");
 
 	bool conditions = false;
@@ -237,7 +237,7 @@ System::String^ DB::Mapper::searchPurchasedItems(System::String^ name, System::S
 	return query;
 }
 
-System::String^ DB::Mapper::searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ PurchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate) {
+System::String^ DB::Mapper::searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ purchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate) {
 	System::String^ query = gcnew System::String(" SELECT p.idPurchase, cl.name, cl.firstName, p.purchaseDate, p.payDate, p.deliveryDate, p.discountAmount, p.dutyFreePrice, p.vatAmount, p.ttcPrice, p.idPaymentAddress, p.idDeliveryAddress, p.idClient FROM [A2POO-AzureDB].[dbo].[Purchase] p INNER JOIN [A2POO-AzureDB].[dbo].[Client] cl ON p.idClient = cl.idClient");
 
 	bool conditions = false;
@@ -1018,20 +1018,20 @@ System::String^ DB::Mapper::deletePurchase(int idPurchase) {
 	return query;
 }
 
-System::String^ DB::Mapper::deletePurchaseNoPayment(int idPurchaseNoPayment) {
-	System::String^ query = gcnew System::String("DELETE FROM ? WHERE ? = " + idPurchaseNoPayment);
-	return query;
-}
+//System::String^ DB::Mapper::deletePurchaseNoPayment(int idPurchaseNoPayment) {
+//	System::String^ query = gcnew System::String("DELETE FROM ? WHERE ? = " + idPurchaseNoPayment);
+//	return query;
+//}
 
 System::String^ DB::Mapper::deleteAddress(int idAddress) {
 	System::String^ query = gcnew System::String("DELETE FROM Address WHERE idAddress = " + idAddress + " ; DELETE FROM Client WHERE idAddress = " + idAddress + " ; DELETE FROM Purchase WHERE idPaymentAddress = " + idAddress + " ; DELETE FROM Purchase WHERE idDeliveryAddress = " + idAddress + " ; DELETE FROM live WHERE idClient = " + idAddress + " ; DELETE FROM billing_address WHERE idClient = " + idAddress);
 	return query;
 }
 
-System::String^ DB::Mapper::deleteAddressCity(int idAddressCity) {
-	System::String^ query = gcnew System::String("DELETE FROM ? WHERE ? = " + idAddressCity);
-	return query;
-}
+//System::String^ DB::Mapper::deleteAddressCity(int idAddressCity) {
+//	System::String^ query = gcnew System::String("DELETE FROM ? WHERE ? = " + idAddressCity);
+//	return query;
+//}
 
 System::String^ DB::Mapper::deleteCity(int idCity) {
 	System::String^ query = gcnew System::String("DELETE FROM City WHERE idCity = " + idCity + " ; DELETE FROM Address WHERE idCity = " + idCity);

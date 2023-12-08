@@ -3,7 +3,7 @@
 #include "PurchaseEditorForm.h"
 #include "Services.h"
 
-namespace IHM {
+namespace NS_IHM {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -17,7 +17,7 @@ namespace IHM {
 	/// </summary>
 	public ref class PurchaseListForm : public System::Windows::Forms::Form {
 	public:
-		PurchaseListForm(NS_Services::Services^ sercices) {
+		PurchaseListForm(NS_Services::Services^ services) {
 			this->services = services;
 			InitializeComponent();
 			//
@@ -260,7 +260,7 @@ namespace IHM {
 			this->btnCreateEmployee->TabIndex = 2;
 			this->btnCreateEmployee->Text = L"Créer";
 			this->btnCreateEmployee->UseVisualStyleBackColor = true;
-			this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &PurchaseListForm::btnCreatePurchaseClick);
+			//this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &PurchaseListForm::btnCreatePurchaseClick);
 			// 
 			// gpbOpen
 			// 
@@ -346,12 +346,12 @@ namespace IHM {
 		}
 #pragma endregion
 	private: System::Void purchaseListLoad(System::Object^ sender, System::EventArgs^ e) {
-		DataSet^ data = services->searchPurchases(this->txtClientName->Text, this->txtClientFirstName->Text, this->dtpPurchase->Value, this->dtpPay->Value, this->dtpDelivery->Value);
+		DataSet^ data = this->services->searchPurchases(this->txtName->Text, this->txtFirstName->Text, this->dtpOrder->Value, this->dtpPay->Value, this->dtpDelivery->Value);
 		this->dgvPurchases->DataSource = data->Tables[0];
 	}
 
 	private: System::Void btnSearchPurchasesClick(System::Object^ sender, System::EventArgs^ e) {
-		DataSet^ data = services->searchPurchases(this->txtClientName->Text, this->txtClientFirstName->Text, this->dtpPurchase->Value, this->dtpPay->Value, this->dtpDelivery->Value);
+		DataSet^ data = this->services->searchPurchases(this->txtName->Text, this->txtFirstName->Text, this->dtpOrder->Value, this->dtpPay->Value, this->dtpDelivery->Value);
 		this->dgvPurchases->DataSource = data->Tables[0];
 	}
 	};
