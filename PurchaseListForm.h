@@ -346,12 +346,13 @@ namespace IHM {
 		}
 #pragma endregion
 	private: System::Void purchaseListLoad(System::Object^ sender, System::EventArgs^ e) {
-
+		DataSet^ data = services->searchPurchases(this->txtClientName->Text, this->txtClientFirstName->Text, this->dtpPurchase->Value, this->dtpPay->Value, this->dtpDelivery->Value);
+		this->dgvPurchases->DataSource = data->Tables[0];
 	}
 
-	private: System::Void btnCreatePurchaseClick(System::Object^ sender, System::EventArgs^ e) {
-		PurchaseEditorForm^ purchaseEditorForm = gcnew PurchaseEditorForm(services, false);
-		purchaseEditorForm->ShowDialog();
+	private: System::Void btnSearchPurchasesClick(System::Object^ sender, System::EventArgs^ e) {
+		DataSet^ data = services->searchPurchases(this->txtClientName->Text, this->txtClientFirstName->Text, this->dtpPurchase->Value, this->dtpPay->Value, this->dtpDelivery->Value);
+		this->dgvPurchases->DataSource = data->Tables[0];
 	}
 	};
 }

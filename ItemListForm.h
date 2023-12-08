@@ -264,13 +264,15 @@ namespace IHM {
 
 		}
 #pragma endregion
+	
 	private: System::Void itemListLoad(System::Object^ sender, System::EventArgs^ e) {
-
+		DataSet^ data = services->searchItems(this->txtName->Text, this->txtReference->Text);
+		this->dgvItems->DataSource = data->Tables[0];
 	}
 
-	private: System::Void btnCreateItemClick(System::Object^ sender, System::EventArgs^ e) {
-		ItemEditorForm^ itemEditorForm = gcnew ItemEditorForm(services, false);
-		itemEditorForm->ShowDialog();
+	private: System::Void btnSearchItemsClick(System::Object^ sender, System::EventArgs^ e) {
+		DataSet^ data = services->searchItems(this->txtName->Text, this->txtReference->Text);
+		this->dgvItems->DataSource = data->Tables[0];
 	}
 	};
 }

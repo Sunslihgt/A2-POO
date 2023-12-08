@@ -25,7 +25,12 @@ namespace NS_Services {
 		bool connectDB(System::String^ login, System::String^ password);
 
 		System::Data::DataSet^ Services::Services::searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
+		System::Data::DataSet^ Services::Services::searchEmployees(System::String^ name, System::String^ firstName, System::String^ streetName, int streetNumber, System::String^ cityName);
+		System::Data::DataSet^ Services::Services::searchItems(System::String^ name, System::String^ reference);
+		System::Data::DataSet^ Services::Services::searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ PurchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate);
+
 		NS_Services::Client^ createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
+
 		NS_Services::Client^ getClientById(int idClient);
 		System::Data::DataSet^ selectClientDeliveryAddressesByIdClient(int idClient);
 		System::Data::DataSet^ selectClientBillingAddressesByIdClient(int idClient);
@@ -51,7 +56,10 @@ namespace NS_Services {
 		float getStoredValue(float vatPercent, float profitPercent, float unknownShrinkagePercent);
 		*/
 
+	
+	
 		// Date minimale pour qu'une date soit valide dans la base de données (01/01/1900)
 		const static System::DateTime^ MIN_DATETIME = DB::Mapper::MIN_DATETIME;
+	
 	};
 }
