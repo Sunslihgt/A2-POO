@@ -1,48 +1,5 @@
 #include "Mapper.h"
 
-/*System::String^ NS_Comp_Mappage::Mapper::Select(void) {
-	return " SELECT c.id IdClient, c.nom Nom, c.prenom Prenom, a.id IdAdresse, a.rue nomRue, a.numero numero, a.ville nomVille " +
-		" FROM [A2POO-AzureDB].[dbo].[Clients] c " +
-		" INNER JOIN [A2POO-AzureDB].[dbo].[Adresses] a " +
-		" ON c.IdAdresse = a.Id";
-}
-
-System::String^ NS_Comp_Mappage::DB::Mapper::Insert(void) {
-	return "INSERT INTO [A2POO-AzureDB].[dbo].[Clients] (id, nom, prenom) VALUES(" + this->Id + ", '" + this->nom + "','" + this->prenom + "');";
-}
-
-System::String^ NS_Comp_Mappage::DB::Mapper::Delete(void) {
-	return "DELETE FROM [A2POO-AzureDB].[dbo].[Clients] WHERE id = " + this->Id + ";";
-}
-
-System::String^ NS_Comp_Mappage::DB::Mapper::Update(void) {
-	return "UPDATE [A2POO-AzureDB].[dbo].[Clients] SET nom = '" + this->nom + "', prenom = '" + this->prenom + "' WHERE id = " + this->Id + ";";
-}
-
-void NS_Comp_Mappage::DB::Mapper::setId(int Id) {
-	this->Id = Id;
-}
-
-void NS_Comp_Mappage::DB::Mapper::setNom(System::String^ nom) {
-	this->nom = nom;
-}
-
-void NS_Comp_Mappage::DB::Mapper::setPrenom(System::String^ prenom) {
-	this->prenom = prenom;
-}
-
-int NS_Comp_Mappage::DB::Mapper::getId(void) {
-	return this->Id;
-}
-
-System::String^ NS_Comp_Mappage::DB::Mapper::getNom(void) {
-	return this->nom;
-}
-
-System::String^ NS_Comp_Mappage::DB::Mapper::getPrenom(void) {
-	return this->prenom;
-}*/
-
 System::String^ DB::Mapper::selectEmployeeById(int id) {
 	System::String^ query = gcnew System::String(" SELECT e.idEmployee, e.name, e.firstName, e.startDate, e.idAddress FROM [A2POO-AzureDB].[dbo].[Employee] e WHERE e.idEmployee = " + id);
 	return query;
