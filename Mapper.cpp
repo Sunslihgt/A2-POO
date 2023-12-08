@@ -55,6 +55,7 @@ System::String^ DB::Mapper::selectClientById(int id) {
 
 System::String^ DB::Mapper::selectItemById(int id) {
 	System::String^ query = gcnew System::String(" SELECT i.idItem, i.name, i.reference, i.quantity, i.availableQuantity, i.quantityThreshold, i.supplierPrice, i.unitPrice, i.vatRate FROM [A2POO-AzureDB].[dbo].[Item] i WHERE i.idItem = " + id);
+	return query;
 }
 
 System::String^ DB::Mapper::selectPurchasedItemById(int id) {
