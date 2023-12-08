@@ -4,7 +4,7 @@
 #include "PaymentType.h"
 
 namespace NS_Services {
-	ref class PaymentMethod : public BaseObject {
+	public ref class PaymentMethod : public BaseObject {
 	private:
 		System::String^ name;
 		System::String^ firstName;

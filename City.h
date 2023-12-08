@@ -3,7 +3,7 @@
 #include "BaseObject.h"
 
 namespace NS_Services {
-	ref class City : public BaseObject {
+	public ref class City : public BaseObject {
 	private:
 
 		System::String^ cityName;

@@ -4,7 +4,7 @@
 #include "City.h"
 
 namespace NS_Services {
-	ref class Address : public BaseObject {
+	public ref class Address : public BaseObject {
 	private:
 		System::String^ streetName;
 		int streetNumber;

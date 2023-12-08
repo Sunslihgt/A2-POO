@@ -11,6 +11,48 @@ bool NS_Services::Services::connectDB(System::String^ login, System::String^ pas
 
 System::Data::DataSet^ NS_Services::Services::searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
 	System::String^ sql = DB::Mapper::searchClients(name, firstName, birthDate, firstPurchaseDate);
-	System::Data::DataSet^ data = this->dbController->getRows(sql, "Clients");
+	System::Data::DataSet^ data = this->dbController->getRows(sql);
 	return data;
+}
+
+
+NS_Services::Client^ NS_Services::Services::createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
+	System::String^ sql = DB::Mapper::createClient(name, firstName, birthDate, firstPurchaseDate);
+	int id = this->dbController->createObject(sql);
+	if (id < 0) {
+		return nullptr;
+	}
+	return NS_Services::Services::getClientById(id);
+}
+
+NS_Services::Client^ NS_Services::Services::getClientById(int idClient) {
+	System::String^ sql = DB::Mapper::selectClientById(idClient);
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+	if (dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
+		return nullptr;
+	}
+	System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
+
+	try {
+		int id = (int) row[0];
+		System::String^ name = (System::String^) row[1];
+		System::String^ firstName = (System::String^) row[2];
+		System::DateTime^ birthDate = System::DateTime::Parse(System::Convert::ToString(row[3]));
+		System::DateTime^ firstOrderDate = System::DateTime::Parse(System::Convert::ToString(row[4]));;
+		return gcnew NS_Services::Client(id, name, firstName, birthDate, firstOrderDate);
+	} catch (System::Exception^ ex) {
+		return nullptr;
+	}
+}
+
+System::Data::DataSet^ NS_Services::Services::selectClientDeliveryAddressesByIdClient(int idClient) {
+	System::String^ sql = DB::Mapper::selectClientDeliveryAddressesByIdClient(idClient);
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+	return dataSet;
+}
+
+System::Data::DataSet^ NS_Services::Services::selectClientBillingAddressesByIdClient(int idClient) {
+	System::String^ sql = DB::Mapper::selectClientBillingAddressesByIdClient(idClient);
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+	return dataSet;
 }

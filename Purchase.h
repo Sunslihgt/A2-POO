@@ -6,7 +6,7 @@
 #include "Address.h"
 
 namespace NS_Services {
-	ref class Purchase : public BaseObject {
+	public ref class Purchase : public BaseObject {
 	private:
 
 		System::DateTime^ orderDate;
