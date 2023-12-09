@@ -1,48 +1,5 @@
 #include "Mapper.h"
 
-/*System::String^ NS_Comp_Mappage::Mapper::Select(void) {
-	return " SELECT c.id IdClient, c.nom Nom, c.prenom Prenom, a.id IdAdresse, a.rue nomRue, a.numero numero, a.ville nomVille " +
-		" FROM [A2POO-AzureDB].[dbo].[Clients] c " +
-		" INNER JOIN [A2POO-AzureDB].[dbo].[Adresses] a " +
-		" ON c.IdAdresse = a.Id";
-}
-
-System::String^ NS_Comp_Mappage::DB::Mapper::Insert(void) {
-	return "INSERT INTO [A2POO-AzureDB].[dbo].[Clients] (id, nom, prenom) VALUES(" + this->Id + ", '" + this->nom + "','" + this->prenom + "');";
-}
-
-System::String^ NS_Comp_Mappage::DB::Mapper::Delete(void) {
-	return "DELETE FROM [A2POO-AzureDB].[dbo].[Clients] WHERE id = " + this->Id + ";";
-}
-
-System::String^ NS_Comp_Mappage::DB::Mapper::Update(void) {
-	return "UPDATE [A2POO-AzureDB].[dbo].[Clients] SET nom = '" + this->nom + "', prenom = '" + this->prenom + "' WHERE id = " + this->Id + ";";
-}
-
-void NS_Comp_Mappage::DB::Mapper::setId(int Id) {
-	this->Id = Id;
-}
-
-void NS_Comp_Mappage::DB::Mapper::setNom(System::String^ nom) {
-	this->nom = nom;
-}
-
-void NS_Comp_Mappage::DB::Mapper::setPrenom(System::String^ prenom) {
-	this->prenom = prenom;
-}
-
-int NS_Comp_Mappage::DB::Mapper::getId(void) {
-	return this->Id;
-}
-
-System::String^ NS_Comp_Mappage::DB::Mapper::getNom(void) {
-	return this->nom;
-}
-
-System::String^ NS_Comp_Mappage::DB::Mapper::getPrenom(void) {
-	return this->prenom;
-}*/
-
 System::String^ DB::Mapper::selectEmployeeById(int id) {
 	System::String^ query = gcnew System::String(" SELECT e.idEmployee, e.name, e.firstName, e.startDate, e.idAddress FROM [A2POO-AzureDB].[dbo].[Employee] e WHERE e.idEmployee = " + id);
 	return query;
@@ -64,7 +21,7 @@ System::String^ DB::Mapper::selectPurchasedItemById(int id) {
 }
 
 System::String^ DB::Mapper::selectPurchaseById(int id) {
-	System::String^ query = gcnew System::String(" SELECT p.idPurchase, p.purchaseDate, p.payDate, p.deliveryDate, p.discountAmount, p.dutyFreePrice, p.vatAmount, p.ttcPrice, p.idPaymentAddress, p.idDeliveryAddress, p.idPaymentMethod, p.idClient FROM [A2POO-AzureDB].[dbo].[Purchase] p WHERE p.idPurchase = " + id);
+	System::String^ query = gcnew System::String(" SELECT p.idPurchase, p.purchaseDate, p.payDate, p.deliveryDate, p.discountAmount, p.dutyFreePrice, p.vatAmount, p.ttcPrice, p.idPaymentAddress, p.idDeliveryAddress, p.idClient FROM [A2POO-AzureDB].[dbo].[Purchase] p WHERE p.idPurchase = " + id);
 	return query;
 }
 
@@ -92,16 +49,6 @@ System::String^ DB::Mapper::selectPaymentTypeById(int id) {
 	System::String^ query = gcnew System::String(" SELECT pt.idPaymentType, pt.typeName FROM [A2POO-AzureDB].[dbo].[PaymentType] pt WHERE pt.idPaymentType = " + id);
 	return query;
 }
-
-//System::String^ DB::Mapper::selectClientDeliveryAddressesByIdClient(int idClient) {
-//	System::String^ query = gcnew System::String(" SELECT a.idAddress, a.streetNumber, a.streetName, c.cityName FROM [A2POO-AzureDB].[dbo].[delivery_address] da INNER JOIN [A2POO-AzureDB].[dbo].[Address] a ON da.idAddress = a.idAddress INNER JOIN [A2POO-AzureDB].[dbo].[City] c ON a.idCity = c.idCity WHERE da.idClient = " + idClient);
-//	return query;
-//}
-//
-//System::String^ DB::Mapper::selectClientBillingAddressesByIdClient(int idClient) {
-//	System::String^ query = gcnew System::String(" SELECT a.idAddress, a.streetNumber, a.streetName, c.cityName FROM [A2POO-AzureDB].[dbo].[billing_address] ba INNER JOIN [A2POO-AzureDB].[dbo].[Address] a ON ba.idAddress = a.idAddress INNER JOIN [A2POO-AzureDB].[dbo].[City] c ON a.idCity = c.idCity WHERE ba.idClient = " + idClient);
-//	return query;
-//}
 
 System::String^ DB::Mapper::searchEmployees(System::String^ name, System::String^ firstName, System::String^ streetName, int streetNumber, System::String^ cityName) {
 	System::String^ query = gcnew System::String(" SELECT e.idEmployee, e.name, e.firstName, e.startDate, a.streetName, a.streetNumber, ci.cityName FROM [A2POO-AzureDB].[dbo].[Employee] e INNER JOIN [A2POO-AzureDB].[dbo].[Address] a ON e.idAddress = a.idAddress INNER JOIN [A2POO-AzureDB].[dbo].[City] ci ON a.idCity = ci.idCity");
@@ -448,7 +395,7 @@ System::String^ DB::Mapper::createPaymentMethodPaymentType(purchaseId, name, fir
 
 }*/
 
-System::String^ DB::Mapper::updateEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity) {
+System::String^ DB::Mapper::updateEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, int idAddress) {
 	bool modification = false;
 	bool ajout = false;
 	System::String^ query = gcnew System::String(" UPDATE Employee SET ");
@@ -480,27 +427,12 @@ System::String^ DB::Mapper::updateEmployee(int idEmployee, System::String^ name,
 
 	query += " WHERE idEmployee = " + idEmployee + " ; UPDATE Address SET ";
 
-	if (streetName != nullptr && streetName != "") {
-		query += "streetName = '" + streetName + "'";
-		ajout = true;
-		modification = true;
-	}
-
-	if (streetNumber > 0) {
+	if (idAddress > 0) {
 		if (ajout) {
 			query += ", ";
 		}
 
-		query += "streetNumber = " + idCity;
-		modification = true;
-	}
-
-	if (idCity > 0) {
-		if (ajout) {
-			query += ", ";
-		}
-
-		query += "idCity = " + idCity;
+		query += "idAddress = " + idAddress;
 		modification = true;
 	}
 
@@ -627,13 +559,19 @@ System::String^ DB::Mapper::updateItem(int idItem, System::String^ name, System:
 	return query;
 }
 
-System::String^ DB::Mapper::updatePurchasedItem(int idPurchasedItem, int idItem, int itemAmount, float totalPrice, float vatAmount) {
+System::String^ DB::Mapper::updatePurchasedItem(int idPurchasedItem, int idItem, int idPurchase, int itemAmount, float totalPrice, float vatAmount) {
 	bool modification = false;
 	bool ajout = false;
 	System::String^ query = gcnew System::String(" UPDATE PurchasedItem SET ");
 
 	if (idItem > 0) {
 		query += "idItem = " + idItem;
+		ajout = true;
+		modification = true;
+	}
+
+	if (idPurchase > 0) {
+		query += "idPurchase = " + idPurchase;
 		ajout = true;
 		modification = true;
 	}
@@ -676,31 +614,12 @@ System::String^ DB::Mapper::updatePurchasedItem(int idPurchasedItem, int idItem,
 	return query;
 }
 
-System::String^ DB::Mapper::updatePurchase(int idPurchase, int idClient, int idPaymentMethod, System::DateTime^ purchaseDate, System::DateTime^ payDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice) {
+System::String^ DB::Mapper::updatePurchase(int idPurchase, System::DateTime^ purchaseDate, System::DateTime^ payDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice, int idPaymentAddress, int idDeliveryAddress, int idClient) {
 	bool modification = false;
 	bool ajout = false;
 	System::String^ query = gcnew System::String(" UPDATE Purchase SET ");
 
-	if (idClient > 0) {
-		query += "idCLient = " + idClient;
-		ajout = true;
-		modification = true;
-	}
-
-	if (idPaymentMethod > 0) {
-		if (ajout) {
-			query += ", ";
-		}
-
-		query += "idPaymentMethod = " + idPaymentMethod;
-		ajout = true;
-		modification = true;
-	}
-
 	if (purchaseDate != nullptr && (purchaseDate->System::DateTime::Compare(*purchaseDate, *MIN_DATETIME) > 0)) {
-		if (ajout) {
-			query += ", ";
-		}
 
 		query += "purchaseDate = '" + purchaseDate->ToString("yyyy-MM-dd") + "'";
 		ajout = true;
@@ -753,6 +672,36 @@ System::String^ DB::Mapper::updatePurchase(int idPurchase, int idClient, int idP
 		}
 
 		query += "ttcPrice = " + ttcPrice;
+		ajout = true;
+		modification = true;
+	}
+
+	if (idPaymentAddress > 0) {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "idPaymentAddress = " + idPaymentAddress;
+		ajout = true;
+		modification = true;
+	}
+
+	if (idDeliveryAddress > 0) {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "idDeliveryAddress = " + idDeliveryAddress;
+		ajout = true;
+		modification = true;
+	}
+
+	if (idClient > 0) {
+		if (ajout) {
+			query += ", ";
+		}
+
+		query += "idCLient = " + idClient;
 		modification = true;
 	}
 
@@ -998,7 +947,7 @@ System::String^ DB::Mapper::updateAddressCity(int idAddress, System::String^ str
 
 
 System::String^ DB::Mapper::deleteEmployee(int idEmployee) {
-	System::String^ query = gcnew System::String("DELETE FROM Employee WHERE idEmployee = " + idEmployee + " ; DELETE FROM manage WHERE subordinate = " + idEmployee + " ; DELETE FROM manage WHERE superior = " + idEmployee);
+	System::String^ query = gcnew System::String("DELETE FROM Employee WHERE idEmployee = " + idEmployee);
 	return query;
 }
 
@@ -1008,7 +957,7 @@ System::String^ DB::Mapper::deleteClient(int idClient) {
 }
 
 System::String^ DB::Mapper::deleteItem(int idItem) {
-	System::String^ query = gcnew System::String("DELETE FROM Item WHERE idItem = " + idItem + " ; DELETE FROM PurchasedItem WHERE idItem = " + idItem);
+	System::String^ query = gcnew System::String("DELETE FROM Item WHERE idItem = " + idItem);
 	return query;
 }
 
@@ -1018,7 +967,7 @@ System::String^ DB::Mapper::deletePurchasedItem(int idPurchasedItem) {
 }
 
 System::String^ DB::Mapper::deletePurchase(int idPurchase) {
-	System::String^ query = gcnew System::String("DELETE FROM Purchase WHERE idPurchase = " + idPurchase + " ; DELETE FROM PurchasedItem WHERE idPurchase = " + idPurchase);
+	System::String^ query = gcnew System::String("DELETE FROM Purchase WHERE idPurchase = " + idPurchase);
 	return query;
 }
 
@@ -1028,7 +977,7 @@ System::String^ DB::Mapper::deletePurchase(int idPurchase) {
 //}
 
 System::String^ DB::Mapper::deleteAddress(int idAddress) {
-	System::String^ query = gcnew System::String("DELETE FROM Address WHERE idAddress = " + idAddress + " ; DELETE FROM Client WHERE idAddress = " + idAddress + " ; DELETE FROM Purchase WHERE idPaymentAddress = " + idAddress + " ; DELETE FROM Purchase WHERE idDeliveryAddress = " + idAddress + " ; DELETE FROM live WHERE idClient = " + idAddress + " ; DELETE FROM billing_address WHERE idClient = " + idAddress);
+	System::String^ query = gcnew System::String("DELETE FROM Address WHERE idAddress = " + idAddress);
 	return query;
 }
 
@@ -1038,26 +987,16 @@ System::String^ DB::Mapper::deleteAddress(int idAddress) {
 //}
 
 System::String^ DB::Mapper::deleteCity(int idCity) {
-	System::String^ query = gcnew System::String("DELETE FROM City WHERE idCity = " + idCity + " ; DELETE FROM Address WHERE idCity = " + idCity);
+	System::String^ query = gcnew System::String("DELETE FROM City WHERE idCity = " + idCity);
 	return query;
 }
 
 System::String^ DB::Mapper::deletePaymentMethod(int idPaymentMethod) {
-	System::String^ query = gcnew System::String("DELETE FROM PaymentMethod WHERE idPaymentMethod = " + idPaymentMethod + "DELETE FROM Purchase WHERE idPaymentMethod = " + idPaymentMethod);
+	System::String^ query = gcnew System::String("DELETE FROM PaymentMethod WHERE idPaymentMethod = " + idPaymentMethod);
 	return query;
 }
 
 System::String^ DB::Mapper::deletePaymentType(int idPaymentType) {
-	System::String^ query = gcnew System::String("DELETE FROM PaymentType WHERE idPaymentType = " + idPaymentType + " ; DELETE FROM PaymentMethod WHERE idPaymentType = " + idPaymentType);
+	System::String^ query = gcnew System::String("DELETE FROM PaymentType WHERE idPaymentType = " + idPaymentType);
 	return query;
 }
-
-/*System::String^ DB::Mapper::deletePurchaseNoPayment(int idPurchaseNoPayment) {
-	System::String^ query = gcnew System::String("DELETE FROM ? WHERE ? = " + idPurchaseNoPayment);
-	return query;
-}
-
-System::String^ DB::Mapper::deleteAddressCity(int idAddressCity) {
-	System::String^ query = gcnew System::String("DELETE FROM ? WHERE ? = " + idAddressCity);
-	return query;
-}*/

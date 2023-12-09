@@ -41,11 +41,11 @@ namespace DB {
 		//static System::String^ createAddressCity(System::String^ streetName, int streetNumber, System::String^ cityName);
 		//static System::String^ createPaymentMethodPaymentType(int purchaseId, System::String^ name, System::String^ firstName, float amount, int paymentTypeName);
 
-		static System::String^ updateEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity);
+		static System::String^ updateEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, int idAddress);
 		static System::String^ updateClient(int idClient, System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
 		static System::String^ updateItem(int idItem, System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate);
-		static System::String^ updatePurchasedItem(int idPurchasedItem, int idItem, int itemAmount, float totalPrice, float vatAmount);
-		static System::String^ updatePurchase(int idPurchase, int idClient, int idPaymentMethod, System::DateTime^ purchaseDate, System::DateTime^ payDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice);
+		static System::String^ updatePurchasedItem(int idPurchasedItem, int idItem, int idPurchase, int itemAmount, float totalPrice, float vatAmount);
+		static System::String^ updatePurchase(int idPurchase, System::DateTime^ purchaseDate, System::DateTime^ payDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice, int idPaymentAddress, int idDeliveryAddress, int idClient);
 		static System::String^ updateAddress(int idAddress, System::String^ streetName, int streetNumber, int idCity);
 		static System::String^ updateCity(int idCity, System::String^ cityName);
 		static System::String^ updatePaymentMethod(int idPaymentMethod, int idPaymentType, System::String^ name, System::String^ firstName, float amount);
