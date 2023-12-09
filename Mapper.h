@@ -22,12 +22,13 @@ namespace DB {
 		static System::String^ searchItems(System::String^ name, System::String^ reference);
 		static System::String^ searchPurchasedItems(int idItem, System::String^ name, System::String^ reference);
 		static System::String^ searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ purchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate, int idClient);
+		static System::String^ searchAddresses(System::String^ streetName, int streetNumber, int idCity);
 		static System::String^ searchAddresses(System::String^ streetName, int streetNumber, System::String^ cityName);
 		static System::String^ searchCities(System::String^ cityName);
 		static System::String^ searchPaymentMethods(System::String^ name, System::String^ firstName);
 		static System::String^ searchPaymentTypes(System::String^ typeName);
 
-		static System::String^ createEmployee(System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity);
+		static System::String^ createEmployee(System::String^ name, System::String^ firstName, System::DateTime^ startDate, int idAddress);
 		static System::String^ createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstOrderDate);
 		static System::String^ createItem(System::String^ name, int reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate);
 		static System::String^ createPurchasedItem(int itemAmount, float totalPrice, float vatAmount, int idPurchase, int idItem);

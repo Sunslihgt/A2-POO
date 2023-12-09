@@ -294,6 +294,37 @@ System::String^ DB::Mapper::searchPurchases(System::String^ clientName, System::
 	return query;
 }
 
+System::String^ DB::Mapper::searchAddresses(System::String^ streetName, int streetNumber, int idCity) {
+	System::String^ query = gcnew System::String(" SELECT a.idAddress, a.streetName, a.streetNumber, a.idCity, ci.cityName FROM [A2POO-AzureDB].[dbo].[Address] a INNER JOIN [A2POO-AzureDB].[dbo].[City] ci ON a.idCity = ci.idCity");
+
+	bool conditions = false;
+	System::String^ filters = gcnew System::String(" WHERE ");
+	if (streetName != nullptr && streetName != "") {
+		filters += "a.streetName LIKE '%" + streetName + "%'";
+		conditions = true;
+	}
+	if (streetNumber >= 1) {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "a.streetNumber = '" + streetNumber + "'";
+		conditions = true;
+	}
+	if (idCity >= 0) {
+		if (conditions) {
+			filters += " AND ";
+		}
+		filters += "a.idCity = " + idCity;
+		conditions = true;
+	}
+
+	if (conditions) {
+		query += filters;
+	}
+
+	return query;
+}
+
 System::String^ DB::Mapper::searchAddresses(System::String^ streetName, int streetNumber, System::String^ cityName) {
 	System::String^ query = gcnew System::String(" SELECT a.idAddress, a.streetName, a.streetNumber, a.idCity, ci.cityName FROM [A2POO-AzureDB].[dbo].[Address] a INNER JOIN [A2POO-AzureDB].[dbo].[City] ci ON a.idCity = ci.idCity");
 
@@ -386,8 +417,8 @@ System::String^ DB::Mapper::searchPaymentTypes(System::String^ typeName) {
 	return query;
 }
 
-System::String^ DB::Mapper::createEmployee(System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity) {
-	System::String^ query = gcnew System::String(" INSERT INTO Employee (name, firstName, startDate, streetName, streetNumber, idCity) OUTPUT Inserted.idEmployee VALUES('" + name + "', '" + firstName + "', '" + startDate + "', '" + streetName + "', " + streetNumber + ")");
+System::String^ DB::Mapper::createEmployee(System::String^ name, System::String^ firstName, System::DateTime^ startDate, int idAddress) {
+	System::String^ query = gcnew System::String(" INSERT INTO Employee (name, firstName, startDate, idAddress) OUTPUT Inserted.idEmployee VALUES('" + name + "', '" + firstName + "', '" + startDate + "', " + idAddress + ")");
 	return query;
 }
 

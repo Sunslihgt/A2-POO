@@ -36,6 +36,12 @@ System::Data::DataSet^ NS_Services::Services::searchPurchases(System::String^ cl
 	return data;
 }
 
+System::Data::DataSet^ NS_Services::Services::searchAddresses(System::String^ streetName, int streetNumber, int idCity) {
+	System::String^ sql = DB::Mapper::searchAddresses(streetName, streetNumber, idCity);
+	System::Data::DataSet^ data = this->dbController->getRows(sql);
+	return data;
+}
+
 System::Data::DataSet^ NS_Services::Services::searchCities(System::String^ cityName) {
 	System::String^ sql = DB::Mapper::searchCities(cityName);
 	System::Data::DataSet^ data = this->dbController->getRows(sql);
@@ -44,6 +50,51 @@ System::Data::DataSet^ NS_Services::Services::searchCities(System::String^ cityN
 
 
 /* CREATE */
+System::Data::DataSet^ NS_Services::Services::createEmployee(System::String^ name, System::String^ firstName, System::DateTime^ startDate, int idAddress) {
+	System::String^ sql = DB::Mapper::createEmployee(name, firstName, startDate, idAddress);
+	int id = this->dbController->createObject(sql);
+	if (id < 0) {
+		return nullptr;
+	}
+	return NS_Services::Services::getClientById(id);
+}
+
+// Crée un employé à l'aide d'une adresse (si l'adresse n'existe pas, elle est créée)
+System::Data::DataSet^ NS_Services::Services::createEmployee(System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity) {
+	System::Data::DataSet^ dataSetSearchAddress = this->searchAddresses(streetName, streetNumber, idCity);
+	if (dataSetSearchAddress->Tables->Count == 0 || dataSetSearchAddress->Tables[0]->Rows->Count == 0) {  // Si l'adresse n'existe pas
+		System::Data::DataSet^ dataSetCreateAddress = this->createAddress(streetName, streetNumber, idCity);
+		if (dataSetCreateAddress->Tables->Count == 0 || dataSetCreateAddress->Tables[0]->Rows->Count == 0) {  // Si l'adresse n'a pas pu être créée
+			return nullptr;
+		}
+		System::Data::DataRow^ row = dataSetCreateAddress->Tables[0]->Rows[0];
+		int idAddress = (int) row[0];
+		return this->createEmployee(name, firstName, startDate, idAddress);
+	} else {  // Si l'adresse existe
+		System::Data::DataRow^ row = dataSetSearchAddress->Tables[0]->Rows[0];
+		int idAddress = (int) row[0];
+		return this->createEmployee(name, firstName, startDate, idAddress);
+	}
+}
+
+// Crée un employé à l'aide d'une adresse et d'un nom de ville (si l'adresse ou la ville n'existe pas, elle est créée)
+System::Data::DataSet^ NS_Services::Services::createEmployee(System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, System::String^ cityName) {
+	System::Data::DataSet^ dataSetSearchCity = this->searchCities(cityName);
+	if (dataSetSearchCity->Tables->Count == 0 || dataSetSearchCity->Tables[0]->Rows->Count == 0) {  // Si la ville n'existe pas
+		System::Data::DataSet^ dataSetCreateCity = this->createCity(cityName);
+		if (dataSetCreateCity->Tables->Count == 0 || dataSetCreateCity->Tables[0]->Rows->Count == 0) {  // Si la ville n'a pas pu être créée
+			return nullptr;
+		}
+		System::Data::DataRow^ row = dataSetCreateCity->Tables[0]->Rows[0];
+		int idCity = (int) row[0];
+		return this->createEmployee(name, firstName, startDate, streetName, streetNumber, idCity);
+	} else {  // Si la ville existe
+		System::Data::DataRow^ row = dataSetSearchCity->Tables[0]->Rows[0];
+		int idCity = (int) row[0];
+		return this->createEmployee(name, firstName, startDate, streetName, streetNumber, idCity);
+	}
+}
+
 System::Data::DataSet^ NS_Services::Services::createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
 	System::String^ sql = DB::Mapper::createClient(name, firstName, birthDate, firstPurchaseDate);
 	int id = this->dbController->createObject(sql);
@@ -102,21 +153,12 @@ System::Data::DataSet^ NS_Services::Services::getClientById(int idClient) {
 	System::String^ sql = DB::Mapper::selectClientById(idClient);
 	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
 	return dataSet;
-	//if (dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
-	//	return nullptr;
-	//}
+}
 
-	//System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
-	//try {
-	//	int id = (int) row[0];
-	//	System::String^ name = (System::String^) row[1];
-	//	System::String^ firstName = (System::String^) row[2];
-	//	System::DateTime^ birthDate = System::DateTime::Parse(System::Convert::ToString(row[3]));
-	//	System::DateTime^ firstOrderDate = System::DateTime::Parse(System::Convert::ToString(row[4]));;
-	//	return gcnew NS_Services::Client(id, name, firstName, birthDate, firstOrderDate);
-	//} catch (System::Exception^ ex) {
-	//	return nullptr;
-	//}
+System::Data::DataSet^ NS_Services::Services::getEmployeeById(int idEmployee) {
+	System::String^ sql = DB::Mapper::selectEmployeeById(idEmployee);
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+	return dataSet;
 }
 
 System::Data::DataSet^ NS_Services::Services::getCityById(int idCity) {

@@ -348,14 +348,41 @@ namespace NS_IHM {
 		}
 #pragma endregion
 	private: System::Void employeeListLoad(System::Object^ sender, System::EventArgs^ e) {
-		DataSet^ data = services->searchEmployees(this->txtName->Text, this->txtFirstName->Text, this->txtStreetName->Text, System::Convert::ToInt32(this->numStreetNumber->Value), this->txtCityName->Text);
-		this->dgvEmployees->DataSource = data->Tables[0];
+		updateDgv();
 	}
 	private: System::Void btnSearchEmployeesClick(System::Object^ sender, System::EventArgs^ e) {
-		DataSet^ data = services->searchEmployees(this->txtName->Text, this->txtFirstName->Text, this->txtStreetName->Text, System::Convert::ToInt32(this->numStreetNumber->Value), this->txtCityName->Text);
-		this->dgvEmployees->DataSource = data->Tables[0];
+		updateDgv();
 	}
 
+	private: System::Void btnCreateEmployeeClick(System::Object^ sender, System::EventArgs^ e) {
+		EmployeeEditorForm^ employeeEditorForm = gcnew EmployeeEditorForm(services, false, -1);
+		employeeEditorForm->ShowDialog();
+		updateDgv();
+	}
+
+	private: System::Void btnOpenEmployeeClick(System::Object^ sender, System::EventArgs^ e) {
+		int idEmployee = Decimal::ToInt32(this->numIdEmployee->Value);
+		if (idEmployee > 0) {
+			System::Data::DataSet^ dataSet = services->getEmployeeById(idEmployee);
+			if (dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
+				MessageBox::Show("L'employé n'existe pas", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			} else {
+				EmployeeEditorForm^ employeeEditorForm = gcnew EmployeeEditorForm(services, true, idEmployee);
+				employeeEditorForm->ShowDialog();
+				updateDgv();
+			}
+		} else {
+			MessageBox::Show("L'id doit être supérieur ou égal à 0", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+	}
+
+	private:
+		// Fait une recherche dans la base de données à l'aide des critères de recherche et met à jour le DataGridView
+		System::Void updateDgv() {
+			DataSet^ data = services->searchEmployees(this->txtName->Text, this->txtFirstName->Text, this->txtStreetName->Text, System::Convert::ToInt32(this->numStreetNumber->Value), this->txtCityName->Text);
+			this->dgvEmployees->DataSource = data->Tables[0];
+		}
 	};
 
 }

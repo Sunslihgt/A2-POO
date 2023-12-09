@@ -305,32 +305,6 @@ namespace NS_IHM {
 			}
 		}
 
-
-
-		//System::Void btnCreateDelliveryAddressClick(System::Object^ sender, System::EventArgs^ e) {
-		//	if (!this->alreadyExists) {
-		//		MessageBox::Show("Ouvrez l'éditeur de client en mode modification pour créer ajouter des adresses", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		//		return;  // Ne pas permettre la création si le client n'existe pas
-		//	}
-
-		//	if (this->txtStreetDelivery->Text->Length > 0 && this->numStreetNumberDelivery->Value > 0 && this->txtCityDelivery->Text->Length > 0) {
-		//		int cityId = -1;
-		//		System::Data::DataSet^ cityDataSet = this->services->searchCities(this->txtCityDelivery->Text);
-
-		//		if (cityDataSet != nullptr || cityDataSet->Tables[0]->Rows->Count == 0) {
-		//			cityId = this->services->createCity(this->txtCityDelivery->Text);
-		//		} else {
-		//			cityId = (int) cityDataSet->Tables[0]->Rows[0]->ItemArray[0];
-		//		}
-
-		//		this->services->createDeliveryAddress(this->client->getId(), this->txtStreetDelivery->Text, (int) this->numStreetNumberDelivery->Value, this->txtCityDelivery->Text);
-		//		MessageBox::Show("L'adresse de livraison a bien été créée.", "Succès", MessageBoxButtons::OK, MessageBoxIcon::Information);
-		//		fillFieldsFromObject();
-		//	} else {
-		//		MessageBox::Show("Veuillez remplir tous les champs.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		//	}
-		//}
-
 		// Désactive le bouton de création si le client existe déjà
 		// Désactive les boutons de modification et de suppression si le client n'existe pas encore
 		System::Void enableButtons() {

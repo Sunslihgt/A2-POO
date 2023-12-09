@@ -16,11 +16,12 @@ namespace NS_IHM {
 	/// </summary>
 	public ref class EmployeeEditorForm : public System::Windows::Forms::Form {
 	public:
-		EmployeeEditorForm(NS_Services::Services^ services, bool alreadyExists) {
+		EmployeeEditorForm(NS_Services::Services^ services, bool alreadyExists, int id) {
 			InitializeComponent();
 
 			this->services = services;
 			this->alreadyExists = alreadyExists;
+			this->id = id;
 			
 			if (alreadyExists) {
 				this->btnUpdateEmployee->Enabled = false;
@@ -43,6 +44,7 @@ namespace NS_IHM {
 	private:
 		NS_Services::Services^ services;
 		bool alreadyExists;
+		int id;
 
 	private: System::Windows::Forms::Label^ lblTitle;
 	private: System::Windows::Forms::GroupBox^ gpbInfos;
@@ -253,6 +255,7 @@ namespace NS_IHM {
 			this->btnCreateEmployee->TabIndex = 24;
 			this->btnCreateEmployee->Text = L"Créer";
 			this->btnCreateEmployee->UseVisualStyleBackColor = true;
+			this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &EmployeeEditorForm::btnCreateEmployeeClick);
 			// 
 			// btnUpdateEmployee
 			// 
@@ -262,6 +265,7 @@ namespace NS_IHM {
 			this->btnUpdateEmployee->TabIndex = 25;
 			this->btnUpdateEmployee->Text = L"Modifier";
 			this->btnUpdateEmployee->UseVisualStyleBackColor = true;
+			this->btnUpdateEmployee->Click += gcnew System::EventHandler(this, &EmployeeEditorForm::btnUpdateEmployeeClick);
 			// 
 			// btnDeleteEmployee
 			// 
@@ -271,6 +275,7 @@ namespace NS_IHM {
 			this->btnDeleteEmployee->TabIndex = 26;
 			this->btnDeleteEmployee->Text = L"Supprimer";
 			this->btnDeleteEmployee->UseVisualStyleBackColor = true;
+			this->btnDeleteEmployee->Click += gcnew System::EventHandler(this, &EmployeeEditorForm::btnDeleteEmployeeClick);
 			// 
 			// EmployeeEditorForm
 			// 
@@ -297,5 +302,131 @@ namespace NS_IHM {
 
 		}
 #pragma endregion
+	private:
+		System::Void btnCreateEmployeeClick(System::Object^ sender, System::EventArgs^ e) {
+			if (this->alreadyExists) {
+				MessageBox::Show("Ouvrez l'éditeur d'employé en mode création pour créer un nouveu client", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;  // Ne pas permettre la création si l'employé existe déjà
+			}
+			if (this->txtName->Text->Length == 0) {
+				MessageBox::Show("Le nom ne peut pas être vide.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			if (this->txtFirstName->Text->Length == 0) {
+				MessageBox::Show("Le prénom ne peut pas être vide.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			if (this->txtStreet->Text->Length == 0) {
+				MessageBox::Show("La rue ne peut pas être vide.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			if (this->numStreetNumber->Value <= 0) {
+				MessageBox::Show("Le numéro de rue ne peut pas être inférieur ou égal à 0.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			if (this->txtCity->Text->Length == 0) {
+				MessageBox::Show("La ville ne peut pas être vide.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			if (System::DateTime::Compare(this->dtpStart->Value, *NS_Services::Services::MIN_DATETIME) <= 0) {
+				MessageBox::Show("La date d'embauche ne peut pas être antérieure au 01/01/1900.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			// Création de l'employé
+			System::Data::DataSet^ dataSet = this->services->createEmployee(this->txtName->Text, this->txtFirstName->Text, this->dtpStart->Value, this->txtStreet->Text, (int) this->numStreetNumber->Value, this->txtCity->Text);
+			if (dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
+				System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
+				this->id = System::Convert::ToInt32(row[0]);  // Récupération de l'id de l'employé
+				fillFieldsFromDataSet(dataSet);  // Update des champs
+				alreadyExists = true;  // Le client existe maintenant
+				enableButtons();  // Activation des boutons
+			} else {
+				MessageBox::Show("Une erreur est survenue lors de la création de l'employé.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+
+		System::Void btnUpdateEmployeeClick(System::Object^ sender, System::EventArgs^ e) {
+			if (!this->alreadyExists) {
+				MessageBox::Show("Ouvrez l'éditeur d'employé en mode modification pour modifier un employé", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;  // Ne pas permettre la modification si l'employé n'existe pas
+			}
+			if (this->txtName->Text->Length == 0) {
+				MessageBox::Show("Le nom ne peut pas être vide.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			if (this->txtFirstName->Text->Length == 0) {
+				MessageBox::Show("Le prénom ne peut pas être vide.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			if (this->txtStreet->Text->Length == 0) {
+				MessageBox::Show("La rue ne peut pas être vide.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			if (this->numStreetNumber->Value <= 0) {
+				MessageBox::Show("Le numéro de rue ne peut pas être inférieur ou égal à 0.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			if (this->txtCity->Text->Length == 0) {
+				MessageBox::Show("La ville ne peut pas être vide.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			if (System::DateTime::Compare(this->dtpStart->Value, *NS_Services::Services::MIN_DATETIME) <= 0) {
+				MessageBox::Show("La date d'embauche ne peut pas être antérieure au 01/01/1900.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			// Modification de l'employé
+			System::Data::DataSet^ dataSet = this->services->updateEmployee(this->txtName->Text, this->txtFirstName->Text, this->dtpStart->Value, this->txtStreet->Text, (int) this->numStreetNumber->Value, this->txtCity->Text);
+			fillFieldsFromDataSet(dataSet);  // Update des champs
+		}
+
+		System::Void btnDeleteEmployeeClick(System::Object^ sender, System::EventArgs^ e) {
+			if (!this->alreadyExists) {
+				MessageBox::Show("Ouvrez l'éditeur d'employé en mode modification pour supprimer un employé", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;  // Ne pas permettre la suppression si l'employé n'existe pas
+			}
+
+			// Suppression de l'employé
+			bool deleted = this->services->deleteEmployee(this->id);
+			if (deleted) {
+				MessageBox::Show("Employé supprimé.", "Ok", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				this->Close();
+			} else {
+				MessageBox::Show("Une erreur est survenue lors de la suppression de l'employé.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+
+		// Désactive le bouton de création si l'employé existe déjà
+		// Désactive les boutons de modification et de suppression si l'employé n'existe pas encore
+		System::Void enableButtons() {
+			if (alreadyExists) {
+				this->btnCreateEmployee->Enabled = false;
+				this->btnUpdateEmployee->Enabled = true;
+				this->btnDeleteEmployee->Enabled = true;
+			} else {
+				this->btnCreateEmployee->Enabled = true;
+				this->btnUpdateEmployee->Enabled = false;
+				this->btnDeleteEmployee->Enabled = false;
+			}
+		}
+
+		System::Void fillFieldsFromId() {
+			if (alreadyExists && this->id >= 0) {
+				System::Data::DataSet^ dataSet = this->services->getEmployeeById(this->id);
+				fillFieldsFromDataSet(dataSet);
+			}
+		}
+
+		System::Void fillFieldsFromDataSet(System::Data::DataSet^ dataSet) {
+			if (dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
+				System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
+				// cl.idEmployee, cl.name , cl.firstName, cl.birthDate, cl.firstOrderDate
+				this->txtName->Text = row[1]->ToString();
+				this->txtFirstName->Text = row[2]->ToString();
+				this->dtpBirth->Value = System::DateTime::Parse(System::Convert::ToString(row[3]));
+				this->dtpFirstPurchase->Value = System::DateTime::Parse(System::Convert::ToString(row[4]));
+			}
+		}
 	};
 }
