@@ -10,18 +10,18 @@ namespace DB {
 		static System::String^ selectPurchaseById(int id);
 		static System::String^ selectAdressById(int id);
 		static System::String^ selectCityById(int id);
+		static System::String^ selectAddressById(int id);
 		static System::String^ selectPaymentMethodById(int id);
 		static System::String^ selectPaymentTypeById(int id);
 
-		static System::String^ selectClientDeliveryAddressesByIdClient(int idClient);
-		static System::String^ selectClientBillingAddressesByIdClient(int idClient);
-
+		//static System::String^ selectClientDeliveryAddressesByIdClient(int idClient);
+		//static System::String^ selectClientBillingAddressesByIdClient(int idClient);
 
 		static System::String^ searchEmployees(System::String^ name, System::String^ firstName, System::String^ streetName, int streetNumber, System::String^ cityName);
 		static System::String^ searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
 		static System::String^ searchItems(System::String^ name, System::String^ reference);
 		static System::String^ searchPurchasedItems(int idItem, System::String^ name, System::String^ reference);
-		static System::String^ searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ purchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate);
+		static System::String^ searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ purchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate, int idClient);
 		static System::String^ searchAddresses(System::String^ streetName, int streetNumber, System::String^ cityName);
 		static System::String^ searchCities(System::String^ cityName);
 		static System::String^ searchPaymentMethods(System::String^ name, System::String^ firstName);

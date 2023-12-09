@@ -17,13 +17,13 @@ namespace NS_IHM {
 	/// </summary>
 	public ref class ClientEditorForm : public System::Windows::Forms::Form {
 	public:
-		ClientEditorForm(NS_Services::Services^ services, bool alreadyExists, NS_Services::Client^ client) {
+		ClientEditorForm(NS_Services::Services^ services, bool alreadyExists, int id) {
 			InitializeComponent();
 
+			this->id = id;
 			this->services = services;
 			this->alreadyExists = alreadyExists;
-			this->client = client;
-			fillFieldsFromObject();
+			fillFieldsFromId();
 			enableButtons();
 		}
 
@@ -40,7 +40,8 @@ namespace NS_IHM {
 	private:
 		NS_Services::Services^ services;
 		bool alreadyExists;
-		NS_Services::Client^ client;
+		int id;
+		//NS_Services::Client^ client;
 
 	private: System::Windows::Forms::Button^ btnDeleteClient;
 	private: System::Windows::Forms::Button^ btnCreateClient;
@@ -57,8 +58,6 @@ namespace NS_IHM {
 	private: System::Windows::Forms::Label^ lblTitle;
 	private: System::Windows::Forms::DataGridView^ dgvDeliveryAddresses;
 	private: System::Windows::Forms::DataGridView^ dgvBillingAddresses;
-
-
 	private: System::Windows::Forms::GroupBox^ gpbcreateDeliveryAddressz;
 	private: System::Windows::Forms::Button^ btnCreateDeliveryAddress;
 	private: System::Windows::Forms::TextBox^ txtCityDelivery;
@@ -82,15 +81,7 @@ namespace NS_IHM {
 	private: System::Windows::Forms::Label^ lblBillingAddress;
 	private: System::Windows::Forms::Label^ lblCityNameBillingAddress;
 	private: System::Windows::Forms::Label^ lblStreetNameBilling;
-
-
-
-
-
-
 	private: System::Windows::Forms::Label^ lblStreetNumberBilling;
-
-
 
 	private:
 		/// <summary>
@@ -241,6 +232,7 @@ namespace NS_IHM {
 			this->btnDeleteClient->TabIndex = 32;
 			this->btnDeleteClient->Text = L"Supprimer";
 			this->btnDeleteClient->UseVisualStyleBackColor = true;
+			this->btnDeleteClient->Click += gcnew System::EventHandler(this, &ClientEditorForm::btnDeleteClientClick);
 			// 
 			// btnCreateClient
 			// 
@@ -328,6 +320,7 @@ namespace NS_IHM {
 			this->btnUpdateClient->TabIndex = 31;
 			this->btnUpdateClient->Text = L"Modifier";
 			this->btnUpdateClient->UseVisualStyleBackColor = true;
+			this->btnUpdateClient->Click += gcnew System::EventHandler(this, &ClientEditorForm::btnUpdateClientClick);
 			// 
 			// gpbInfos
 			// 
@@ -633,20 +626,80 @@ namespace NS_IHM {
 			}
 
 			// Création du client
-			this->client = this->services->createClient(this->txtName->Text, this->txtFirstName->Text, this->dtpBirth->Value, this->dtpFirstPurchase->Value);
-			if (client != nullptr) {
-				MessageBox::Show("Le client a bien été créé.", "Succès", MessageBoxButtons::OK, MessageBoxIcon::Information);
-				this->alreadyExists = true;
-				fillFieldsFromObject();
-				enableButtons();
+			System::Data::DataSet^ dataSet = this->services->createClient(this->txtName->Text, this->txtFirstName->Text, this->dtpBirth->Value, this->dtpFirstPurchase->Value);
+			if (dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
+				System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
+				this->id = System::Convert::ToInt32(row[0]);
+				fillFieldsFromDataSet(dataSet);  // Update des champs
+				alreadyExists = true;  // Le client existe maintenant
+				enableButtons();  // Activation des boutons
 			} else {
 				MessageBox::Show("Une erreur est survenue lors de la création du client.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 		}
 
+		System::Void btnUpdateClientClick(System::Object^ sender, System::EventArgs^ e) {
+			if (!this->alreadyExists) {
+				MessageBox::Show("Ouvrez l'éditeur de client en mode modification pour modifier un client", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;  // Ne pas permettre la modification si le client n'existe pas
+			}
+			if (this->txtName->Text->Length == 0) {
+				MessageBox::Show("Le nom ne peut pas être vide.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			if (this->txtFirstName->Text->Length == 0) {
+				MessageBox::Show("Le prénom ne peut pas être vide.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			if (System::DateTime::Compare(this->dtpBirth->Value, *NS_Services::Services::MIN_DATETIME) <= 0) {
+				MessageBox::Show("La date de naissance ne peut pas être antérieure au 01/01/1900.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			// Modification du client
+			System::Data::DataSet^ dataSet = this->services->updateClient(this->id, this->txtName->Text, this->txtFirstName->Text, this->dtpBirth->Value, this->dtpFirstPurchase->Value);
+			fillFieldsFromDataSet(dataSet);  // Update des champs
+		}
+
+		System::Void btnDeleteClientClick(System::Object^ sender, System::EventArgs^ e) {
+			if (!this->alreadyExists) {
+				MessageBox::Show("Ouvrez l'éditeur de client en mode modification pour supprimer un client", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;  // Ne pas permettre la suppression si le client n'existe pas
+			}
+
+			// Suppression du client
+			bool deleted = this->services->deleteClient(this->id);
+			if (deleted) {
+				MessageBox::Show("Client supprimé.", "Ok", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				this->Close();
+			} else {
+				MessageBox::Show("Une erreur est survenue lors de la suppression du client.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+
+
+
 		//System::Void btnCreateDelliveryAddressClick(System::Object^ sender, System::EventArgs^ e) {
+		//	if (!this->alreadyExists) {
+		//		MessageBox::Show("Ouvrez l'éditeur de client en mode modification pour créer ajouter des adresses", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		//		return;  // Ne pas permettre la création si le client n'existe pas
+		//	}
+
 		//	if (this->txtStreetDelivery->Text->Length > 0 && this->numStreetNumberDelivery->Value > 0 && this->txtCityDelivery->Text->Length > 0) {
-		//		this->services->cit
+		//		int cityId = -1;
+		//		System::Data::DataSet^ cityDataSet = this->services->searchCities(this->txtCityDelivery->Text);
+
+		//		if (cityDataSet != nullptr || cityDataSet->Tables[0]->Rows->Count == 0) {
+		//			cityId = this->services->createCity(this->txtCityDelivery->Text);
+		//		} else {
+		//			cityId = (int) cityDataSet->Tables[0]->Rows[0]->ItemArray[0];
+		//		}
+
+		//		this->services->createDeliveryAddress(this->client->getId(), this->txtStreetDelivery->Text, (int) this->numStreetNumberDelivery->Value, this->txtCityDelivery->Text);
+		//		MessageBox::Show("L'adresse de livraison a bien été créée.", "Succès", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		//		fillFieldsFromObject();
+		//	} else {
+		//		MessageBox::Show("Veuillez remplir tous les champs.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		//	}
 		//}
 
@@ -672,20 +725,29 @@ namespace NS_IHM {
 			}
 		}
 
-		System::Void fillFieldsFromObject() {
-			if (this->client != nullptr) {
-				this->txtName->Text = this->client->getName();
-				this->txtFirstName->Text = this->client->getFirstName();
-				this->dtpBirth->Value = *this->client->getBirthDate();
-				this->dtpFirstPurchase->Value = *this->client->getFirstOrderDate();
+		System::Void fillFieldsFromId() {
+			if (alreadyExists && this->id >= 0) {
+				System::Data::DataSet^ dataSet = this->services->getClientById(this->id);
+				fillFieldsFromDataSet(dataSet);
 
-				// Remplissage du tableau des adresses de livraison
-				DataSet^ dataDeliveryAddresses = services->selectClientDeliveryAddressesByIdClient(this->client->getId());
-				this->dgvDeliveryAddresses->DataSource = dataDeliveryAddresses->Tables[0];
+				//// Remplissage du tableau des adresses de livraison
+				//DataSet^ dataDeliveryAddresses = services->selectClientDeliveryAddressesByIdClient(this->client->getId());
+				//this->dgvDeliveryAddresses->DataSource = dataDeliveryAddresses->Tables[0];
 
-				// Remplissage du tableau des adresses de paiement
-				DataSet^ dataBillingAddresses = services->selectClientBillingAddressesByIdClient(this->client->getId());
-				this->dgvBillingAddresses->DataSource = dataBillingAddresses->Tables[0];
+				//// Remplissage du tableau des adresses de paiement
+				//DataSet^ dataBillingAddresses = services->selectClientBillingAddressesByIdClient(this->client->getId());
+				//this->dgvBillingAddresses->DataSource = dataBillingAddresses->Tables[0];
+			}
+		}
+
+		System::Void fillFieldsFromDataSet(System::Data::DataSet^ dataSet) {
+			if (dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
+				System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
+				// cl.idClient, cl.name , cl.firstName, cl.birthDate, cl.firstOrderDate
+				this->txtName->Text = row[1]->ToString();
+				this->txtFirstName->Text = row[2]->ToString();
+				this->dtpBirth->Value = System::DateTime::Parse(System::Convert::ToString(row[3]));
+				this->dtpFirstPurchase->Value = System::DateTime::Parse(System::Convert::ToString(row[4]));
 			}
 		}
 	};

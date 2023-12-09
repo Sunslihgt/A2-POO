@@ -17,11 +17,11 @@ namespace NS_IHM {
 	public ref class EmployeeEditorForm : public System::Windows::Forms::Form {
 	public:
 		EmployeeEditorForm(NS_Services::Services^ services, bool alreadyExists) {
-			this->services = services;
-			this->alreadyExists = alreadyExists;
-
 			InitializeComponent();
 
+			this->services = services;
+			this->alreadyExists = alreadyExists;
+			
 			if (alreadyExists) {
 				this->btnUpdateEmployee->Enabled = false;
 				this->btnDeleteEmployee->Enabled = false;

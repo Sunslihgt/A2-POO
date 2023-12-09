@@ -324,30 +324,41 @@ namespace NS_IHM {
 		}
 #pragma endregion
 	private: System::Void clientListLoad(System::Object^ sender, System::EventArgs^ e) {
-		DataSet^ data = services->searchClients(this->txtName->Text, this->txtFirstName->Text, this->dtpBirth->Value, this->dtpFirstPurchase->Value);
-		this->dgvClients->DataSource = data->Tables[0];
+		updateDgv();
 	}
 
 	private: System::Void btnSearchClientsClick(System::Object^ sender, System::EventArgs^ e) {
-		DataSet^ data = services->searchClients(this->txtName->Text, this->txtFirstName->Text, this->dtpBirth->Value, this->dtpFirstPurchase->Value);
-		this->dgvClients->DataSource = data->Tables[0];
+		updateDgv();
 	}
 
 	private: System::Void btnCreateClientClick(System::Object^ sender, System::EventArgs^ e) {
-		ClientEditorForm^ clientEditorForm = gcnew ClientEditorForm(services, false, nullptr);
+		ClientEditorForm^ clientEditorForm = gcnew ClientEditorForm(services, false, -1);
 		clientEditorForm->ShowDialog();
+		updateDgv();
 	}
 
 	private: System::Void btnOpenEmployeeClick(System::Object^ sender, System::EventArgs^ e) {
-		NS_Services::Client^ client = services->getClientById((int) this->numIdEmployee->Value);
-		
-		if (client == nullptr) {
-			MessageBox::Show("Le client n'existe pas", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		int idClient = Decimal::ToInt32(this->numIdEmployee->Value);
+		if (idClient > 0) {
+			System::Data::DataSet^ dataSet = services->getClientById(idClient);
+			if (dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
+				MessageBox::Show("Le client n'existe pas", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			} else {
+				ClientEditorForm^ clientEditorForm = gcnew ClientEditorForm(services, true, idClient);
+				clientEditorForm->ShowDialog();
+				updateDgv();
+			}
+		} else {
+			MessageBox::Show("L'id doit être supérieur ou égal à 0", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			return;
 		}
-
-		ClientEditorForm^ clientEditorForm = gcnew ClientEditorForm(services, true, client);
-		clientEditorForm->ShowDialog();
 	}
+
+	private:
+		// Fait une recherche dans la base de données à l'aide des critères de recherche et met à jour le DataGridView
+		System::Void updateDgv() {
+			DataSet^ data = services->searchClients(this->txtName->Text, this->txtFirstName->Text, this->dtpBirth->Value, this->dtpFirstPurchase->Value);
+			this->dgvClients->DataSource = data->Tables[0];
+		}
 	};
 }
