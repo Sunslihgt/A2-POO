@@ -1,12 +1,8 @@
 -- Suppression des tables --
 USE [A2POO-AzureDB];
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[billing_address]') AND type in (N'U'))
-DROP TABLE [dbo].[billing_address]
-GO
-
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[delivery_address]') AND type in (N'U'))
-DROP TABLE [dbo].[delivery_address]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[paid_with]') AND type in (N'U'))
+DROP TABLE [dbo].[paid_with]
 GO
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[manage]') AND type in (N'U'))
