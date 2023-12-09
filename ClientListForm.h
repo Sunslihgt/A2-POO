@@ -283,7 +283,7 @@ namespace NS_IHM {
 			this->btnOpenEmployee->TabIndex = 2;
 			this->btnOpenEmployee->Text = L"Ouvrir";
 			this->btnOpenEmployee->UseVisualStyleBackColor = true;
-			this->btnOpenEmployee->Click += gcnew System::EventHandler(this, &ClientListForm::btnOpenEmployeeClick);
+			this->btnOpenEmployee->Click += gcnew System::EventHandler(this, &ClientListForm::btnOpenClientClick);
 			// 
 			// lblTitle
 			// 
@@ -337,7 +337,7 @@ namespace NS_IHM {
 		updateDgv();
 	}
 
-	private: System::Void btnOpenEmployeeClick(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void btnOpenClientClick(System::Object^ sender, System::EventArgs^ e) {
 		int idClient = Decimal::ToInt32(this->numIdEmployee->Value);
 		if (idClient > 0) {
 			System::Data::DataSet^ dataSet = services->getClientById(idClient);
