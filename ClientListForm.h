@@ -2,8 +2,9 @@
 
 #include "ClientEditorForm.h"
 #include "Services.h"
+#include "Client.h"
 
-namespace IHM {
+namespace NS_IHM {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -282,6 +283,7 @@ namespace IHM {
 			this->btnOpenEmployee->TabIndex = 2;
 			this->btnOpenEmployee->Text = L"Ouvrir";
 			this->btnOpenEmployee->UseVisualStyleBackColor = true;
+			this->btnOpenEmployee->Click += gcnew System::EventHandler(this, &ClientListForm::btnOpenEmployeeClick);
 			// 
 			// lblTitle
 			// 
@@ -332,13 +334,20 @@ namespace IHM {
 	}
 
 	private: System::Void btnCreateClientClick(System::Object^ sender, System::EventArgs^ e) {
-		ClientEditorForm^ clientEditorForm = gcnew ClientEditorForm(services, false);
+		ClientEditorForm^ clientEditorForm = gcnew ClientEditorForm(services, false, nullptr);
 		clientEditorForm->ShowDialog();
 	}
 
-	private: System::Void btnUpdateClientClick(System::Object^ sender, System::EventArgs^ e) {
-		//ClientEditorForm^ clientEditorForm = gcnew ClientEditorForm(services, true);
-		//clientEditorForm->ShowDialog();
+	private: System::Void btnOpenEmployeeClick(System::Object^ sender, System::EventArgs^ e) {
+		NS_Services::Client^ client = services->getClientById((int) this->numIdEmployee->Value);
+		
+		if (client == nullptr) {
+			MessageBox::Show("Le client n'existe pas", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+
+		ClientEditorForm^ clientEditorForm = gcnew ClientEditorForm(services, true, client);
+		clientEditorForm->ShowDialog();
 	}
 	};
 }

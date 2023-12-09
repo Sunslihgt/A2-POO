@@ -2,7 +2,7 @@
 
 #include "Services.h"
 
-namespace IHM {
+namespace NS_IHM {
 
 	using namespace System;
 	using namespace System::ComponentModel;

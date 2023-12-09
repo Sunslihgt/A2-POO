@@ -1,9 +1,8 @@
 #pragma once
 
 namespace DB {
-	ref class Mapper {
+	public ref class Mapper {
 	public:
-
 		static System::String^ selectEmployeeById(int id);
 		static System::String^ selectClientById(int id);
 		static System::String^ selectItemById(int id);
@@ -13,6 +12,10 @@ namespace DB {
 		static System::String^ selectCityById(int id);
 		static System::String^ selectPaymentMethodById(int id);
 		static System::String^ selectPaymentTypeById(int id);
+
+		static System::String^ selectClientDeliveryAddressesByIdClient(int idClient);
+		static System::String^ selectClientBillingAddressesByIdClient(int idClient);
+
 
 		static System::String^ searchEmployees(System::String^ name, System::String^ firstName, System::String^ streetName, int streetNumber, System::String^ cityName);
 		static System::String^ searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
@@ -25,7 +28,7 @@ namespace DB {
 		static System::String^ searchPaymentTypes(System::String^ typeName);
 
 		static System::String^ createEmployee(System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity);
-		static System::String^ createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
+		static System::String^ createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstOrderDate);
 		static System::String^ createItem(System::String^ name, int reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate);
 		static System::String^ createPurchasedItem(int itemAmount, float totalPrice, float vatAmount, int idPurchase, int idItem);
 		static System::String^ createPurchase(System::DateTime^ purchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice, int idPaymentMethod, int idClient);		
@@ -55,16 +58,18 @@ namespace DB {
 		static System::String^ deleteItem(int idItem);
 		static System::String^ deletePurchasedItem(int idPurchasedItem);
 		static System::String^ deletePurchase(int idPurchase);
+		//static System::String^ deletePurchaseNoPayment(int idPurchaseNoPayment);
 		static System::String^ deleteAddress(int idAddress);
+		//static System::String^ deleteAddressCity(int idCity);
 		static System::String^ deleteCity(int idCity);
 		static System::String^ deletePaymentMethod(int idPaymentMethod);
 		static System::String^ deletePaymentType(int idPaymentType);
-		//static System::String^ deletePurchaseNoPayment(int idPurchaseNoPayment);
-		//static System::String^ deleteAddressCity(int idCity);
+
+		// Date minimale pour qu'une date soit valide dans la base de données (01/01/1900)
+		const static System::DateTime^ MIN_DATETIME = gcnew System::DateTime(1900, 01, 01);
 
 	private:
 		const static int MIN_BIRTHYEAR = 1901;
 		const static int MIN_PURCHASEYEAR = 2000;
-		const static System::DateTime^ MIN_DATETIME = gcnew System::DateTime(1900, 01, 01);
 	};
 }

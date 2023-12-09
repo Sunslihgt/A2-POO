@@ -1,7 +1,7 @@
 #pragma once
 
 namespace NS_Services {
-	ref class BaseObject abstract {
+	public ref class BaseObject abstract {
 	protected:
 		int id;
 		bool isCreated;
@@ -11,5 +11,7 @@ namespace NS_Services {
 		virtual bool create() = 0;
 		virtual bool update() = 0;
 		virtual bool deleteObject() = 0;
+
+		int getId();
 	};
 }

@@ -3,7 +3,7 @@
 #include "MainForm.h"
 #include "Services.h"
 
-namespace IHM {
+namespace NS_IHM {
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -205,7 +205,7 @@ namespace IHM {
 		}
 
 		// Création du MainForm
-		IHM::MainForm^ mainForm = gcnew MainForm(services);
+		NS_IHM::MainForm^ mainForm = gcnew MainForm(services);
 
 		// Affichage du MainForm
 		mainForm->ShowDialog();

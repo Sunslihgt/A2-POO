@@ -7,7 +7,7 @@
 #include "StatisticsForm.h"
 #include "Services.h"
 
-namespace IHM {
+namespace NS_IHM {
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -197,27 +197,27 @@ namespace IHM {
 	}
 
 	private: System::Void btnEmployeeClick(System::Object^ sender, System::EventArgs^ e) {
-		IHM::EmployeeListForm^ employeeListForm = gcnew EmployeeListForm(services);
+		NS_IHM::EmployeeListForm^ employeeListForm = gcnew EmployeeListForm(services);
 		employeeListForm->ShowDialog();
 	}
 
 	private: System::Void btnClientClick(System::Object^ sender, System::EventArgs^ e) {
-		IHM::ClientListForm^ clientListForm = gcnew ClientListForm(services);
+		NS_IHM::ClientListForm^ clientListForm = gcnew ClientListForm(services);
 		clientListForm->ShowDialog();
 	}
 
 	private: System::Void btnItemClick(System::Object^ sender, System::EventArgs^ e) {
-		IHM::ItemListForm^ itemList = gcnew ItemListForm(services);
+		NS_IHM::ItemListForm^ itemList = gcnew ItemListForm(services);
 		itemList->ShowDialog();
 	}
 
 	private: System::Void btnPurchaseClick(System::Object^ sender, System::EventArgs^ e) {
-		IHM::PurchaseListForm^ purchaseListForm = gcnew PurchaseListForm(services);
+		NS_IHM::PurchaseListForm^ purchaseListForm = gcnew PurchaseListForm(services);
 		purchaseListForm->ShowDialog();
 	}
 
 	private: System::Void btnStatisticsClick(System::Object^ sender, System::EventArgs^ e) {
-		IHM::StatisticsForm^ statisticsForm = gcnew StatisticsForm(services);
+		NS_IHM::StatisticsForm^ statisticsForm = gcnew StatisticsForm(services);
 		statisticsForm->ShowDialog();
 	}
 

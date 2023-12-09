@@ -3,7 +3,7 @@
 #include "ItemEditorForm.h"
 #include "Services.h"
 
-namespace IHM {
+namespace NS_IHM {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -183,7 +183,7 @@ namespace IHM {
 			this->btnCreateEmployee->TabIndex = 2;
 			this->btnCreateEmployee->Text = L"Créer";
 			this->btnCreateEmployee->UseVisualStyleBackColor = true;
-			this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &ItemListForm::btnCreateItemClick);
+			//this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &ItemListForm::btnCreateItemClick);
 			// 
 			// gpbOpen
 			// 
@@ -264,13 +264,15 @@ namespace IHM {
 
 		}
 #pragma endregion
+	
 	private: System::Void itemListLoad(System::Object^ sender, System::EventArgs^ e) {
-
+		DataSet^ data = services->searchItems(this->txtName->Text, this->txtReference->Text);
+		this->dgvItems->DataSource = data->Tables[0];
 	}
 
-	private: System::Void btnCreateItemClick(System::Object^ sender, System::EventArgs^ e) {
-		ItemEditorForm^ itemEditorForm = gcnew ItemEditorForm(services, false);
-		itemEditorForm->ShowDialog();
+	private: System::Void btnSearchItemsClick(System::Object^ sender, System::EventArgs^ e) {
+		DataSet^ data = services->searchItems(this->txtName->Text, this->txtReference->Text);
+		this->dgvItems->DataSource = data->Tables[0];
 	}
 	};
 }

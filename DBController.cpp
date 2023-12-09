@@ -1,6 +1,6 @@
 #include "DBController.h"
 
-namespace DB {
+namespace NS_DB {
 	DBController::DBController() {
 		this->connected = false;
 	}
@@ -11,7 +11,6 @@ namespace DB {
 		this->sqlConnection = gcnew System::Data::SqlClient::SqlConnection(connectionString);
 		this->sqlCommand = gcnew System::Data::SqlClient::SqlCommand(gcnew System::String("Rien"), this->sqlConnection);
 		this->sqlDataAdapter = gcnew System::Data::SqlClient::SqlDataAdapter();
-		this->sqlDataSet = gcnew System::Data::DataSet();
 
 		this->sqlCommand->CommandType = System::Data::CommandType::Text;
 
@@ -28,26 +27,45 @@ namespace DB {
 		return this->connected;
 	}
 
-	System::Data::DataSet^ DBController::getRows(System::String^ sql, System::String^ dataTableName) {
-		this->sqlDataSet->Clear();
+	System::Data::DataSet^ DBController::getRows(System::String^ sql) {
+		System::Data::DataSet^ dataSet = gcnew System::Data::DataSet();
 		this->sqlCommand->CommandText = sql;
 		this->sqlDataAdapter->SelectCommand = this->sqlCommand;
-		this->sqlDataAdapter->Fill(this->sqlDataSet);
+		this->sqlDataAdapter->Fill(dataSet);
 
-		return this->sqlDataSet;
+		return dataSet;
 	}
 
-	//System::Data::DataSet^ DBController::getRow(System::String^ sql) {
-	//	throw gcnew System::NotImplementedException();
-	//	// TODO: insérer une instruction return ici
-	//}
-
-	System::Void DBController::actionRows(System::String^ sql) {
+	// Exécute une requête de type "INSERT INTO"
+	// Renvoit l'id de l'objet créé ou -1 en cas d'erreur
+	int DBController::createObject(System::String^ sql) {
 		this->sqlCommand->CommandText = sql;
 		this->sqlDataAdapter->SelectCommand = this->sqlCommand;
-		this->sqlConnection->Open();
-		this->sqlCommand->ExecuteNonQuery();
-		this->sqlConnection->Close();
+		int newId = -1;
+		try {
+			this->sqlConnection->Open();
+			newId = System::Convert::ToInt32(this->sqlCommand->ExecuteScalar());
+			this->sqlConnection->Close();
+		} catch (System::Exception^ ex) {
+			return -1;
+		}
+
+		return newId;
+	}
+
+	// Exécute une requête de type "INSERT INTO" ou "UPDATE"
+	// Renvoit false en cas d'erreur
+	bool DBController::actionRows(System::String^ sql) {
+		this->sqlCommand->CommandText = sql;
+		this->sqlDataAdapter->SelectCommand = this->sqlCommand;
+		try {
+			this->sqlConnection->Open();
+			this->sqlCommand->ExecuteNonQuery();
+			this->sqlConnection->Close();
+		} catch (System::Exception^ ex) {
+			return false;
+		}
+		return true;
 	}
 
 	bool DBController::isConnected() {

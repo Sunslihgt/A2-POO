@@ -3,7 +3,7 @@
 #include "BaseObject.h"
 
 namespace NS_Services {
-	ref class PaymentType : public BaseObject {
+	public ref class PaymentType : public BaseObject {
 	private:
 		System::String^ typeName;
 

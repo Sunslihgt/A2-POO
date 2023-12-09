@@ -2,7 +2,7 @@
 
 #include "Services.h"
 
-namespace IHM {
+namespace NS_IHM {
 
 	using namespace System;
 	using namespace System::ComponentModel;
@@ -396,6 +396,6 @@ namespace IHM {
 		}
 #pragma endregion
 	private:
-		System::Void IHM::ItemEditorForm::addFloatTextBoxConstraints();
+		System::Void ItemEditorForm::addFloatTextBoxConstraints();
 	};
 }

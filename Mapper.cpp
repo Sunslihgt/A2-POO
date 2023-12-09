@@ -12,6 +12,7 @@ System::String^ DB::Mapper::selectClientById(int id) {
 
 System::String^ DB::Mapper::selectItemById(int id) {
 	System::String^ query = gcnew System::String(" SELECT i.idItem, i.name, i.reference, i.quantity, i.availableQuantity, i.quantityThreshold, i.supplierPrice, i.unitPrice, i.vatRate FROM [A2POO-AzureDB].[dbo].[Item] i WHERE i.idItem = " + id);
+	return query;
 }
 
 System::String^ DB::Mapper::selectPurchasedItemById(int id) {
@@ -44,11 +45,15 @@ System::String^ DB::Mapper::selectPaymentTypeById(int id) {
 	return query;
 }
 
+System::String^ DB::Mapper::selectClientDeliveryAddressesByIdClient(int idClient) {
+	System::String^ query = gcnew System::String(" SELECT a.idAddress, a.streetNumber, a.streetName, c.cityName FROM [A2POO-AzureDB].[dbo].[delivery_address] da INNER JOIN [A2POO-AzureDB].[dbo].[Address] a ON da.idAddress = a.idAddress INNER JOIN [A2POO-AzureDB].[dbo].[City] c ON a.idCity = c.idCity WHERE da.idClient = " + idClient);
+	return query;
+}
 
-
-
-
-
+System::String^ DB::Mapper::selectClientBillingAddressesByIdClient(int idClient) {
+	System::String^ query = gcnew System::String(" SELECT a.idAddress, a.streetNumber, a.streetName, c.cityName FROM [A2POO-AzureDB].[dbo].[billing_address] ba INNER JOIN [A2POO-AzureDB].[dbo].[Address] a ON ba.idAddress = a.idAddress INNER JOIN [A2POO-AzureDB].[dbo].[City] c ON a.idCity = c.idCity WHERE ba.idClient = " + idClient);
+	return query;
+}
 
 System::String^ DB::Mapper::searchEmployees(System::String^ name, System::String^ firstName, System::String^ streetName, int streetNumber, System::String^ cityName) {
 	System::String^ query = gcnew System::String(" SELECT e.idEmployee, e.name, e.firstName, e.startDate, a.streetName, a.streetNumber, ci.cityName FROM [A2POO-AzureDB].[dbo].[Employee] e INNER JOIN [A2POO-AzureDB].[dbo].[Address] a ON e.idAddress = a.idAddress INNER JOIN [A2POO-AzureDB].[dbo].[City] ci ON a.idCity = ci.idCity");
@@ -112,7 +117,7 @@ System::String^ DB::Mapper::searchClients(System::String^ name, System::String^ 
 		filters += "cl.firstName LIKE '%" + firstName + "%'";
 		conditions = true;
 	}
-	if (birthDate != nullptr && birthDate->Year > MIN_BIRTHYEAR) {
+	if (birthDate != nullptr && birthDate->Year >= MIN_BIRTHYEAR) {
 		if (conditions) {
 			filters += " AND ";
 		}
@@ -163,7 +168,7 @@ System::String^ DB::Mapper::searchPurchasedItems(int idItem, System::String^ nam
 
 	bool conditions = false;
 	System::String^ filters = gcnew System::String(" WHERE ");
-	if (idItem > 0) {
+	if (idItem >= 1) {
 		filters += "pi.idItem LIKE '%" + idItem + "%'";
 		conditions = true;
 	}
@@ -190,7 +195,7 @@ System::String^ DB::Mapper::searchPurchasedItems(int idItem, System::String^ nam
 }
 
 System::String^ DB::Mapper::searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ purchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate) {
-	System::String^ query = gcnew System::String(" SELECT p.idPurchase, p.purchaseDate, p.payDate, p.deliveryDate, p.discountAmount, p.dutyFreePrice, p.vatAmount, p.ttcPrice, p.idPaymentAddress, p.idDeliveryAddress, p.idClient, cl.name, cl.firstName FROM [A2POO-AzureDB].[dbo].[Purchase] p INNER JOIN [A2POO-AzureDB].[dbo].[Client] cl ON p.idClient = cl.idClient");
+	System::String^ query = gcnew System::String(" SELECT p.idPurchase, cl.name, cl.firstName, p.purchaseDate, p.payDate, p.deliveryDate, p.discountAmount, p.dutyFreePrice, p.vatAmount, p.ttcPrice, p.idPaymentAddress, p.idDeliveryAddress, p.idClient FROM [A2POO-AzureDB].[dbo].[Purchase] p INNER JOIN [A2POO-AzureDB].[dbo].[Client] cl ON p.idClient = cl.idClient");
 
 	bool conditions = false;
 	System::String^ filters = gcnew System::String(" WHERE ");
@@ -205,7 +210,7 @@ System::String^ DB::Mapper::searchPurchases(System::String^ clientName, System::
 		filters += "cl.firstName LIKE '%" + clientFirstName + "%'";
 		conditions = true;
 	}
-	if (purchaseDate != nullptr && purchaseDate->Year > MIN_PURCHASEYEAR) {
+	if (purchaseDate != nullptr && purchaseDate->Year >= MIN_PURCHASEYEAR) {
 		if (conditions) {
 			filters += " AND ";
 		}
@@ -243,7 +248,7 @@ System::String^ DB::Mapper::searchAddresses(System::String^ streetName, int stre
 		filters += "a.streetName LIKE '%" + streetName + "%'";
 		conditions = true;
 	}
-	if (streetNumber > 0) {
+	if (streetNumber >= 1) {
 		if (conditions) {
 			filters += " AND ";
 		}
@@ -326,20 +331,13 @@ System::String^ DB::Mapper::searchPaymentTypes(System::String^ typeName) {
 	return query;
 }
 
-
-
-
-
-
-
-
 System::String^ DB::Mapper::createEmployee(System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity) {
 	System::String^ query = gcnew System::String(" INSERT INTO Employee (name, firstName, startDate, streetName, streetNumber, idCity) OUTPUT Inserted.idEmployee VALUES('" + name + "', '" + firstName + "', '" + startDate + "', '" + streetName + "', " + streetNumber + ")");
 	return query;
 }
 
-System::String^ DB::Mapper::createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
-	System::String^ query = gcnew System::String(" INSERT INTO Client (name, firstName, birthDate, firstPurchaseDate) OUTPUT Inserted.idClient VALUES('" + name + "', '" + firstName + "', '" + birthDate->ToString("yyyy-MM-dd") + "', '" + firstPurchaseDate->ToString("yyyy-MM-dd") + "')");
+System::String^ DB::Mapper::createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstOrderDate) {
+	System::String^ query = gcnew System::String(" INSERT INTO Client (name, firstName, birthDate, firstOrderDate) OUTPUT Inserted.idClient VALUES('" + name + "', '" + firstName + "', '" + birthDate->ToString("yyyy-MM-dd") + "', '" + firstOrderDate->ToString("yyyy-MM-dd") + "')");
 	return query;
 }
 
@@ -378,7 +376,8 @@ System::String^ DB::Mapper::createPaymentType(System::String^ typeName) {
 	return query;
 }
 
-/*System::String^ DB::Mapper::createEmployeeCity(System::String^ name, System::String^ firstName, startDate, System::String^ streetName, int streetNumber, cityName) {
+/*
+System::String^ DB::Mapper::createEmployeeCity(System::String^ name, System::String^ firstName, startDate, System::String^ streetName, int streetNumber, cityName) {
 
 }
 
@@ -976,10 +975,20 @@ System::String^ DB::Mapper::deletePurchase(int idPurchase) {
 	return query;
 }
 
+//System::String^ DB::Mapper::deletePurchaseNoPayment(int idPurchaseNoPayment) {
+//	System::String^ query = gcnew System::String("DELETE FROM ? WHERE ? = " + idPurchaseNoPayment);
+//	return query;
+//}
+
 System::String^ DB::Mapper::deleteAddress(int idAddress) {
 	System::String^ query = gcnew System::String("DELETE FROM Address WHERE idAddress = " + idAddress + " ; DELETE FROM Client WHERE idAddress = " + idAddress + " ; DELETE FROM Purchase WHERE idPaymentAddress = " + idAddress + " ; DELETE FROM Purchase WHERE idDeliveryAddress = " + idAddress + " ; DELETE FROM live WHERE idClient = " + idAddress + " ; DELETE FROM billing_address WHERE idClient = " + idAddress);
 	return query;
 }
+
+//System::String^ DB::Mapper::deleteAddressCity(int idAddressCity) {
+//	System::String^ query = gcnew System::String("DELETE FROM ? WHERE ? = " + idAddressCity);
+//	return query;
+//}
 
 System::String^ DB::Mapper::deleteCity(int idCity) {
 	System::String^ query = gcnew System::String("DELETE FROM City WHERE idCity = " + idCity + " ; DELETE FROM Address WHERE idCity = " + idCity);
