@@ -23,12 +23,8 @@ namespace NS_IHM {
 			this->alreadyExists = alreadyExists;
 			this->id = id;
 			
-			if (alreadyExists) {
-				this->btnUpdateEmployee->Enabled = false;
-				this->btnDeleteEmployee->Enabled = false;
-			} else {
-				this->btnCreateEmployee->Enabled = false;
-			}
+			fillFieldsFromId();  // Remplissage des champs à partir de l'id
+			enableButtons();  // Activation des boutons
 		}
 
 	protected:
@@ -377,7 +373,7 @@ namespace NS_IHM {
 			}
 
 			// Modification de l'employé
-			System::Data::DataSet^ dataSet = this->services->updateEmployee(this->txtName->Text, this->txtFirstName->Text, this->dtpStart->Value, this->txtStreet->Text, (int) this->numStreetNumber->Value, this->txtCity->Text);
+			System::Data::DataSet^ dataSet = this->services->updateEmployee(this->id, this->txtName->Text, this->txtFirstName->Text, this->dtpStart->Value, this->txtStreet->Text, (int) this->numStreetNumber->Value, this->txtCity->Text);
 			fillFieldsFromDataSet(dataSet);  // Update des champs
 		}
 
@@ -421,11 +417,13 @@ namespace NS_IHM {
 		System::Void fillFieldsFromDataSet(System::Data::DataSet^ dataSet) {
 			if (dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
 				System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
-				// cl.idEmployee, cl.name , cl.firstName, cl.birthDate, cl.firstOrderDate
+				// e.idEmployee, e.name, e.firstName, e.startDate, e.idAddress, a.streetName, a.streetNumber, ci.cityName
 				this->txtName->Text = row[1]->ToString();
 				this->txtFirstName->Text = row[2]->ToString();
-				this->dtpBirth->Value = System::DateTime::Parse(System::Convert::ToString(row[3]));
-				this->dtpFirstPurchase->Value = System::DateTime::Parse(System::Convert::ToString(row[4]));
+				this->dtpStart->Value = System::DateTime::Parse(System::Convert::ToString(row[3]));
+				this->txtStreet->Text = row[5]->ToString();
+				this->numStreetNumber->Value = System::Convert::ToInt32(row[6]);
+				this->txtCity->Text = row[7]->ToString();
 			}
 		}
 	};

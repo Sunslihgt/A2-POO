@@ -48,7 +48,11 @@ namespace NS_Services {
 		System::Data::DataSet^ getAddressById(int idAddress);
 
 		System::Data::DataSet^ updateClient(int idClient, System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
+		System::Data::DataSet^ updateEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, int idAddress);
+		System::Data::DataSet^ updateEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity);
+		System::Data::DataSet^ updateEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, System::String^ cityName);
 
+		bool deleteEmployee(int idEmployee);
 		bool deleteClient(int idClient);
 
 		//System::Data::DataSet^ selectClientDeliveryAddressesByIdClient(int idClient);
@@ -78,7 +82,7 @@ namespace NS_Services {
 	
 	
 		// Date minimale pour qu'une date soit valide dans la base de données (01/01/1900)
-		const static System::DateTime^ MIN_DATETIME = DB::Mapper::MIN_DATETIME;
+		const static System::DateTime^ MIN_DATETIME = NS_DB::Mapper::MIN_DATETIME;
 	
 	};
 }

@@ -261,7 +261,7 @@ namespace NS_IHM {
 			this->btnCreateEmployee->TabIndex = 2;
 			this->btnCreateEmployee->Text = L"Créer";
 			this->btnCreateEmployee->UseVisualStyleBackColor = true;
-			//this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &EmployeeListForm::btnCreateEmployeeClick);
+			this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &EmployeeListForm::btnCreateEmployeeClick);
 			// 
 			// gpbOpen
 			// 
@@ -307,6 +307,7 @@ namespace NS_IHM {
 			this->btnOpenEmployee->TabIndex = 2;
 			this->btnOpenEmployee->Text = L"Ouvrir";
 			this->btnOpenEmployee->UseVisualStyleBackColor = true;
+			this->btnOpenEmployee->Click += gcnew System::EventHandler(this, &EmployeeListForm::btnOpenEmployeeClick);
 			// 
 			// lblTitle
 			// 

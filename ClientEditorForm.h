@@ -327,7 +327,7 @@ namespace NS_IHM {
 		}
 
 		System::Void fillFieldsFromDataSet(System::Data::DataSet^ dataSet) {
-			if (dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
+			if (dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 4) {
 				System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
 				// cl.idClient, cl.name , cl.firstName, cl.birthDate, cl.firstOrderDate
 				this->txtName->Text = row[1]->ToString();

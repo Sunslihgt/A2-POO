@@ -1,6 +1,6 @@
 #pragma once
 
-namespace DB {
+namespace NS_DB {
 	public ref class Mapper {
 	public:
 		static System::String^ selectEmployeeById(int id);
@@ -8,7 +8,6 @@ namespace DB {
 		static System::String^ selectItemById(int id);
 		static System::String^ selectPurchasedItemById(int id);
 		static System::String^ selectPurchaseById(int id);
-		static System::String^ selectAdressById(int id);
 		static System::String^ selectCityById(int id);
 		static System::String^ selectAddressById(int id);
 		static System::String^ selectPaymentMethodById(int id);
@@ -42,7 +41,7 @@ namespace DB {
 		//static System::String^ createAddressCity(System::String^ streetName, int streetNumber, System::String^ cityName);
 		//static System::String^ createPaymentMethodPaymentType(int purchaseId, System::String^ name, System::String^ firstName, float amount, int paymentTypeName);
 
-		static System::String^ updateEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity);
+		static System::String^ updateEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, int idAddress);
 		static System::String^ updateClient(int idClient, System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
 		static System::String^ updateItem(int idItem, System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate);
 		static System::String^ updatePurchasedItem(int idPurchasedItem, int idItem, int itemAmount, float totalPrice, float vatAmount);
@@ -65,6 +64,7 @@ namespace DB {
 		static System::String^ deleteCity(int idCity);
 		static System::String^ deletePaymentMethod(int idPaymentMethod);
 		static System::String^ deletePaymentType(int idPaymentType);
+		static System::String^ deleteManage(int idEmployee, bool isSuperior);
 
 		// Date minimale pour qu'une date soit valide dans la base de données (01/01/1900)
 		const static System::DateTime^ MIN_DATETIME = gcnew System::DateTime(1900, 01, 01);
