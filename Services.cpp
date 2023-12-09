@@ -5,10 +5,13 @@ NS_Services::Services::Services() {
 	this->dbController = gcnew NS_DB::DBController();
 }
 
+// Connection à la base de données
 bool NS_Services::Services::connectDB(System::String^ login, System::String^ password) {
 	return dbController->connect(login, password);
 }
 
+
+/* SEARCH */
 System::Data::DataSet^ NS_Services::Services::searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
 	System::String^ sql = DB::Mapper::searchClients(name, firstName, birthDate, firstPurchaseDate);
 	System::Data::DataSet^ data = this->dbController->getRows(sql);
@@ -27,14 +30,21 @@ System::Data::DataSet^ NS_Services::Services::searchItems(System::String^ name, 
 	return data;
 }
 
-System::Data::DataSet^ NS_Services::Services::searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ purchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate) {
-	System::String^ sql = DB::Mapper::searchPurchases(clientName, clientFirstName, purchaseDate, payDate, deliveryDate);
+System::Data::DataSet^ NS_Services::Services::searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ purchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate, int idClient) {
+	System::String^ sql = DB::Mapper::searchPurchases(clientName, clientFirstName, purchaseDate, payDate, deliveryDate, idClient);
+	System::Data::DataSet^ data = this->dbController->getRows(sql);
+	return data;
+}
+
+System::Data::DataSet^ NS_Services::Services::searchCities(System::String^ cityName) {
+	System::String^ sql = DB::Mapper::searchCities(cityName);
 	System::Data::DataSet^ data = this->dbController->getRows(sql);
 	return data;
 }
 
 
-NS_Services::Client^ NS_Services::Services::createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
+/* CREATE */
+System::Data::DataSet^ NS_Services::Services::createClient(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
 	System::String^ sql = DB::Mapper::createClient(name, firstName, birthDate, firstPurchaseDate);
 	int id = this->dbController->createObject(sql);
 	if (id < 0) {
@@ -43,34 +53,114 @@ NS_Services::Client^ NS_Services::Services::createClient(System::String^ name, S
 	return NS_Services::Services::getClientById(id);
 }
 
-NS_Services::Client^ NS_Services::Services::getClientById(int idClient) {
+System::Data::DataSet^ NS_Services::Services::createCity(System::String^ cityName) {
+	System::String^ sql = DB::Mapper::createCity(cityName);
+	int id = this->dbController->createObject(sql);
+	if (id < 0) {
+		return nullptr;
+	}
+	return NS_Services::Services::getCityById(id);
+}
+
+System::Data::DataSet^ NS_Services::Services::createAddress(System::String^ streetName, int streetNumber, int idCity) {
+	System::String^ sql = DB::Mapper::createAddress(streetName, streetNumber, idCity);
+	int id = this->dbController->createObject(sql);
+	if (id < 0) {
+		return nullptr;
+	}
+	return NS_Services::Services::getAddressById(id);
+}
+
+// Crée une adresse à l'aide d'un nom de ville (si la ville n'existe pas, elle est créée)
+System::Data::DataSet^ NS_Services::Services::createAddress(System::String^ streetName, int streetNumber, System::String^ cityName) {
+	System::Data::DataSet^ dataSetSearchCity = this->searchCities(cityName);
+	if (dataSetSearchCity->Tables->Count == 0 || dataSetSearchCity->Tables[0]->Rows->Count == 0) {  // Si la ville n'existe pas
+		System::Data::DataSet^ dataSetCreateCity = this->createCity(cityName);
+		if (dataSetCreateCity->Tables->Count == 0 || dataSetCreateCity->Tables[0]->Rows->Count == 0) {  // Si la ville n'a pas pu être créée
+			return nullptr;
+		}
+		System::Data::DataRow^ row = dataSetCreateCity->Tables[0]->Rows[0];
+		int idCity = (int) row[0];
+		System::Data::DataSet^ dataSetCreateAddress = this->createAddress(streetName, streetNumber, idCity);
+		if (dataSetCreateAddress->Tables->Count == 0 || dataSetCreateAddress->Tables[0]->Rows->Count == 0) {  // Si l'adresse n'a pas pu être créée
+			return nullptr;
+		}
+		return dataSetCreateAddress;  // L'adresse a été créée et la ville n'existait pas déjà
+	} else {  // Si la ville existe
+		System::Data::DataRow^ row = dataSetSearchCity->Tables[0]->Rows[0];
+		int idCity = (int) row[0];
+		System::Data::DataSet^ dataSetCreateAddress = this->createAddress(streetName, streetNumber, idCity);
+		if (dataSetCreateAddress->Tables->Count == 0 || dataSetCreateAddress->Tables[0]->Rows->Count == 0) {  // Si l'adresse n'a pas pu être créée
+			return nullptr;
+		}
+		return dataSetCreateAddress;  // L'adresse a été créée et la ville existait déjà
+	}
+}
+
+/* GET BY ID */
+System::Data::DataSet^ NS_Services::Services::getClientById(int idClient) {
 	System::String^ sql = DB::Mapper::selectClientById(idClient);
 	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
-	if (dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
-		return nullptr;
-	}
-	System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
+	return dataSet;
+	//if (dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
+	//	return nullptr;
+	//}
 
-	try {
-		int id = (int) row[0];
-		System::String^ name = (System::String^) row[1];
-		System::String^ firstName = (System::String^) row[2];
-		System::DateTime^ birthDate = System::DateTime::Parse(System::Convert::ToString(row[3]));
-		System::DateTime^ firstOrderDate = System::DateTime::Parse(System::Convert::ToString(row[4]));;
-		return gcnew NS_Services::Client(id, name, firstName, birthDate, firstOrderDate);
-	} catch (System::Exception^ ex) {
-		return nullptr;
-	}
+	//System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
+	//try {
+	//	int id = (int) row[0];
+	//	System::String^ name = (System::String^) row[1];
+	//	System::String^ firstName = (System::String^) row[2];
+	//	System::DateTime^ birthDate = System::DateTime::Parse(System::Convert::ToString(row[3]));
+	//	System::DateTime^ firstOrderDate = System::DateTime::Parse(System::Convert::ToString(row[4]));;
+	//	return gcnew NS_Services::Client(id, name, firstName, birthDate, firstOrderDate);
+	//} catch (System::Exception^ ex) {
+	//	return nullptr;
+	//}
 }
 
-System::Data::DataSet^ NS_Services::Services::selectClientDeliveryAddressesByIdClient(int idClient) {
-	System::String^ sql = DB::Mapper::selectClientDeliveryAddressesByIdClient(idClient);
+System::Data::DataSet^ NS_Services::Services::getCityById(int idCity) {
+	System::String^ sql = DB::Mapper::selectCityById(idCity);
 	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
 	return dataSet;
 }
 
-System::Data::DataSet^ NS_Services::Services::selectClientBillingAddressesByIdClient(int idClient) {
-	System::String^ sql = DB::Mapper::selectClientBillingAddressesByIdClient(idClient);
+System::Data::DataSet^ NS_Services::Services::getAddressById(int idAddress) {
+	System::String^ sql = DB::Mapper::selectAddressById(idAddress);
 	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
 	return dataSet;
 }
+
+/* UPDATE */
+System::Data::DataSet^ NS_Services::Services::updateClient(int idClient, System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
+	System::String^ sql = DB::Mapper::updateClient(idClient, name, firstName, birthDate,  firstPurchaseDate);
+	bool updated = this->dbController->actionRows(sql);
+	return this->getClientById(idClient);
+}
+
+/* DELETE */
+bool NS_Services::Services::deleteClient(int idClient) {
+	System::DateTime^ defaultDateTime = gcnew System::DateTime(1, 1, 1);
+
+	System::String^ sqlSearchPurchases = DB::Mapper::searchPurchases(gcnew System::String(""), gcnew System::String(""), defaultDateTime, defaultDateTime, defaultDateTime, idClient);
+	System::Data::DataSet^ dataSetPurchases = this->dbController->getRows(sqlSearchPurchases);
+
+	if (dataSetPurchases->Tables->Count == 0 || dataSetPurchases->Tables[0]->Rows->Count == 0) {
+		System::String^ sqlDelete = DB::Mapper::deleteClient(idClient);
+		return this->dbController->actionRows(sqlDelete);
+	} else {  // Si le client a des achats (référence au client dans la table Purchase)
+		return false;  // Le client ne peut pas être supprimé (car référence étrangère)
+	}
+}
+
+//System::Data::DataSet^ NS_Services::Services::selectClientDeliveryAddressesByIdClient(int idClient) {
+//	System::String^ sql = DB::Mapper::selectClientDeliveryAddressesByIdClient(idClient);
+//	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+//	return dataSet;
+//}
+
+//System::Data::DataSet^ NS_Services::Services::selectClientBillingAddressesByIdClient(int idClient) {
+//	System::String^ sql = DB::Mapper::selectClientBillingAddressesByIdClient(idClient);
+//	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+//	return dataSet;
+//}

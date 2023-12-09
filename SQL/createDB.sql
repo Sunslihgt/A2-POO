@@ -74,12 +74,10 @@ CREATE TABLE Purchase(
    ttcPrice DECIMAL(15,2),
    idPaymentAddress INT NOT NULL,
    idDeliveryAddress INT NOT NULL,
-   idPaymentMethod INT,
    idClient INT NOT NULL,
    PRIMARY KEY(idPurchase),
    FOREIGN KEY(idPaymentAddress) REFERENCES Address(idAddress),
    FOREIGN KEY(idDeliveryAddress) REFERENCES Address(idAddress),
-   FOREIGN KEY(idPaymentMethod) REFERENCES PaymentMethod(idPaymentMethod),
    FOREIGN KEY(idClient) REFERENCES Client(idClient)
 );
 
@@ -95,26 +93,18 @@ CREATE TABLE PurchasedItem(
    FOREIGN KEY(idItem) REFERENCES Item(idItem)
 );
 
+CREATE TABLE paid_with(
+   idPurchase INT NOT NULL,
+   idPaymentMethod INT NOT NULL,
+   PRIMARY KEY(idPurchase, idPaymentMethod),
+   FOREIGN KEY(idPurchase) REFERENCES Purchase(idPurchase),
+   FOREIGN KEY(idPaymentMethod) REFERENCES PaymentMethod(idPaymentMethod)
+);
+
 CREATE TABLE manage(
    subordinate INT NOT NULL,
    superior INT NOT NULL,
    PRIMARY KEY(subordinate, superior),
    FOREIGN KEY(subordinate) REFERENCES Employee(idEmployee),
    FOREIGN KEY(superior) REFERENCES Employee(idEmployee)
-);
-
-CREATE TABLE billing_address(
-   idClient INT NOT NULL,
-   idAddress INT NOT NULL,
-   PRIMARY KEY(idClient, idAddress),
-   FOREIGN KEY(idClient) REFERENCES Client(idClient),
-   FOREIGN KEY(idAddress) REFERENCES Address(idAddress)
-);
-
-CREATE TABLE delivery_address(
-   idClient INT NOT NULL,
-   idAddress INT NOT NULL,
-   PRIMARY KEY(idClient, idAddress),
-   FOREIGN KEY(idClient) REFERENCES Client(idClient),
-   FOREIGN KEY(idAddress) REFERENCES Address(idAddress)
 );

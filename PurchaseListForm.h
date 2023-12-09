@@ -346,12 +346,12 @@ namespace NS_IHM {
 		}
 #pragma endregion
 	private: System::Void purchaseListLoad(System::Object^ sender, System::EventArgs^ e) {
-		DataSet^ data = this->services->searchPurchases(this->txtName->Text, this->txtFirstName->Text, this->dtpOrder->Value, this->dtpPay->Value, this->dtpDelivery->Value);
+		DataSet^ data = this->services->searchPurchases(this->txtName->Text, this->txtFirstName->Text, this->dtpOrder->Value, this->dtpPay->Value, this->dtpDelivery->Value, -1);
 		this->dgvPurchases->DataSource = data->Tables[0];
 	}
 
 	private: System::Void btnSearchPurchasesClick(System::Object^ sender, System::EventArgs^ e) {
-		DataSet^ data = this->services->searchPurchases(this->txtName->Text, this->txtFirstName->Text, this->dtpOrder->Value, this->dtpPay->Value, this->dtpDelivery->Value);
+		DataSet^ data = this->services->searchPurchases(this->txtName->Text, this->txtFirstName->Text, this->dtpOrder->Value, this->dtpPay->Value, this->dtpDelivery->Value, -1);
 		this->dgvPurchases->DataSource = data->Tables[0];
 	}
 	};
