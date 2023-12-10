@@ -236,6 +236,8 @@ namespace NS_IHM {
 				if (txtBoxFloat->Text->Length == 0 || txtBoxFloat->Text->IndexOf(",") >= 0) {
 					e->Handled = true;  // On bloque la saisie si le champ est vide ou s'il y a déjà une virgule
 				}
+			} else if (e->KeyChar == '.') {
+				e->Handled = true;  // On bloque la saisie si un point est entré
 			} else if ((e->KeyChar < '0' || e->KeyChar > '9') && e->KeyChar != (wchar_t) Keys::Back && e->KeyChar != (wchar_t) Keys::Delete) {
 				e->Handled = true;  // On bloque la saisie si ce n'est pas un chiffre ou la touche effacer/supprimer
 			}

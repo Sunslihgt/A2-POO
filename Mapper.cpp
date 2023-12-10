@@ -371,8 +371,8 @@ namespace NS_DB {
 		return query;
 	}
 
-	System::String^ Mapper::createItem(System::String^ name, int reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate) {
-		System::String^ query = gcnew System::String(" INSERT INTO Item (name, reference, quantity, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate) OUTPUT Inserted.idItem VALUES('" + name + "', " + reference + ", " + quantity + ", " + availableQuantity + ", " + availableQuantity + ", " + quantityThreshold + ", " + supplierPrice + ", " + unitPrice + ", " + vatRate + ")");
+	System::String^ Mapper::createItem(System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate) {
+		System::String^ query = gcnew System::String(" INSERT INTO Item (name, reference, quantity, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate) OUTPUT Inserted.idItem VALUES('" + name + "', '" + reference + "', " + quantity + ", " + availableQuantity + ", " + quantityThreshold + ", " + supplierPrice.ToString()->Replace(",", ".") + ", " + unitPrice.ToString()->Replace(",", ".") + ", " + vatRate.ToString()->Replace(",", ".") + ")");
 		return query;
 	}
 
@@ -556,19 +556,19 @@ namespace NS_DB {
 		}
 
 		if (supplierPrice > 0) {
-			query += "supplierPrice = " + supplierPrice;
+			query += "supplierPrice = " + supplierPrice.ToString()->Replace(",", ".");
 			ajout = true;
 			modification = true;
 		}
 
 		if (unitPrice > 0) {
-			query += "unitPrice = " + unitPrice;
+			query += "unitPrice = " + unitPrice.ToString()->Replace(",", ".");
 			ajout = true;
 			modification = true;
 		}
 
 		if (vatRate > 0) {
-			query += "vatRate = " + vatRate;
+			query += "vatRate = " + vatRate.ToString()->Replace(",", ".");
 			modification = true;
 		}
 

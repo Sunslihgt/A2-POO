@@ -16,18 +16,16 @@ namespace NS_IHM {
 	/// </summary>
 	public ref class ItemEditorForm : public System::Windows::Forms::Form {
 	public:
-		ItemEditorForm(NS_Services::Services^ services, bool alreadyExists) {
+		ItemEditorForm(NS_Services::Services^ services, bool alreadyExists, int id) {
+			InitializeComponent();
+			addFloatTextBoxConstraints();
+
 			this->services = services;
 			this->alreadyExists = alreadyExists;
+			this->id = id;
 
-			InitializeComponent();
-
-			if (alreadyExists) {
-				this->btnUpdateItem->Enabled = false;
-				this->btnDeleteItem->Enabled = false;
-			} else {
-				this->btnCreateItem->Enabled = false;
-			}
+			fillFieldsFromId();  // Remplissage des champs à partir de l'id
+			enableButtons();  // Activation des boutons
 		}
 
 	protected:
@@ -43,6 +41,7 @@ namespace NS_IHM {
 	private:
 		NS_Services::Services^ services;
 		bool alreadyExists;
+		int id;
 
 	private: System::Windows::Forms::Button^ btnDeleteItem;
 	private: System::Windows::Forms::Button^ btnUpdateItem;
@@ -52,10 +51,8 @@ namespace NS_IHM {
 	private: System::Windows::Forms::NumericUpDown^ numQuantity;
 	private: System::Windows::Forms::Label^ lblQauntity;
 	private: System::Windows::Forms::GroupBox^ gpbInfos;
-	private: System::Windows::Forms::TextBox^ txtFirstName;
+	private: System::Windows::Forms::TextBox^ txtReference;
 	private: System::Windows::Forms::Label^ lblFirstName;
-	private: System::Windows::Forms::Label^ lblStart;
-	private: System::Windows::Forms::DateTimePicker^ dtpStart;
 	private: System::Windows::Forms::Label^ lblName;
 	private: System::Windows::Forms::TextBox^ txtName;
 	private: System::Windows::Forms::Label^ lblTitle;
@@ -93,10 +90,8 @@ namespace NS_IHM {
 			this->numQuantity = (gcnew System::Windows::Forms::NumericUpDown());
 			this->lblQauntity = (gcnew System::Windows::Forms::Label());
 			this->gpbInfos = (gcnew System::Windows::Forms::GroupBox());
-			this->txtFirstName = (gcnew System::Windows::Forms::TextBox());
+			this->txtReference = (gcnew System::Windows::Forms::TextBox());
 			this->lblFirstName = (gcnew System::Windows::Forms::Label());
-			this->lblStart = (gcnew System::Windows::Forms::Label());
-			this->dtpStart = (gcnew System::Windows::Forms::DateTimePicker());
 			this->lblName = (gcnew System::Windows::Forms::Label());
 			this->txtName = (gcnew System::Windows::Forms::TextBox());
 			this->lblTitle = (gcnew System::Windows::Forms::Label());
@@ -117,7 +112,7 @@ namespace NS_IHM {
 			// 
 			// btnDeleteItem
 			// 
-			this->btnDeleteItem->Location = System::Drawing::Point(75, 425);
+			this->btnDeleteItem->Location = System::Drawing::Point(75, 389);
 			this->btnDeleteItem->Name = L"btnDeleteItem";
 			this->btnDeleteItem->Size = System::Drawing::Size(220, 23);
 			this->btnDeleteItem->TabIndex = 32;
@@ -126,7 +121,7 @@ namespace NS_IHM {
 			// 
 			// btnUpdateItem
 			// 
-			this->btnUpdateItem->Location = System::Drawing::Point(75, 396);
+			this->btnUpdateItem->Location = System::Drawing::Point(75, 360);
 			this->btnUpdateItem->Name = L"btnUpdateItem";
 			this->btnUpdateItem->Size = System::Drawing::Size(220, 23);
 			this->btnUpdateItem->TabIndex = 31;
@@ -135,12 +130,13 @@ namespace NS_IHM {
 			// 
 			// btnCreateItem
 			// 
-			this->btnCreateItem->Location = System::Drawing::Point(75, 367);
+			this->btnCreateItem->Location = System::Drawing::Point(75, 331);
 			this->btnCreateItem->Name = L"btnCreateItem";
 			this->btnCreateItem->Size = System::Drawing::Size(220, 23);
 			this->btnCreateItem->TabIndex = 30;
 			this->btnCreateItem->Text = L"Créer";
 			this->btnCreateItem->UseVisualStyleBackColor = true;
+			this->btnCreateItem->Click += gcnew System::EventHandler(this, &ItemEditorForm::btnCreateItem_Click);
 			// 
 			// gpbQuantity
 			// 
@@ -150,9 +146,9 @@ namespace NS_IHM {
 			this->gpbQuantity->Controls->Add(this->lblAvailableQuantity);
 			this->gpbQuantity->Controls->Add(this->numQuantity);
 			this->gpbQuantity->Controls->Add(this->lblQauntity);
-			this->gpbQuantity->Location = System::Drawing::Point(75, 152);
+			this->gpbQuantity->Location = System::Drawing::Point(75, 125);
 			this->gpbQuantity->Name = L"gpbQuantity";
-			this->gpbQuantity->Size = System::Drawing::Size(220, 104);
+			this->gpbQuantity->Size = System::Drawing::Size(220, 95);
 			this->gpbQuantity->TabIndex = 29;
 			this->gpbQuantity->TabStop = false;
 			this->gpbQuantity->Text = L"Quantité";
@@ -187,6 +183,7 @@ namespace NS_IHM {
 			this->numAvailableQuantity->Name = L"numAvailableQuantity";
 			this->numAvailableQuantity->Size = System::Drawing::Size(96, 20);
 			this->numAvailableQuantity->TabIndex = 21;
+			this->numAvailableQuantity->TextChanged += gcnew System::EventHandler(this, &ItemEditorForm::numQuantityChanged);
 			// 
 			// lblAvailableQuantity
 			// 
@@ -207,6 +204,7 @@ namespace NS_IHM {
 			this->numQuantity->Name = L"numQuantity";
 			this->numQuantity->Size = System::Drawing::Size(96, 20);
 			this->numQuantity->TabIndex = 16;
+			this->numQuantity->TextChanged += gcnew System::EventHandler(this, &ItemEditorForm::numQuantityChanged);
 			// 
 			// lblQauntity
 			// 
@@ -219,26 +217,24 @@ namespace NS_IHM {
 			// 
 			// gpbInfos
 			// 
-			this->gpbInfos->Controls->Add(this->txtFirstName);
+			this->gpbInfos->Controls->Add(this->txtReference);
 			this->gpbInfos->Controls->Add(this->lblFirstName);
-			this->gpbInfos->Controls->Add(this->lblStart);
-			this->gpbInfos->Controls->Add(this->dtpStart);
 			this->gpbInfos->Controls->Add(this->lblName);
 			this->gpbInfos->Controls->Add(this->txtName);
 			this->gpbInfos->Location = System::Drawing::Point(75, 47);
 			this->gpbInfos->Name = L"gpbInfos";
-			this->gpbInfos->Size = System::Drawing::Size(220, 99);
+			this->gpbInfos->Size = System::Drawing::Size(220, 72);
 			this->gpbInfos->TabIndex = 28;
 			this->gpbInfos->TabStop = false;
 			this->gpbInfos->Text = L"Informations personnelles";
 			// 
-			// txtFirstName
+			// txtReference
 			// 
-			this->txtFirstName->Location = System::Drawing::Point(91, 45);
-			this->txtFirstName->MaxLength = 50;
-			this->txtFirstName->Name = L"txtFirstName";
-			this->txtFirstName->Size = System::Drawing::Size(123, 20);
-			this->txtFirstName->TabIndex = 17;
+			this->txtReference->Location = System::Drawing::Point(91, 45);
+			this->txtReference->MaxLength = 50;
+			this->txtReference->Name = L"txtReference";
+			this->txtReference->Size = System::Drawing::Size(123, 20);
+			this->txtReference->TabIndex = 17;
 			// 
 			// lblFirstName
 			// 
@@ -247,23 +243,6 @@ namespace NS_IHM {
 			this->lblFirstName->Size = System::Drawing::Size(59, 13);
 			this->lblFirstName->TabIndex = 18;
 			this->lblFirstName->Text = L"Référence";
-			// 
-			// lblStart
-			// 
-			this->lblStart->Location = System::Drawing::Point(6, 74);
-			this->lblStart->Name = L"lblStart";
-			this->lblStart->Size = System::Drawing::Size(96, 13);
-			this->lblStart->TabIndex = 20;
-			this->lblStart->Text = L"Date d\'embauche";
-			// 
-			// dtpStart
-			// 
-			this->dtpStart->Format = System::Windows::Forms::DateTimePickerFormat::Short;
-			this->dtpStart->Location = System::Drawing::Point(118, 71);
-			this->dtpStart->Name = L"dtpStart";
-			this->dtpStart->Size = System::Drawing::Size(96, 20);
-			this->dtpStart->TabIndex = 19;
-			this->dtpStart->Value = System::DateTime(1900, 1, 1, 0, 0, 0, 0);
 			// 
 			// lblName
 			// 
@@ -301,7 +280,7 @@ namespace NS_IHM {
 			this->groupBox1->Controls->Add(this->txtFloatVatRate);
 			this->groupBox1->Controls->Add(this->lblFloatUnitPrice);
 			this->groupBox1->Controls->Add(this->lblFloatSupplierPrice);
-			this->groupBox1->Location = System::Drawing::Point(75, 262);
+			this->groupBox1->Location = System::Drawing::Point(75, 226);
 			this->groupBox1->Name = L"groupBox1";
 			this->groupBox1->Size = System::Drawing::Size(220, 99);
 			this->groupBox1->TabIndex = 30;
@@ -336,11 +315,11 @@ namespace NS_IHM {
 			this->lblVatRate->TabIndex = 17;
 			this->lblVatRate->Text = L"TVA (%)";
 			// 
-			// txtVatRate
+			// txtFloatVatRate
 			// 
 			this->txtFloatVatRate->Location = System::Drawing::Point(112, 71);
 			this->txtFloatVatRate->MaxLength = 10;
-			this->txtFloatVatRate->Name = L"txtVatRate";
+			this->txtFloatVatRate->Name = L"txtFloatVatRate";
 			this->txtFloatVatRate->Size = System::Drawing::Size(102, 20);
 			this->txtFloatVatRate->TabIndex = 15;
 			this->txtFloatVatRate->Text = L"0";
@@ -369,7 +348,7 @@ namespace NS_IHM {
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->AutoSize = true;
-			this->ClientSize = System::Drawing::Size(370, 465);
+			this->ClientSize = System::Drawing::Size(370, 431);
 			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->btnDeleteItem);
 			this->Controls->Add(this->btnUpdateItem);
@@ -377,8 +356,8 @@ namespace NS_IHM {
 			this->Controls->Add(this->gpbQuantity);
 			this->Controls->Add(this->gpbInfos);
 			this->Controls->Add(this->lblTitle);
-			this->MaximumSize = System::Drawing::Size(386, 504);
-			this->MinimumSize = System::Drawing::Size(386, 504);
+			this->MaximumSize = System::Drawing::Size(386, 470);
+			this->MinimumSize = System::Drawing::Size(386, 470);
 			this->Name = L"ItemEditorForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"ItemEditorForm";
@@ -392,10 +371,96 @@ namespace NS_IHM {
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
 			this->ResumeLayout(false);
-			addFloatTextBoxConstraints();
+
 		}
 #pragma endregion
 	private:
 		System::Void ItemEditorForm::addFloatTextBoxConstraints();
-	};
+
+		System::Void btnCreateItem_Click(System::Object^ sender, System::EventArgs^ e) {
+			if (this->txtName->Text->Length == 0 || this->txtReference->Text->Length == 0) {
+				MessageBox::Show("Veuillez remplir tous les champs obligatoires.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			float supplierPrice = -1;
+			float unitPrice = -1;
+			float vatRate = -1;
+
+
+			try {
+				supplierPrice = float::Parse(this->txtFloatSupplierPrice->Text);
+				unitPrice = float::Parse(this->txtFloatUnitPrice->Text);
+				vatRate = float::Parse(this->txtFloatVatRate->Text);
+			} catch (System::Exception^ ex) {
+				MessageBox::Show("Veuillez entrer des nombres décimaux valides.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			// Création de l'item
+			System::Data::DataSet^ dataSet = this->services->createItem(this->txtName->Text, this->txtReference->Text, (int) this->numQuantity->Value, (int) this->numAvailableQuantity->Value, (int) this->numQuantityThreshold->Value, supplierPrice, unitPrice, vatRate);
+			if (dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
+				System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
+				this->id = System::Convert::ToInt32(row[0]);  // Récupération de l'id de l'item
+				fillFieldsFromDataSet(dataSet);  // Update des champs
+				alreadyExists = true;  // L'item existe maintenant
+				enableButtons();  // Activation des boutons
+			} else {
+				MessageBox::Show("Une erreur est survenue lors de la création du produit.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+
+		// Désactive le bouton de création si l'employé existe déjà
+		// Désactive les boutons de modification et de suppression si l'employé n'existe pas encore
+		System::Void enableButtons() {
+			if (alreadyExists) {
+				this->btnCreateItem->Enabled = false;
+				this->btnUpdateItem->Enabled = true;
+				this->btnDeleteItem->Enabled = true;
+				this->numAvailableQuantity->ReadOnly = false;
+				this->numAvailableQuantity->Enabled = true;
+				this->numQuantity->ReadOnly = true;
+				this->numQuantity->Enabled = false;
+			} else {
+				this->btnCreateItem->Enabled = true;
+				this->btnUpdateItem->Enabled = false;
+				this->btnDeleteItem->Enabled = false;
+				this->numAvailableQuantity->ReadOnly = true;
+				this->numAvailableQuantity->Enabled = false;
+				this->numQuantity->ReadOnly = false;
+				this->numQuantity->Enabled = true;
+			}
+		}
+
+		System::Void fillFieldsFromId() {
+			if (alreadyExists && this->id >= 0) {
+				System::Data::DataSet^ dataSet = this->services->getItemById(this->id);
+				fillFieldsFromDataSet(dataSet);
+			}
+		}
+
+		System::Void fillFieldsFromDataSet(System::Data::DataSet^ dataSet) {
+			if (dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
+				System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
+				// 0,        1,      2,           3,          4,                   5,                   6,               7,           8
+				// i.idItem, i.name, i.reference, i.quantity, i.availableQuantity, i.quantityThreshold, i.supplierPrice, i.unitPrice, i.vatRate
+				this->txtName->Text = row[1]->ToString();
+				this->txtReference->Text = row[2]->ToString();
+				this->numQuantity->Text = row[3]->ToString();
+				this->numAvailableQuantity->Text = row[4]->ToString();
+				this->numQuantityThreshold->Text = row[5]->ToString();
+				this->txtFloatSupplierPrice->Text = row[6]->ToString();
+				this->txtFloatUnitPrice->Text = row[7]->ToString();
+				this->txtFloatVatRate->Text = row[8]->ToString();
+			}
+		}
+
+		// Synchronisation des quantités
+		System::Void numQuantityChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (this->alreadyExists) {
+			//this->numQuantity->Value = this->numAvailableQuantity->Value;
+		} else {
+			this->numAvailableQuantity->Value = this->numQuantity->Value;
+		} 
+	}
+};
 }

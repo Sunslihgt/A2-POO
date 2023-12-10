@@ -148,6 +148,15 @@ System::Data::DataSet^ NS_Services::Services::createAddress(System::String^ stre
 	}
 }
 
+System::Data::DataSet^ NS_Services::Services::createItem(System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate) {
+	System::String^ sql = NS_DB::Mapper::createItem(name, reference, quantity, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate);
+	int id = this->dbController->createObject(sql);
+	if (id < 0) {
+		return nullptr;
+	}
+	return NS_Services::Services::getItemById(id);
+}
+
 /* GET BY ID */
 System::Data::DataSet^ NS_Services::Services::getClientById(int idClient) {
 	System::String^ sql = NS_DB::Mapper::selectClientById(idClient);
@@ -169,6 +178,12 @@ System::Data::DataSet^ NS_Services::Services::getCityById(int idCity) {
 
 System::Data::DataSet^ NS_Services::Services::getAddressById(int idAddress) {
 	System::String^ sql = NS_DB::Mapper::selectAddressById(idAddress);
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+	return dataSet;
+}
+
+System::Data::DataSet^ NS_Services::Services::getItemById(int idItem) {
+	System::String^ sql = NS_DB::Mapper::selectItemById(idItem);
 	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
 	return dataSet;
 }
