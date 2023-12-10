@@ -23,7 +23,7 @@ namespace NS_DB {
 	}
 
 	System::String^ Mapper::selectPurchaseById(int id) {
-		System::String^ query = gcnew System::String(" SELECT p.idPurchase, p.purchaseDate, p.payDate, p.deliveryDate, p.discountAmount, p.dutyFreePrice, p.vatAmount, p.ttcPrice, p.idPaymentAddress, p.idDeliveryAddress, p.idPaymentMethod, p.idClient FROM [A2POO-AzureDB].[dbo].[Purchase] p WHERE p.idPurchase = " + id);
+		System::String^ query = gcnew System::String(" SELECT p.idPurchase, p.purchaseDate, p.payDate, p.deliveryDate, p.discountAmount, p.dutyFreePrice, p.vatAmount, p.ttcPrice, p.idPaymentAddress, p.idDeliveryAddress, p.idClient FROM [A2POO-AzureDB].[dbo].[Purchase] p WHERE p.idPurchase = " + id);
 		return query;
 	}
 
@@ -38,7 +38,7 @@ namespace NS_DB {
 	}
 
 	System::String^ Mapper::selectPaymentMethodById(int id) {
-		System::String^ query = gcnew System::String(" SELECT pm.idPaymentMethod, pm.name, pm.firstName, pm.amount, pm.idPaymentType FROM [A2POO-AzureDB].[dbo].[PaymentMethod] pm WHERE pm.idPurchaseMethod = " + id);
+		System::String^ query = gcnew System::String(" SELECT pm.idPaymentMethod, pm.name, pm.firstName, pm.amount, pm.idPaymentType FROM [A2POO-AzureDB].[dbo].[PaymentMethod] pm WHERE pm.idPaymentMethod = " + id);
 		return query;
 	}
 
