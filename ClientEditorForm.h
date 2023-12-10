@@ -91,7 +91,7 @@ namespace NS_IHM {
 			this->btnDeleteClient->Location = System::Drawing::Point(46, 237);
 			this->btnDeleteClient->Name = L"btnDeleteClient";
 			this->btnDeleteClient->Size = System::Drawing::Size(220, 23);
-			this->btnDeleteClient->TabIndex = 32;
+			this->btnDeleteClient->TabIndex = 7;
 			this->btnDeleteClient->Text = L"Supprimer";
 			this->btnDeleteClient->UseVisualStyleBackColor = true;
 			this->btnDeleteClient->Click += gcnew System::EventHandler(this, &ClientEditorForm::btnDeleteClientClick);
@@ -102,7 +102,7 @@ namespace NS_IHM {
 			this->btnCreateClient->Location = System::Drawing::Point(46, 179);
 			this->btnCreateClient->Name = L"btnCreateClient";
 			this->btnCreateClient->Size = System::Drawing::Size(220, 23);
-			this->btnCreateClient->TabIndex = 30;
+			this->btnCreateClient->TabIndex = 5;
 			this->btnCreateClient->Text = L"Créer";
 			this->btnCreateClient->UseVisualStyleBackColor = true;
 			this->btnCreateClient->Click += gcnew System::EventHandler(this, &ClientEditorForm::btnCreateClientClick);
@@ -113,7 +113,7 @@ namespace NS_IHM {
 			this->txtFirstName->MaxLength = 50;
 			this->txtFirstName->Name = L"txtFirstName";
 			this->txtFirstName->Size = System::Drawing::Size(159, 20);
-			this->txtFirstName->TabIndex = 17;
+			this->txtFirstName->TabIndex = 2;
 			// 
 			// lblFirstName
 			// 
@@ -137,7 +137,7 @@ namespace NS_IHM {
 			this->dtpBirth->Location = System::Drawing::Point(118, 71);
 			this->dtpBirth->Name = L"dtpBirth";
 			this->dtpBirth->Size = System::Drawing::Size(96, 20);
-			this->dtpBirth->TabIndex = 19;
+			this->dtpBirth->TabIndex = 3;
 			this->dtpBirth->Value = System::DateTime(1900, 1, 1, 0, 0, 0, 0);
 			// 
 			// lblName
@@ -162,7 +162,7 @@ namespace NS_IHM {
 			this->txtName->MaxLength = 50;
 			this->txtName->Name = L"txtName";
 			this->txtName->Size = System::Drawing::Size(159, 20);
-			this->txtName->TabIndex = 15;
+			this->txtName->TabIndex = 1;
 			// 
 			// dtpFirstPurchase
 			// 
@@ -170,7 +170,7 @@ namespace NS_IHM {
 			this->dtpFirstPurchase->Location = System::Drawing::Point(118, 97);
 			this->dtpFirstPurchase->Name = L"dtpFirstPurchase";
 			this->dtpFirstPurchase->Size = System::Drawing::Size(96, 20);
-			this->dtpFirstPurchase->TabIndex = 21;
+			this->dtpFirstPurchase->TabIndex = 4;
 			this->dtpFirstPurchase->Value = System::DateTime(1900, 1, 1, 0, 0, 0, 0);
 			// 
 			// btnUpdateClient
@@ -179,7 +179,7 @@ namespace NS_IHM {
 			this->btnUpdateClient->Location = System::Drawing::Point(46, 208);
 			this->btnUpdateClient->Name = L"btnUpdateClient";
 			this->btnUpdateClient->Size = System::Drawing::Size(220, 23);
-			this->btnUpdateClient->TabIndex = 31;
+			this->btnUpdateClient->TabIndex = 6;
 			this->btnUpdateClient->Text = L"Modifier";
 			this->btnUpdateClient->UseVisualStyleBackColor = true;
 			this->btnUpdateClient->Click += gcnew System::EventHandler(this, &ClientEditorForm::btnUpdateClientClick);
@@ -301,7 +301,7 @@ namespace NS_IHM {
 				MessageBox::Show("Client supprimé.", "Ok", MessageBoxButtons::OK, MessageBoxIcon::Information);
 				this->Close();
 			} else {
-				MessageBox::Show("Une erreur est survenue lors de la suppression du client.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				MessageBox::Show("Une erreur est survenue lors de la suppression du client. Impossible de supprimer un client s'il a des commandes", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 		}
 
@@ -327,7 +327,7 @@ namespace NS_IHM {
 		}
 
 		System::Void fillFieldsFromDataSet(System::Data::DataSet^ dataSet) {
-			if (dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 4) {
+			if (dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
 				System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
 				// cl.idClient, cl.name , cl.firstName, cl.birthDate, cl.firstOrderDate
 				this->txtName->Text = row[1]->ToString();

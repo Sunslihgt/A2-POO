@@ -41,19 +41,27 @@ namespace NS_Services {
 		System::Data::DataSet^ createAddress(System::String^ streetName, int streetNumber, int idCity);
 		// Crée une adresse à l'aide d'un nom de ville (si la ville n'existe pas, elle est créée)
 		System::Data::DataSet^ createAddress(System::String^ streetName, int streetNumber, System::String^ cityName);
+		System::Data::DataSet^ createItem(System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate);
+
 		
 		System::Data::DataSet^ getEmployeeById(int idEmployee);
 		System::Data::DataSet^ getClientById(int idClient);
 		System::Data::DataSet^ getCityById(int idCity);
 		System::Data::DataSet^ getAddressById(int idAddress);
+		System::Data::DataSet^ getItemById(int idItem);
 
 		System::Data::DataSet^ updateClient(int idClient, System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
 		System::Data::DataSet^ updateEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, int idAddress);
 		System::Data::DataSet^ updateEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity);
 		System::Data::DataSet^ updateEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, System::String^ cityName);
+		System::Data::DataSet^ updateItem(int idItem, System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate);
+
+		// Ahoute à la quantité totale et disponible d'un item la quantité passée en paramètre
+		System::Data::DataSet^ modifyItemQuantity(int idItem, int quantity);
 
 		bool deleteEmployee(int idEmployee);
 		bool deleteClient(int idClient);
+		bool deleteItem(int idItem);
 
 		//System::Data::DataSet^ selectClientDeliveryAddressesByIdClient(int idClient);
 		//System::Data::DataSet^ selectClientBillingAddressesByIdClient(int idClient);

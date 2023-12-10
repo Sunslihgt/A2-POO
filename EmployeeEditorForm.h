@@ -129,7 +129,7 @@ namespace NS_IHM {
 			this->txtFirstName->MaxLength = 50;
 			this->txtFirstName->Name = L"txtFirstName";
 			this->txtFirstName->Size = System::Drawing::Size(159, 20);
-			this->txtFirstName->TabIndex = 17;
+			this->txtFirstName->TabIndex = 2;
 			// 
 			// lblFirstName
 			// 
@@ -153,7 +153,7 @@ namespace NS_IHM {
 			this->dtpStart->Location = System::Drawing::Point(118, 71);
 			this->dtpStart->Name = L"dtpStart";
 			this->dtpStart->Size = System::Drawing::Size(96, 20);
-			this->dtpStart->TabIndex = 19;
+			this->dtpStart->TabIndex = 3;
 			this->dtpStart->Value = System::DateTime(1900, 1, 1, 0, 0, 0, 0);
 			// 
 			// lblName
@@ -170,7 +170,7 @@ namespace NS_IHM {
 			this->txtName->MaxLength = 50;
 			this->txtName->Name = L"txtName";
 			this->txtName->Size = System::Drawing::Size(159, 20);
-			this->txtName->TabIndex = 15;
+			this->txtName->TabIndex = 1;
 			// 
 			// gpbAddress
 			// 
@@ -203,7 +203,7 @@ namespace NS_IHM {
 			this->txtCity->MaxLength = 50;
 			this->txtCity->Name = L"txtCity";
 			this->txtCity->Size = System::Drawing::Size(160, 20);
-			this->txtCity->TabIndex = 15;
+			this->txtCity->TabIndex = 6;
 			// 
 			// txtStreet
 			// 
@@ -211,7 +211,7 @@ namespace NS_IHM {
 			this->txtStreet->MaxLength = 50;
 			this->txtStreet->Name = L"txtStreet";
 			this->txtStreet->Size = System::Drawing::Size(160, 20);
-			this->txtStreet->TabIndex = 19;
+			this->txtStreet->TabIndex = 5;
 			// 
 			// lblStreet
 			// 
@@ -232,7 +232,7 @@ namespace NS_IHM {
 			});
 			this->numStreetNumber->Name = L"numStreetNumber";
 			this->numStreetNumber->Size = System::Drawing::Size(96, 20);
-			this->numStreetNumber->TabIndex = 16;
+			this->numStreetNumber->TabIndex = 4;
 			// 
 			// lblStreetNumber
 			// 
@@ -248,7 +248,7 @@ namespace NS_IHM {
 			this->btnCreateEmployee->Location = System::Drawing::Point(75, 263);
 			this->btnCreateEmployee->Name = L"btnCreateEmployee";
 			this->btnCreateEmployee->Size = System::Drawing::Size(220, 23);
-			this->btnCreateEmployee->TabIndex = 24;
+			this->btnCreateEmployee->TabIndex = 7;
 			this->btnCreateEmployee->Text = L"Créer";
 			this->btnCreateEmployee->UseVisualStyleBackColor = true;
 			this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &EmployeeEditorForm::btnCreateEmployeeClick);
@@ -258,7 +258,7 @@ namespace NS_IHM {
 			this->btnUpdateEmployee->Location = System::Drawing::Point(75, 292);
 			this->btnUpdateEmployee->Name = L"btnUpdateEmployee";
 			this->btnUpdateEmployee->Size = System::Drawing::Size(220, 23);
-			this->btnUpdateEmployee->TabIndex = 25;
+			this->btnUpdateEmployee->TabIndex = 8;
 			this->btnUpdateEmployee->Text = L"Modifier";
 			this->btnUpdateEmployee->UseVisualStyleBackColor = true;
 			this->btnUpdateEmployee->Click += gcnew System::EventHandler(this, &EmployeeEditorForm::btnUpdateEmployeeClick);
@@ -268,7 +268,7 @@ namespace NS_IHM {
 			this->btnDeleteEmployee->Location = System::Drawing::Point(75, 321);
 			this->btnDeleteEmployee->Name = L"btnDeleteEmployee";
 			this->btnDeleteEmployee->Size = System::Drawing::Size(220, 23);
-			this->btnDeleteEmployee->TabIndex = 26;
+			this->btnDeleteEmployee->TabIndex = 9;
 			this->btnDeleteEmployee->Text = L"Supprimer";
 			this->btnDeleteEmployee->UseVisualStyleBackColor = true;
 			this->btnDeleteEmployee->Click += gcnew System::EventHandler(this, &EmployeeEditorForm::btnDeleteEmployeeClick);

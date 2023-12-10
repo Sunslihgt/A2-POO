@@ -3,7 +3,6 @@
 namespace NS_DB {
 	System::String^ Mapper::selectEmployeeById(int id) {
 		System::String^ query = gcnew System::String(" SELECT e.idEmployee, e.name, e.firstName, e.startDate, e.idAddress, a.streetName, a.streetNumber, ci.cityName FROM [A2POO-AzureDB].[dbo].[Employee] e INNER JOIN [A2POO-AzureDB].[dbo].[Address] a ON e.idAddress = a.idAddress INNER JOIN [A2POO-AzureDB].[dbo].[City] ci ON a.idCity = ci.idCity WHERE e.idEmployee = " + id);
-		//System::String^ query = gcnew System::String(" SELECT e.idEmployee, e.name, e.firstName, e.startDate, e.idAddress FROM [A2POO-AzureDB].[dbo].[Employee] e WHERE e.idEmployee = " + id);
 		return query;
 	}
 
@@ -155,27 +154,20 @@ namespace NS_DB {
 		return query;
 	}
 
-	System::String^ Mapper::searchPurchasedItems(int idItem, System::String^ name, System::String^ reference) {
+	System::String^ Mapper::searchPurchasedItems(int idPurchase, int idItem) {
 		System::String^ query = gcnew System::String(" SELECT pi.idPurchasedItem, pi.itemAmount, pi.totalPrice, pi.vatAmount, pi.idPurchase, pi.idItem, i.name, i.reference FROM [A2POO-AzureDB].[dbo].[PurchasedItem] pi INNER JOIN [A2POO-AzureDB].[dbo].[Item] i ON pi.idItem = i.idItem");
 
 		bool conditions = false;
 		System::String^ filters = gcnew System::String(" WHERE ");
+		if (idPurchase >= 1) {
+			filters += "pi.idPurchase = " + idPurchase;
+			conditions = true;
+		}
 		if (idItem >= 1) {
-			filters += "pi.idItem LIKE '%" + idItem + "%'";
-			conditions = true;
-		}
-		if (name != nullptr && name != "") {
 			if (conditions) {
 				filters += " AND ";
 			}
-			filters += "i.name LIKE '%" + name + "%'";
-			conditions = true;
-		}
-		if (reference != nullptr && reference != "") {
-			if (conditions) {
-				filters += " AND ";
-			}
-			filters += "i.reference LIKE '%" + reference + "%'";
+			filters += "pi.idItem = " + idItem;
 			conditions = true;
 		}
 
@@ -371,8 +363,8 @@ namespace NS_DB {
 		return query;
 	}
 
-	System::String^ Mapper::createItem(System::String^ name, int reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate) {
-		System::String^ query = gcnew System::String(" INSERT INTO Item (name, reference, quantity, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate) OUTPUT Inserted.idItem VALUES('" + name + "', " + reference + ", " + quantity + ", " + availableQuantity + ", " + availableQuantity + ", " + quantityThreshold + ", " + supplierPrice + ", " + unitPrice + ", " + vatRate + ")");
+	System::String^ Mapper::createItem(System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate) {
+		System::String^ query = gcnew System::String(" INSERT INTO Item (name, reference, quantity, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate) OUTPUT Inserted.idItem VALUES('" + name + "', '" + reference + "', " + quantity + ", " + availableQuantity + ", " + quantityThreshold + ", " + supplierPrice.ToString()->Replace(",", ".") + ", " + unitPrice.ToString()->Replace(",", ".") + ", " + vatRate.ToString()->Replace(",", ".") + ")");
 		return query;
 	}
 
@@ -382,7 +374,7 @@ namespace NS_DB {
 	}
 
 	System::String^ Mapper::createPurchase(System::DateTime^ purchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice, int idPaymentMethod, int idClient) {
-		System::String^ query = gcnew System::String(" INSERT INTO Purchase (purchaseDate, payDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice, idPaymentMethod, idClient) OUTPUT Inserted.idPurchase VALUES(" + purchaseDate->ToString("yyyy-MM-dd") + ", " + payDate->ToString("yyyy-MM-dd") + ", " + deliveryDate->ToString("yyyy-MM-dd") + ", " + discountAmount + ", " + dutyFreePrice + ", " + vatAmount + ", " + ttcPrice + ", " + idPaymentMethod + ", " + idClient + ")");
+		System::String^ query = gcnew System::String(" INSERT INTO Purchase (purchaseDate, payDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice, idPaymentMethod, idClient) OUTPUT Inserted.idPurchase VALUES(" + purchaseDate->ToString("yyyy-MM-dd") + ", " + payDate->ToString("yyyy-MM-dd") + ", " + deliveryDate->ToString("yyyy-MM-dd") + ", " + discountAmount.ToString()->Replace(",", ".") + ", " + dutyFreePrice.ToString()->Replace(",", ".") + ", " + vatAmount.ToString()->Replace(",", ".") + ", " + ttcPrice.ToString()->Replace(",", ".") + ", " + idPaymentMethod + ", " + idClient + ")");
 		return query;
 	}
 
@@ -397,7 +389,7 @@ namespace NS_DB {
 	}
 
 	System::String^ Mapper::createPaymentMethod(System::String^ name, System::String^ firstName, float amount, int idPaymentType) {
-		System::String^ query = gcnew System::String(" INSERT INTO PaymentMethod (name, firstName, amount, idPaymentType) OUTPUT Inserted.idPaymentMethod VALUES('" + name + "', '" + firstName + "', " + amount + ", " + idPaymentType + ")");
+		System::String^ query = gcnew System::String(" INSERT INTO PaymentMethod (name, firstName, amount, idPaymentType) OUTPUT Inserted.idPaymentMethod VALUES('" + name + "', '" + firstName + "', " + amount.ToString()->Replace(",", ".") + ", " + idPaymentType + ")");
 		return query;
 	}
 
@@ -406,26 +398,8 @@ namespace NS_DB {
 		return query;
 	}
 
-	/*
-	System::String^ Mapper::createEmployeeCity(System::String^ name, System::String^ firstName, startDate, System::String^ streetName, int streetNumber, cityName) {
-
-	}
-
-	System::String^ Mapper::createPurchaseNoPayment(clientId, purchaseDate, deliveryDate, discountAmount, dutyFreePrice, vatAmount, ttcPrice) {
-
-	}
-
-	System::String^ Mapper::createAddressCity(streetName, streetNumber, cityName) {
-
-	}
-
-	System::String^ Mapper::createPaymentMethodPaymentType(purchaseId, name, firstName, amount, paymentTypeName) {
-
-	}*/
-
 	System::String^ Mapper::updateEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, int idAddress) {
 		bool modification = false;
-		bool ajout = false;
 		System::String^ query = gcnew System::String(" UPDATE Employee SET ");
 
 		if (name != nullptr && name != "") {
@@ -436,16 +410,13 @@ namespace NS_DB {
 			if (modification) {
 				query += ", ";
 			}
-		
 			query += "firstName = '" + firstName + "'";
-			ajout = true;
 			modification = true;
 		}
 		if (startDate != nullptr && (startDate->System::DateTime::Compare(*startDate, *MIN_DATETIME) > 0)) {
 			if (modification) {
 				query += ", ";
 			}
-
 			query += "startDate = '" + startDate->ToString("yyyy-MM-dd") + "'";
 			modification = true;
 		}
@@ -453,7 +424,6 @@ namespace NS_DB {
 			if (modification) {
 				query += ", ";
 			}
-
 			query += "idAddress = " + idAddress;
 			modification = true;
 		}
@@ -469,40 +439,33 @@ namespace NS_DB {
 
 	System::String^ Mapper::updateClient(int idClient, System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
 		bool modification = false;
-		bool ajout = false;
 		System::String^ query = gcnew System::String(" UPDATE Client SET ");
 
 		if (name != nullptr && name != "") {
 			query += "name = '" + name + "'";
-			ajout = true;
 			modification = true;
 		}
 
 		if (firstName != nullptr && firstName != "") {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
-
 			query += "firstName = '" + firstName + "'";
-			ajout = true;
 			modification = true;
 		}
 
 		if (birthDate != nullptr && (birthDate->System::DateTime::Compare(*birthDate, *MIN_DATETIME) > 0)) {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
-
 			query += "birthDate = '" + birthDate->ToString("yyyy-MM-dd") + "'";
-			ajout = true;
 			modification = true;
 		}
 
 		if (firstPurchaseDate != nullptr && (firstPurchaseDate->System::DateTime::Compare(*firstPurchaseDate, *MIN_DATETIME) > 0)) {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
-
 			query += "firstOrderDate = '" + firstPurchaseDate->ToString("yyyy-MM-dd") + "'";
 			modification = true;
 		}
@@ -518,57 +481,59 @@ namespace NS_DB {
 
 	System::String^ Mapper::updateItem(int idItem, System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate) {
 		bool modification = false;
-		bool ajout = false;
 		System::String^ query = gcnew System::String(" UPDATE Item SET ");
 
 		if (name != nullptr && name != "") {
 			query += "name = '" + name + "'";
-			ajout = true;
 			modification = true;
 		}
-
 		if (reference != nullptr && reference != "") {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
-
 			query += "reference = '" + reference + "'";
-			ajout = true;
 			modification = true;
 		}
-
-		if (quantity > 0) {
+		if (quantity >= 0) {
+			if (modification) {
+				query += ", ";
+			}
 			query += "quantity = " + quantity;
-			ajout = true;
 			modification = true;
 		}
-
-		if (availableQuantity > 0) {
+		if (availableQuantity >= 0) {
+			if (modification) {
+				query += ", ";
+			}
 			query += "availableQuantity = " + availableQuantity;
-			ajout = true;
 			modification = true;
 		}
-
-		if (quantityThreshold > 0) {
+		if (quantityThreshold >= 0) {
+			if (modification) {
+				query += ", ";
+			}
 			query += "quantityThreshold = " + quantityThreshold;
-			ajout = true;
 			modification = true;
 		}
-
 		if (supplierPrice > 0) {
-			query += "supplierPrice = " + supplierPrice;
-			ajout = true;
-			modification = true;
+		if (modification) {
+			query += ", ";
 		}
-
+		query += "supplierPrice = " + supplierPrice.ToString()->Replace(",", ".");
+		modification = true;
+		}
 		if (unitPrice > 0) {
-			query += "unitPrice = " + unitPrice;
-			ajout = true;
+			if (modification) {
+				query += ", ";
+			}
+			query += "unitPrice = " + unitPrice.ToString()->Replace(",", ".");
 			modification = true;
 		}
-
 		if (vatRate > 0) {
-			query += "vatRate = " + vatRate;
+			if (modification) {
+				query += ", ";
+			}
+			query += "vatRate = " + vatRate.ToString()->Replace(",", ".");
 			modification = true;
 		}
 
@@ -583,47 +548,44 @@ namespace NS_DB {
 
 	System::String^ Mapper::updatePurchasedItem(int idPurchasedItem, int idItem, int idPurchase, int itemAmount, float totalPrice, float vatAmount) {
 		bool modification = false;
-		bool ajout = false;
 		System::String^ query = gcnew System::String(" UPDATE PurchasedItem SET ");
 
 		if (idItem > 0) {
+			if (modification) {
+				query += ", ";
+			}
 			query += "idItem = " + idItem;
-			ajout = true;
 			modification = true;
 		}
 
 		if (idPurchase > 0) {
+			if (modification) {
+				query += ", ";
+			}
 			query += "idPurchase = " + idPurchase;
-			ajout = true;
 			modification = true;
 		}
-
-		if (itemAmount > 0) {
-			if (ajout) {
+		if (itemAmount >= 0) {
+			if (modification) {
 				query += ", ";
 			}
-
 			query += "itemAmount = " + itemAmount;
-			ajout = true;
 			modification = true;
 		}
-	
+
 		if (totalPrice > 0) {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
-
-			query += "totalPrice = " + totalPrice;
-			ajout = true;
+			query += "totalPrice = " + totalPrice.ToString()->Replace(",", ".");
 			modification = true;
 		}
 
 		if (vatAmount > 0) {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
-
-			query += "vatAmount = " + vatAmount;
+			query += "vatAmount = " + vatAmount.ToString()->Replace(",", ".");
 			modification = true;
 		}
 
@@ -638,81 +600,67 @@ namespace NS_DB {
 
 	System::String^ Mapper::updatePurchase(int idPurchase, System::DateTime^ purchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice, int idPaymentAddress, int idDeliveryAddress, int idClient) {
 		bool modification = false;
-		bool ajout = false;
 		System::String^ query = gcnew System::String(" UPDATE Purchase SET ");
 
 		if (idClient > 0) {
 			query += "idCLient = " + idClient;
-			ajout = true;
 			modification = true;
 		}
 
 		if (purchaseDate != nullptr && (System::DateTime::Compare(*purchaseDate, *MIN_DATETIME) > 0)) {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
-
 			query += "purchaseDate = '" + purchaseDate->ToString("yyyy-MM-dd") + "'";
-			ajout = true;
 			modification = true;
 		}
 
 		if (payDate != nullptr && (System::DateTime::Compare(*payDate, *MIN_DATETIME) > 0)) {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
-
 			query += "payDate = '" + payDate->ToString("yyyy-MM-dd") + "'";
-			ajout = true;
 			modification = true;
 		}
 
 		if (deliveryDate != nullptr && (System::DateTime::Compare(*deliveryDate, *MIN_DATETIME) > 0)) {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
-
 			query += "deliveryDate = '" + deliveryDate->ToString("yyyy-MM-dd") + "'";
-			ajout = true;
 			modification = true;
 		}
 
 		if (discountAmount > 0) {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
 
-			query += "discountAmount = " + discountAmount;
-			ajout = true;
+			query += "discountAmount = " + discountAmount.ToString()->Replace(",", ".");
 			modification = true;
 		}
 
 		if (dutyFreePrice > 0) {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
-
-			query += "dutyFreePrice = " + dutyFreePrice;
-			ajout = true;
+			query += "dutyFreePrice = " + dutyFreePrice.ToString()->Replace(",", ".");
 			modification = true;
 		}
 
 		if (vatAmount > 0) {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
-
-			query += "vatAmount = " + vatAmount;
-			ajout = true;
+			query += "vatAmount = " + vatAmount.ToString()->Replace(",", ".");
 			modification = true;
 		}
 
 		if (ttcPrice > 0) {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
-
-			query += "ttcPrice = " + ttcPrice;
+			query += "ttcPrice = " + ttcPrice.ToString()->Replace(",", ".");
 			modification = true;
 		}
 
@@ -727,30 +675,25 @@ namespace NS_DB {
 
 	System::String^ Mapper::updateAddress(int idAddress, System::String^ streetName, int streetNumber, int idCity) {
 		bool modification = false;
-		bool ajout = false;
 		System::String^ query = gcnew System::String(" UPDATE Address SET ");
 
 		if (streetName != nullptr && streetName != "") {
 			query += "streetName = '" + streetName + "'";
-			ajout = true;
 			modification = true;
 		}
 
 		if (streetNumber > 0) {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
-
 			query += "streetNumber = " + streetNumber;
-			ajout = true;
 			modification = true;
 		}
 
 		if (idCity > 0) {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
-
 			query += "idCity = " + idCity;
 			modification = true;
 		}
@@ -766,7 +709,6 @@ namespace NS_DB {
 
 	System::String^ Mapper::updateCity(int idCity, System::String^ cityName) {
 		bool modification = false;
-		bool ajout = false;
 		System::String^ query = gcnew System::String(" UPDATE City SET ");
 
 		if (cityName != nullptr && cityName != "") {
@@ -785,52 +727,40 @@ namespace NS_DB {
 
 	System::String^ Mapper::updatePaymentMethod(int idPaymentMethod, int idPaymentType, System::String^ name, System::String^ firstName, float amount) {
 		bool modification = false;
-		bool ajout = false;
 		System::String^ query = gcnew System::String(" UPDATE PaymentMethod SET ");
 
 		if (idPaymentType > 0) {
-
 			query += "idPaymentType = " + idPaymentType;
-			ajout = true;
 			modification = true;
 		}
 
 		if (name != nullptr && name != "") {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
-
 			query += "name = '" + name + "'";
-			ajout = true;
 			modification = true;
 		}
 
 		if (firstName != nullptr && firstName != "") {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
-
 			query += "firstName = '" + firstName + "'";
-			ajout = true;
 			modification = true;
 		}
 
 		if (amount > 0) {
-			if (ajout) {
+			if (modification) {
 				query += ", ";
 			}
-
-			query += "amount = " + amount;
+			query += "amount = " + amount.ToString()->Replace(",", ".");
 			modification = true;
 		}
 
 		query += " WHERE idPaymentMethod = " + idPaymentMethod;
 
 		if (!modification) {
-			if (ajout) {
-				query += ", ";
-			}
-
 			query = "";
 		}
 
@@ -838,13 +768,12 @@ namespace NS_DB {
 	}
 
 	System::String^ Mapper::updatePaymentType(int idPaymentType, System::String^ typeName) {
-		bool modification = false;
-		bool ajout = false;
 		System::String^ query = gcnew System::String(" UPDATE PaymentType SET ");
+		bool modification = false;
 
 		if (typeName != nullptr && typeName != "") {
 			query += "typeName = '" + typeName + "'";
-			ajout = true;
+			modification = true;
 		}
 
 		query += " WHERE idPaymentType = " + idPaymentType;
@@ -855,99 +784,6 @@ namespace NS_DB {
 
 		return query;
 	}
-
-	/*System::String^ Mapper::updatePurchaseNoPayment(int idPurchase, int idClient, System::DateTime^ purchaseDate, System::DateTime^ deliveryDate, float discountAmount, float dutyFreePrice, float vatAmount, float ttcPrice) {
-		bool modification = false;
-		bool ajout = false;
-		System::String^ query = gcnew System::String(" UPDATE Purchase SET ");
-
-		if (idClient > 0) {
-			query += "idCLient = '" + idClient + "'";
-			ajout = true;
-			modification = true;
-		}
-
-		if (idPurchase > 0) {
-			if (ajout) {
-				query += ", ";
-			}
-
-			query += "idPurchase = '" + idPurchase + "'";
-			ajout = true;
-			modification = true;
-		}
-
-		if (purchaseDate != nullptr && (purchaseDate->System::DateTime::Compare(*purchaseDate, *MIN_DATETIME) > 0)) {
-			if (ajout) {
-				query += ", ";
-			}
-
-			query += "purchaseDate = '" + purchaseDate->ToString("yyyy-MM-dd") + "'";
-			ajout = true;
-			modification = true;
-		}
-
-		if (deliveryDate != nullptr && (deliveryDate->System::DateTime::Compare(*deliveryDate, *MIN_DATETIME) > 0)) {
-			if (ajout) {
-				query += ", ";
-			}
-
-			query += "deliveryDate = '" + deliveryDate->ToString("yyyy-MM-dd") + "'";
-			ajout = true;
-			modification = true;
-		}
-
-		if (discountAmount > 0) {
-			if (ajout) {
-				query += ", ";
-			}
-
-			query += "discountAmount = '" + discountAmount + "'";
-			ajout = true;
-			modification = true;
-		}
-
-		if (dutyFreePrice > 0) {
-			if (ajout) {
-				query += ", ";
-			}
-
-			query += "dutyFreePrice = '" + dutyFreePrice + "'";
-			ajout = true;
-			modification = true;
-		}
-
-		if (vatAmount > 0) {
-			if (ajout) {
-				query += ", ";
-			}
-
-			query += "vatAmount = '" + vatAmount + "'";
-			ajout = true;
-			modification = true;
-		}
-
-		if (ttcPrice > 0) {
-			if (ajout) {
-				query += ", ";
-			}
-
-			query += "ttcPrice = '" + ttcPrice + "'";
-			modification = true;
-		}
-
-		query += " WHERE idPurchase = " + idPurchase;
-
-		if (!modification) {
-			query = "";
-		}
-
-		return query;
-	}
-
-	System::String^ Mapper::updateAddressCity(int idAddress, System::String^ streetName, int streetNumber, System::String^ cityName) {
-
-	}*/
 
 	System::String^ Mapper::deleteEmployee(int idEmployee) {
 		System::String^ query = gcnew System::String("DELETE FROM Employee WHERE idEmployee = " + idEmployee + " ; DELETE FROM manage WHERE subordinate = " + idEmployee + " ; DELETE FROM manage WHERE superior = " + idEmployee);
@@ -974,11 +810,6 @@ namespace NS_DB {
 		return query;
 	}
 
-	//System::String^ Mapper::deletePurchaseNoPayment(int idPurchaseNoPayment) {
-	//	System::String^ query = gcnew System::String("DELETE FROM ? WHERE ? = " + idPurchaseNoPayment);
-	//	return query;
-	//}
-
 	System::String^ Mapper::deleteAddress(int idAddress) {
 		System::String^ query = gcnew System::String("DELETE FROM Address WHERE idAddress = " + idAddress + " ; DELETE FROM Client WHERE idAddress = " + idAddress + " ; DELETE FROM Purchase WHERE idPaymentAddress = " + idAddress + " ; DELETE FROM Purchase WHERE idDeliveryAddress = " + idAddress + " ; DELETE FROM live WHERE idClient = " + idAddress + " ; DELETE FROM billing_address WHERE idClient = " + idAddress);
 		return query;
@@ -1002,8 +833,7 @@ namespace NS_DB {
 	System::String^ Mapper::deleteManage(int idEmployee, bool isSuperior) {
 		if (isSuperior) {
 			return gcnew System::String("DELETE FROM manage WHERE superior = " + idEmployee);
-		}
-		else {
+		} else {
 			return gcnew System::String("DELETE FROM manage WHERE subordinate = " + idEmployee);
 		}
 	}

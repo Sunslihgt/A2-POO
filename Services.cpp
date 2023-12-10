@@ -148,6 +148,15 @@ System::Data::DataSet^ NS_Services::Services::createAddress(System::String^ stre
 	}
 }
 
+System::Data::DataSet^ NS_Services::Services::createItem(System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate) {
+	System::String^ sql = NS_DB::Mapper::createItem(name, reference, quantity, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate);
+	int id = this->dbController->createObject(sql);
+	if (id < 0) {
+		return nullptr;
+	}
+	return NS_Services::Services::getItemById(id);
+}
+
 /* GET BY ID */
 System::Data::DataSet^ NS_Services::Services::getClientById(int idClient) {
 	System::String^ sql = NS_DB::Mapper::selectClientById(idClient);
@@ -173,9 +182,15 @@ System::Data::DataSet^ NS_Services::Services::getAddressById(int idAddress) {
 	return dataSet;
 }
 
+System::Data::DataSet^ NS_Services::Services::getItemById(int idItem) {
+	System::String^ sql = NS_DB::Mapper::selectItemById(idItem);
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+	return dataSet;
+}
+
 /* UPDATE */
 System::Data::DataSet^ NS_Services::Services::updateClient(int idClient, System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate) {
-	System::String^ sql = NS_DB::Mapper::updateClient(idClient, name, firstName, birthDate,  firstPurchaseDate);
+	System::String^ sql = NS_DB::Mapper::updateClient(idClient, name, firstName, birthDate, firstPurchaseDate);
 	bool updated = this->dbController->actionRows(sql);
 	return this->getClientById(idClient);
 }
@@ -225,6 +240,27 @@ System::Data::DataSet^ NS_Services::Services::updateEmployee(int idEmployee, Sys
 	}
 }
 
+System::Data::DataSet^ NS_Services::Services::updateItem(int idItem, System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate) {
+	System::String^ sql = NS_DB::Mapper::updateItem(idItem, name, reference, quantity, availableQuantity, quantityThreshold, supplierPrice, unitPrice, vatRate);
+	this->dbController->actionRows(sql);
+	return this->getItemById(idItem);
+}
+
+System::Data::DataSet^ NS_Services::Services::modifyItemQuantity(int idItem, int quantity) {
+	System::Data::DataSet^ dataSetItem = this->getItemById(idItem);
+	if (dataSetItem->Tables->Count == 0 || dataSetItem->Tables[0]->Rows->Count == 0) {
+		return nullptr;
+	}
+	System::Data::DataRow^ rowItem = dataSetItem->Tables[0]->Rows[0];
+
+	int totalQuantity = (int) rowItem[3] + quantity;
+	int availableQuantity = (int) rowItem[4] + quantity;
+
+	System::String^ sql = NS_DB::Mapper::updateItem(idItem, gcnew System::String(""), gcnew System::String(""), totalQuantity, availableQuantity, -1, (float) -1, (float) -1, (float) -1);
+	this->dbController->actionRows(sql);
+	return this->getItemById(idItem);
+}
+
 /* DELETE */
 bool NS_Services::Services::deleteEmployee(int idEmployee) {
 	System::String^ sqlDeleteManageSuperior = NS_DB::Mapper::deleteManage(idEmployee, true);  // Supprime les relations de chef de l'employé
@@ -246,6 +282,19 @@ bool NS_Services::Services::deleteClient(int idClient) {
 		return this->dbController->actionRows(sqlDelete);
 	} else {  // Si le client a des achats (référence au client dans la table Purchase)
 		return false;  // Le client ne peut pas être supprimé (car référence étrangère)
+	}
+}
+
+bool NS_Services::Services::deleteItem(int idItem) {
+	// Vérification que l'item ne soit pas référencé dans la table PurchasedItem
+	System::String^ sqlSearchPurchasedItems = NS_DB::Mapper::searchPurchasedItems(-1, idItem);
+	System::Data::DataSet^ dataSetSearchPurchasedItems = this->dbController->getRows(sqlSearchPurchasedItems);
+
+	if (dataSetSearchPurchasedItems->Tables->Count == 0 || dataSetSearchPurchasedItems->Tables[0]->Rows->Count == 0) {
+		System::String^ sqlDeleteItem = NS_DB::Mapper::deleteItem(idItem);  // Supprime l'item
+		return this->dbController->actionRows(sqlDeleteItem);
+	} else {  // Si l'item est référencé dans la table PurchasedItem
+		return false;  // L'item ne peut pas être supprimé (car référence étrangère)
 	}
 }
 
