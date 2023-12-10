@@ -54,9 +54,11 @@ namespace NS_Services {
 		System::Data::DataSet^ updateEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, int idAddress);
 		System::Data::DataSet^ updateEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, int idCity);
 		System::Data::DataSet^ updateEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, System::String^ cityName);
+		System::Data::DataSet^ updateItem(int idItem, System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate);
 
 		bool deleteEmployee(int idEmployee);
 		bool deleteClient(int idClient);
+		bool deleteItem(int idItem);
 
 		//System::Data::DataSet^ selectClientDeliveryAddressesByIdClient(int idClient);
 		//System::Data::DataSet^ selectClientBillingAddressesByIdClient(int idClient);

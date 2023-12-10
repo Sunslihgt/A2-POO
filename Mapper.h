@@ -19,7 +19,7 @@ namespace NS_DB {
 		static System::String^ searchEmployees(System::String^ name, System::String^ firstName, System::String^ streetName, int streetNumber, System::String^ cityName);
 		static System::String^ searchClients(System::String^ name, System::String^ firstName, System::DateTime^ birthDate, System::DateTime^ firstPurchaseDate);
 		static System::String^ searchItems(System::String^ name, System::String^ reference);
-		static System::String^ searchPurchasedItems(int idItem, System::String^ name, System::String^ reference);
+		static System::String^ searchPurchasedItems(int idPurchase, int idItem);
 		static System::String^ searchPurchases(System::String^ clientName, System::String^ clientFirstName, System::DateTime^ purchaseDate, System::DateTime^ payDate, System::DateTime^ deliveryDate, int idClient);
 		static System::String^ searchAddresses(System::String^ streetName, int streetNumber, int idCity);
 		static System::String^ searchAddresses(System::String^ streetName, int streetNumber, System::String^ cityName);
