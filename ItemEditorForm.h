@@ -584,9 +584,9 @@ namespace NS_IHM {
 				// i.idItem, i.name, i.reference, i.quantity, i.availableQuantity, i.quantityThreshold, i.supplierPrice, i.unitPrice, i.vatRate
 				this->txtName->Text = row[1]->ToString();
 				this->txtReference->Text = row[2]->ToString();
-				this->numQuantity->Text = row[3]->ToString();
-				this->numAvailableQuantity->Text = row[4]->ToString();
-				this->numQuantityThreshold->Text = row[5]->ToString();
+				this->numQuantity->Value = System::Convert::ToInt32(row[3]);
+				this->numAvailableQuantity->Value = System::Convert::ToInt32(row[4]);
+				this->numQuantityThreshold->Value = System::Convert::ToInt32(row[5]);
 				this->txtFloatSupplierPrice->Text = row[6]->ToString();
 				this->txtFloatUnitPrice->Text = row[7]->ToString();
 				this->txtFloatVatRate->Text = row[8]->ToString();

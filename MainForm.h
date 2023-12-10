@@ -23,9 +23,6 @@ namespace NS_IHM {
 		MainForm(NS_Services::Services^ services) {
 			this->services = services;
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
 		}
 
 	protected:
