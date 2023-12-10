@@ -56,6 +56,9 @@ namespace NS_Services {
 		System::Data::DataSet^ updateEmployee(int idEmployee, System::String^ name, System::String^ firstName, System::DateTime^ startDate, System::String^ streetName, int streetNumber, System::String^ cityName);
 		System::Data::DataSet^ updateItem(int idItem, System::String^ name, System::String^ reference, int quantity, int availableQuantity, int quantityThreshold, float supplierPrice, float unitPrice, float vatRate);
 
+		// Ahoute à la quantité totale et disponible d'un item la quantité passée en paramètre
+		System::Data::DataSet^ modifyItemQuantity(int idItem, int quantity);
+
 		bool deleteEmployee(int idEmployee);
 		bool deleteClient(int idClient);
 		bool deleteItem(int idItem);

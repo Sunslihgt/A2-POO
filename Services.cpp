@@ -246,6 +246,21 @@ System::Data::DataSet^ NS_Services::Services::updateItem(int idItem, System::Str
 	return this->getItemById(idItem);
 }
 
+System::Data::DataSet^ NS_Services::Services::modifyItemQuantity(int idItem, int quantity) {
+	System::Data::DataSet^ dataSetItem = this->getItemById(idItem);
+	if (dataSetItem->Tables->Count == 0 || dataSetItem->Tables[0]->Rows->Count == 0) {
+		return nullptr;
+	}
+	System::Data::DataRow^ rowItem = dataSetItem->Tables[0]->Rows[0];
+
+	int totalQuantity = (int) rowItem[3] + quantity;
+	int availableQuantity = (int) rowItem[4] + quantity;
+
+	System::String^ sql = NS_DB::Mapper::updateItem(idItem, gcnew System::String(""), gcnew System::String(""), totalQuantity, availableQuantity, -1, (float) -1, (float) -1, (float) -1);
+	this->dbController->actionRows(sql);
+	return this->getItemById(idItem);
+}
+
 /* DELETE */
 bool NS_Services::Services::deleteEmployee(int idEmployee) {
 	System::String^ sqlDeleteManageSuperior = NS_DB::Mapper::deleteManage(idEmployee, true);  // Supprime les relations de chef de l'employé

@@ -487,7 +487,6 @@ namespace NS_DB {
 			query += "name = '" + name + "'";
 			modification = true;
 		}
-
 		if (reference != nullptr && reference != "") {
 			if (modification) {
 				query += ", ";
@@ -516,27 +515,27 @@ namespace NS_DB {
 			query += "quantityThreshold = " + quantityThreshold;
 			modification = true;
 		}
-
+		if (supplierPrice > 0) {
 		if (modification) {
 			query += ", ";
 		}
 		query += "supplierPrice = " + supplierPrice.ToString()->Replace(",", ".");
 		modification = true;
-
-
-		if (modification) {
-			query += ", ";
 		}
-		query += "unitPrice = " + unitPrice.ToString()->Replace(",", ".");
-		modification = true;
-
-
-		if (modification) {
-			query += ", ";
+		if (unitPrice > 0) {
+			if (modification) {
+				query += ", ";
+			}
+			query += "unitPrice = " + unitPrice.ToString()->Replace(",", ".");
+			modification = true;
 		}
-		query += "vatRate = " + vatRate.ToString()->Replace(",", ".");
-		modification = true;
-
+		if (vatRate > 0) {
+			if (modification) {
+				query += ", ";
+			}
+			query += "vatRate = " + vatRate.ToString()->Replace(",", ".");
+			modification = true;
+		}
 
 		query += " WHERE idItem = " + idItem;
 

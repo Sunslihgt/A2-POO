@@ -67,7 +67,8 @@ namespace NS_IHM {
 	private: System::Windows::Forms::Label^ lblFloatUnitPrice;
 	private: System::Windows::Forms::Label^ lblFloatSupplierPrice;
 	private: System::Windows::Forms::GroupBox^ gpbModifyQuantity;
-	private: System::Windows::Forms::NumericUpDown^ numIdItem;
+	private: System::Windows::Forms::NumericUpDown^ numModifyQuantity;
+
 	private: System::Windows::Forms::Label^ lblModifyQuantity;
 	private: System::Windows::Forms::Button^ btnModifyQuantity;
 
@@ -108,7 +109,7 @@ namespace NS_IHM {
 			this->lblFloatUnitPrice = (gcnew System::Windows::Forms::Label());
 			this->lblFloatSupplierPrice = (gcnew System::Windows::Forms::Label());
 			this->gpbModifyQuantity = (gcnew System::Windows::Forms::GroupBox());
-			this->numIdItem = (gcnew System::Windows::Forms::NumericUpDown());
+			this->numModifyQuantity = (gcnew System::Windows::Forms::NumericUpDown());
 			this->lblModifyQuantity = (gcnew System::Windows::Forms::Label());
 			this->btnModifyQuantity = (gcnew System::Windows::Forms::Button());
 			this->gpbQuantity->SuspendLayout();
@@ -118,16 +119,16 @@ namespace NS_IHM {
 			this->gpbInfos->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			this->gpbModifyQuantity->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numIdItem))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numModifyQuantity))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// btnDeleteItem
 			// 
 			this->btnDeleteItem->Anchor = System::Windows::Forms::AnchorStyles::Top;
-			this->btnDeleteItem->Location = System::Drawing::Point(50, 389);
+			this->btnDeleteItem->Location = System::Drawing::Point(46, 467);
 			this->btnDeleteItem->Name = L"btnDeleteItem";
 			this->btnDeleteItem->Size = System::Drawing::Size(220, 23);
-			this->btnDeleteItem->TabIndex = 11;
+			this->btnDeleteItem->TabIndex = 13;
 			this->btnDeleteItem->Text = L"Supprimer";
 			this->btnDeleteItem->UseVisualStyleBackColor = true;
 			this->btnDeleteItem->Click += gcnew System::EventHandler(this, &ItemEditorForm::btnDeleteItemClick);
@@ -135,10 +136,10 @@ namespace NS_IHM {
 			// btnUpdateItem
 			// 
 			this->btnUpdateItem->Anchor = System::Windows::Forms::AnchorStyles::Top;
-			this->btnUpdateItem->Location = System::Drawing::Point(50, 360);
+			this->btnUpdateItem->Location = System::Drawing::Point(46, 438);
 			this->btnUpdateItem->Name = L"btnUpdateItem";
 			this->btnUpdateItem->Size = System::Drawing::Size(220, 23);
-			this->btnUpdateItem->TabIndex = 10;
+			this->btnUpdateItem->TabIndex = 12;
 			this->btnUpdateItem->Text = L"Modifier";
 			this->btnUpdateItem->UseVisualStyleBackColor = true;
 			this->btnUpdateItem->Click += gcnew System::EventHandler(this, &ItemEditorForm::btnUpdateItemClick);
@@ -146,10 +147,10 @@ namespace NS_IHM {
 			// btnCreateItem
 			// 
 			this->btnCreateItem->Anchor = System::Windows::Forms::AnchorStyles::Top;
-			this->btnCreateItem->Location = System::Drawing::Point(50, 331);
+			this->btnCreateItem->Location = System::Drawing::Point(46, 409);
 			this->btnCreateItem->Name = L"btnCreateItem";
 			this->btnCreateItem->Size = System::Drawing::Size(220, 23);
-			this->btnCreateItem->TabIndex = 9;
+			this->btnCreateItem->TabIndex = 11;
 			this->btnCreateItem->Text = L"Créer";
 			this->btnCreateItem->UseVisualStyleBackColor = true;
 			this->btnCreateItem->Click += gcnew System::EventHandler(this, &ItemEditorForm::btnCreateItemClick);
@@ -163,7 +164,7 @@ namespace NS_IHM {
 			this->gpbQuantity->Controls->Add(this->lblAvailableQuantity);
 			this->gpbQuantity->Controls->Add(this->numQuantity);
 			this->gpbQuantity->Controls->Add(this->lblQauntity);
-			this->gpbQuantity->Location = System::Drawing::Point(50, 125);
+			this->gpbQuantity->Location = System::Drawing::Point(46, 125);
 			this->gpbQuantity->Name = L"gpbQuantity";
 			this->gpbQuantity->Size = System::Drawing::Size(220, 95);
 			this->gpbQuantity->TabIndex = 29;
@@ -240,7 +241,7 @@ namespace NS_IHM {
 			this->gpbInfos->Controls->Add(this->lblFirstName);
 			this->gpbInfos->Controls->Add(this->lblName);
 			this->gpbInfos->Controls->Add(this->txtName);
-			this->gpbInfos->Location = System::Drawing::Point(50, 47);
+			this->gpbInfos->Location = System::Drawing::Point(46, 47);
 			this->gpbInfos->Name = L"gpbInfos";
 			this->gpbInfos->Size = System::Drawing::Size(220, 72);
 			this->gpbInfos->TabIndex = 28;
@@ -286,7 +287,7 @@ namespace NS_IHM {
 			this->lblTitle->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 14));
 			this->lblTitle->Location = System::Drawing::Point(12, 8);
 			this->lblTitle->Name = L"lblTitle";
-			this->lblTitle->Size = System::Drawing::Size(471, 23);
+			this->lblTitle->Size = System::Drawing::Size(297, 23);
 			this->lblTitle->TabIndex = 27;
 			this->lblTitle->Text = L"Produit";
 			this->lblTitle->TextAlign = System::Drawing::ContentAlignment::TopCenter;
@@ -300,7 +301,7 @@ namespace NS_IHM {
 			this->groupBox1->Controls->Add(this->txtFloatVatRate);
 			this->groupBox1->Controls->Add(this->lblFloatUnitPrice);
 			this->groupBox1->Controls->Add(this->lblFloatSupplierPrice);
-			this->groupBox1->Location = System::Drawing::Point(50, 226);
+			this->groupBox1->Location = System::Drawing::Point(46, 226);
 			this->groupBox1->Name = L"groupBox1";
 			this->groupBox1->Size = System::Drawing::Size(220, 99);
 			this->groupBox1->TabIndex = 30;
@@ -309,19 +310,19 @@ namespace NS_IHM {
 			// 
 			// txtFloatSupplierPrice
 			// 
-			this->txtFloatSupplierPrice->Location = System::Drawing::Point(112, 19);
+			this->txtFloatSupplierPrice->Location = System::Drawing::Point(118, 19);
 			this->txtFloatSupplierPrice->MaxLength = 10;
 			this->txtFloatSupplierPrice->Name = L"txtFloatSupplierPrice";
-			this->txtFloatSupplierPrice->Size = System::Drawing::Size(102, 20);
+			this->txtFloatSupplierPrice->Size = System::Drawing::Size(96, 20);
 			this->txtFloatSupplierPrice->TabIndex = 6;
 			this->txtFloatSupplierPrice->Text = L"0";
 			// 
 			// txtFloatUnitPrice
 			// 
-			this->txtFloatUnitPrice->Location = System::Drawing::Point(112, 45);
+			this->txtFloatUnitPrice->Location = System::Drawing::Point(118, 45);
 			this->txtFloatUnitPrice->MaxLength = 10;
 			this->txtFloatUnitPrice->Name = L"txtFloatUnitPrice";
-			this->txtFloatUnitPrice->Size = System::Drawing::Size(102, 20);
+			this->txtFloatUnitPrice->Size = System::Drawing::Size(96, 20);
 			this->txtFloatUnitPrice->TabIndex = 7;
 			this->txtFloatUnitPrice->Text = L"0";
 			// 
@@ -337,10 +338,10 @@ namespace NS_IHM {
 			// 
 			// txtFloatVatRate
 			// 
-			this->txtFloatVatRate->Location = System::Drawing::Point(112, 71);
+			this->txtFloatVatRate->Location = System::Drawing::Point(118, 71);
 			this->txtFloatVatRate->MaxLength = 10;
 			this->txtFloatVatRate->Name = L"txtFloatVatRate";
-			this->txtFloatVatRate->Size = System::Drawing::Size(102, 20);
+			this->txtFloatVatRate->Size = System::Drawing::Size(96, 20);
 			this->txtFloatVatRate->TabIndex = 8;
 			this->txtFloatVatRate->Text = L"0";
 			// 
@@ -350,46 +351,46 @@ namespace NS_IHM {
 			this->lblFloatUnitPrice->Location = System::Drawing::Point(5, 48);
 			this->lblFloatUnitPrice->Margin = System::Windows::Forms::Padding(15, 0, 3, 0);
 			this->lblFloatUnitPrice->Name = L"lblFloatUnitPrice";
-			this->lblFloatUnitPrice->Size = System::Drawing::Size(91, 13);
+			this->lblFloatUnitPrice->Size = System::Drawing::Size(106, 13);
 			this->lblFloatUnitPrice->TabIndex = 20;
-			this->lblFloatUnitPrice->Text = L"Prix vente unitaire";
+			this->lblFloatUnitPrice->Text = L"Prix vente unitaire (€)";
 			// 
 			// lblFloatSupplierPrice
 			// 
 			this->lblFloatSupplierPrice->AutoSize = true;
 			this->lblFloatSupplierPrice->Location = System::Drawing::Point(6, 22);
 			this->lblFloatSupplierPrice->Name = L"lblFloatSupplierPrice";
-			this->lblFloatSupplierPrice->Size = System::Drawing::Size(78, 13);
+			this->lblFloatSupplierPrice->Size = System::Drawing::Size(93, 13);
 			this->lblFloatSupplierPrice->TabIndex = 18;
-			this->lblFloatSupplierPrice->Text = L"Prix fournisseur";
+			this->lblFloatSupplierPrice->Text = L"Prix fournisseur (€)";
 			// 
 			// gpbModifyQuantity
 			// 
 			this->gpbModifyQuantity->Anchor = System::Windows::Forms::AnchorStyles::Top;
-			this->gpbModifyQuantity->Controls->Add(this->numIdItem);
+			this->gpbModifyQuantity->Controls->Add(this->numModifyQuantity);
 			this->gpbModifyQuantity->Controls->Add(this->lblModifyQuantity);
 			this->gpbModifyQuantity->Controls->Add(this->btnModifyQuantity);
-			this->gpbModifyQuantity->Location = System::Drawing::Point(276, 47);
+			this->gpbModifyQuantity->Location = System::Drawing::Point(46, 331);
 			this->gpbModifyQuantity->Name = L"gpbModifyQuantity";
-			this->gpbModifyQuantity->Size = System::Drawing::Size(162, 87);
+			this->gpbModifyQuantity->Size = System::Drawing::Size(220, 72);
 			this->gpbModifyQuantity->TabIndex = 31;
 			this->gpbModifyQuantity->TabStop = false;
 			this->gpbModifyQuantity->Text = L"Ajouter au  stock";
 			// 
-			// numIdItem
+			// numModifyQuantity
 			// 
-			this->numIdItem->AllowDrop = true;
-			this->numIdItem->Location = System::Drawing::Point(59, 20);
-			this->numIdItem->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+			this->numModifyQuantity->AllowDrop = true;
+			this->numModifyQuantity->Location = System::Drawing::Point(118, 20);
+			this->numModifyQuantity->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
 				10000, 0, 0, 0
 			});
-			this->numIdItem->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+			this->numModifyQuantity->Minimum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
 				1, 0, 0, 0
 			});
-			this->numIdItem->Name = L"numIdItem";
-			this->numIdItem->Size = System::Drawing::Size(97, 20);
-			this->numIdItem->TabIndex = 5;
-			this->numIdItem->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+			this->numModifyQuantity->Name = L"numModifyQuantity";
+			this->numModifyQuantity->Size = System::Drawing::Size(96, 20);
+			this->numModifyQuantity->TabIndex = 9;
+			this->numModifyQuantity->Value = System::Decimal(gcnew cli::array< System::Int32 >(4) {
 				1, 0, 0, 0
 			});
 			// 
@@ -406,20 +407,21 @@ namespace NS_IHM {
 			// 
 			this->btnModifyQuantity->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->btnModifyQuantity->Location = System::Drawing::Point(6, 53);
-			this->btnModifyQuantity->Margin = System::Windows::Forms::Padding(3, 10, 3, 3);
+			this->btnModifyQuantity->Location = System::Drawing::Point(6, 44);
+			this->btnModifyQuantity->Margin = System::Windows::Forms::Padding(3, 2, 3, 2);
 			this->btnModifyQuantity->Name = L"btnModifyQuantity";
-			this->btnModifyQuantity->Size = System::Drawing::Size(150, 23);
-			this->btnModifyQuantity->TabIndex = 2;
+			this->btnModifyQuantity->Size = System::Drawing::Size(208, 23);
+			this->btnModifyQuantity->TabIndex = 10;
 			this->btnModifyQuantity->Text = L"Ajouter";
 			this->btnModifyQuantity->UseVisualStyleBackColor = true;
+			this->btnModifyQuantity->Click += gcnew System::EventHandler(this, &ItemEditorForm::btnModifyQuantityClick);
 			// 
 			// ItemEditorForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->AutoSize = true;
-			this->ClientSize = System::Drawing::Size(495, 431);
+			this->ClientSize = System::Drawing::Size(321, 521);
 			this->Controls->Add(this->gpbModifyQuantity);
 			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->btnDeleteItem);
@@ -428,7 +430,7 @@ namespace NS_IHM {
 			this->Controls->Add(this->gpbQuantity);
 			this->Controls->Add(this->gpbInfos);
 			this->Controls->Add(this->lblTitle);
-			this->MinimumSize = System::Drawing::Size(511, 470);
+			this->MinimumSize = System::Drawing::Size(337, 560);
 			this->Name = L"ItemEditorForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"ItemEditorForm";
@@ -443,7 +445,7 @@ namespace NS_IHM {
 			this->groupBox1->PerformLayout();
 			this->gpbModifyQuantity->ResumeLayout(false);
 			this->gpbModifyQuantity->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numIdItem))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numModifyQuantity))->EndInit();
 			this->ResumeLayout(false);
 
 		}
@@ -527,21 +529,44 @@ namespace NS_IHM {
 			}
 		}
 
-		// Désactive le bouton de création si l'employé existe déjà
-		// Désactive les boutons de modification et de suppression si l'employé n'existe pas encore
+		System::Void btnModifyQuantityClick(System::Object^ sender, System::EventArgs^ e) {
+			if (!this->alreadyExists) {
+				MessageBox::Show("Ouvrez l'éditeur de produit en mode modification pour modifier un produit", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;  // Ne pas permettre la modification si le produit n'existe pas
+			}
+
+			// Modification de la quantité
+			System::Data::DataSet^ dataSet = this->services->modifyItemQuantity(this->id, (int) this->numModifyQuantity->Value);
+			if (dataSet != nullptr && dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
+				MessageBox::Show("Quantité modifiée.", "Ok", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				this->numModifyQuantity->Value = 1;  // Reset de la valeur du champ
+				fillFieldsFromDataSet(dataSet);  // Update des champs
+			} else {
+				MessageBox::Show("Une erreur est survenue lors de la modification de la quantité.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+
+		// Désactive le bouton de création si le produit existe déjà
+		// Désactive les boutons de modification et de suppression si le produit n'existe pas encore
 		System::Void enableButtons() {
-			if (alreadyExists) {
+			if (alreadyExists) {  // Si le produit existe déjà
 				this->btnCreateItem->Enabled = false;
 				this->btnUpdateItem->Enabled = true;
 				this->btnDeleteItem->Enabled = true;
 				this->numQuantity->ReadOnly = true;
 				this->numQuantity->Enabled = false;
-			} else {
+				this->numModifyQuantity->Enabled = true;
+				this->numModifyQuantity->ReadOnly = false;
+				this->btnModifyQuantity->Enabled = true;
+			} else {  // Si le produit n'existe pas encore
 				this->btnCreateItem->Enabled = true;
 				this->btnUpdateItem->Enabled = false;
 				this->btnDeleteItem->Enabled = false;
 				this->numQuantity->ReadOnly = false;
 				this->numQuantity->Enabled = true;
+				this->numModifyQuantity->Enabled = false;
+				this->numModifyQuantity->ReadOnly = true;
+				this->btnModifyQuantity->Enabled = false;
 			}
 		}
 
