@@ -46,18 +46,20 @@ namespace NS_IHM {
 	private: System::Windows::Forms::Label^ lblFirstName;
 	private: System::Windows::Forms::TextBox^ txtFirstName;
 	private: System::Windows::Forms::GroupBox^ gpbOpen;
-	private: System::Windows::Forms::NumericUpDown^ numIdEmployee;
+	private: System::Windows::Forms::NumericUpDown^ numIdPurchase;
 	private: System::Windows::Forms::Label^ lblId;
 	private: System::Windows::Forms::GroupBox^ gpbCreate;
 	private: System::Windows::Forms::Button^ btnCreateEmployee;
-	private: System::Windows::Forms::Button^ btnSearchEmployees;
+	private: System::Windows::Forms::Button^ btnSearchPurchases;
 	private: System::Windows::Forms::DateTimePicker^ dtpOrder;
 	private: System::Windows::Forms::Label^ lblOrderDate;
-	private: System::Windows::Forms::Label^ lblPayDate;
-	private: System::Windows::Forms::DateTimePicker^ dtpPay;
+
+
 	private: System::Windows::Forms::Label^ lblTitle;
 	private: System::Windows::Forms::Label^ lblDeliveryDate;
 	private: System::Windows::Forms::DateTimePicker^ dtpDelivery;
+	private: System::Windows::Forms::NumericUpDown^ numIdClient;
+	private: System::Windows::Forms::Label^ lblIdClient;
 
 	private:
 		/// <summary>
@@ -73,13 +75,13 @@ namespace NS_IHM {
 		void InitializeComponent(void) {
 			this->dgvPurchases = (gcnew System::Windows::Forms::DataGridView());
 			this->gpbSearch = (gcnew System::Windows::Forms::GroupBox());
+			this->numIdClient = (gcnew System::Windows::Forms::NumericUpDown());
+			this->lblIdClient = (gcnew System::Windows::Forms::Label());
 			this->lblDeliveryDate = (gcnew System::Windows::Forms::Label());
 			this->dtpDelivery = (gcnew System::Windows::Forms::DateTimePicker());
-			this->lblPayDate = (gcnew System::Windows::Forms::Label());
-			this->dtpPay = (gcnew System::Windows::Forms::DateTimePicker());
 			this->lblOrderDate = (gcnew System::Windows::Forms::Label());
 			this->dtpOrder = (gcnew System::Windows::Forms::DateTimePicker());
-			this->btnSearchEmployees = (gcnew System::Windows::Forms::Button());
+			this->btnSearchPurchases = (gcnew System::Windows::Forms::Button());
 			this->lblFirstName = (gcnew System::Windows::Forms::Label());
 			this->txtFirstName = (gcnew System::Windows::Forms::TextBox());
 			this->lblName = (gcnew System::Windows::Forms::Label());
@@ -87,15 +89,16 @@ namespace NS_IHM {
 			this->gpbCreate = (gcnew System::Windows::Forms::GroupBox());
 			this->btnCreateEmployee = (gcnew System::Windows::Forms::Button());
 			this->gpbOpen = (gcnew System::Windows::Forms::GroupBox());
-			this->numIdEmployee = (gcnew System::Windows::Forms::NumericUpDown());
+			this->numIdPurchase = (gcnew System::Windows::Forms::NumericUpDown());
 			this->lblId = (gcnew System::Windows::Forms::Label());
 			this->btnOpenEmployee = (gcnew System::Windows::Forms::Button());
 			this->lblTitle = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvPurchases))->BeginInit();
 			this->gpbSearch->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numIdClient))->BeginInit();
 			this->gpbCreate->SuspendLayout();
 			this->gpbOpen->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numIdEmployee))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numIdPurchase))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// dgvPurchases
@@ -118,13 +121,13 @@ namespace NS_IHM {
 			// 
 			this->gpbSearch->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
+			this->gpbSearch->Controls->Add(this->numIdClient);
+			this->gpbSearch->Controls->Add(this->lblIdClient);
 			this->gpbSearch->Controls->Add(this->lblDeliveryDate);
 			this->gpbSearch->Controls->Add(this->dtpDelivery);
-			this->gpbSearch->Controls->Add(this->lblPayDate);
-			this->gpbSearch->Controls->Add(this->dtpPay);
 			this->gpbSearch->Controls->Add(this->lblOrderDate);
 			this->gpbSearch->Controls->Add(this->dtpOrder);
-			this->gpbSearch->Controls->Add(this->btnSearchEmployees);
+			this->gpbSearch->Controls->Add(this->btnSearchPurchases);
 			this->gpbSearch->Controls->Add(this->lblFirstName);
 			this->gpbSearch->Controls->Add(this->txtFirstName);
 			this->gpbSearch->Controls->Add(this->lblName);
@@ -136,10 +139,31 @@ namespace NS_IHM {
 			this->gpbSearch->TabStop = false;
 			this->gpbSearch->Text = L"Rechercher";
 			// 
+			// numIdClient
+			// 
+			this->numIdClient->AllowDrop = true;
+			this->numIdClient->Location = System::Drawing::Point(377, 19);
+			this->numIdClient->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+				9999999, 0, 0, 0
+			});
+			this->numIdClient->Name = L"numIdClient";
+			this->numIdClient->Size = System::Drawing::Size(91, 20);
+			this->numIdClient->TabIndex = 7;
+			// 
+			// lblIdClient
+			// 
+			this->lblIdClient->AutoSize = true;
+			this->lblIdClient->Location = System::Drawing::Point(326, 22);
+			this->lblIdClient->Margin = System::Windows::Forms::Padding(15, 0, 3, 0);
+			this->lblIdClient->Name = L"lblIdClient";
+			this->lblIdClient->Size = System::Drawing::Size(45, 13);
+			this->lblIdClient->TabIndex = 6;
+			this->lblIdClient->Text = L"Id Client";
+			// 
 			// lblDeliveryDate
 			// 
 			this->lblDeliveryDate->AutoSize = true;
-			this->lblDeliveryDate->Location = System::Drawing::Point(431, 61);
+			this->lblDeliveryDate->Location = System::Drawing::Point(221, 61);
 			this->lblDeliveryDate->Margin = System::Windows::Forms::Padding(15, 0, 3, 0);
 			this->lblDeliveryDate->Name = L"lblDeliveryDate";
 			this->lblDeliveryDate->Size = System::Drawing::Size(122, 13);
@@ -149,30 +173,11 @@ namespace NS_IHM {
 			// dtpDelivery
 			// 
 			this->dtpDelivery->Format = System::Windows::Forms::DateTimePickerFormat::Short;
-			this->dtpDelivery->Location = System::Drawing::Point(559, 58);
+			this->dtpDelivery->Location = System::Drawing::Point(349, 58);
 			this->dtpDelivery->Name = L"dtpDelivery";
 			this->dtpDelivery->Size = System::Drawing::Size(95, 20);
 			this->dtpDelivery->TabIndex = 13;
 			this->dtpDelivery->Value = System::DateTime(1900, 1, 1, 0, 0, 0, 0);
-			// 
-			// lblPayDate
-			// 
-			this->lblPayDate->AutoSize = true;
-			this->lblPayDate->Location = System::Drawing::Point(221, 61);
-			this->lblPayDate->Margin = System::Windows::Forms::Padding(15, 0, 3, 0);
-			this->lblPayDate->Name = L"lblPayDate";
-			this->lblPayDate->Size = System::Drawing::Size(91, 13);
-			this->lblPayDate->TabIndex = 12;
-			this->lblPayDate->Text = L"Date de paiement";
-			// 
-			// dtpPay
-			// 
-			this->dtpPay->Format = System::Windows::Forms::DateTimePickerFormat::Short;
-			this->dtpPay->Location = System::Drawing::Point(318, 58);
-			this->dtpPay->Name = L"dtpPay";
-			this->dtpPay->Size = System::Drawing::Size(95, 20);
-			this->dtpPay->TabIndex = 11;
-			this->dtpPay->Value = System::DateTime(1900, 1, 1, 0, 0, 0, 0);
 			// 
 			// lblOrderDate
 			// 
@@ -193,16 +198,17 @@ namespace NS_IHM {
 			this->dtpOrder->TabIndex = 9;
 			this->dtpOrder->Value = System::DateTime(1900, 1, 1, 0, 0, 0, 0);
 			// 
-			// btnSearchEmployees
+			// btnSearchPurchases
 			// 
-			this->btnSearchEmployees->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
-			this->btnSearchEmployees->Location = System::Drawing::Point(669, 56);
-			this->btnSearchEmployees->Margin = System::Windows::Forms::Padding(3, 10, 3, 3);
-			this->btnSearchEmployees->Name = L"btnSearchEmployees";
-			this->btnSearchEmployees->Size = System::Drawing::Size(150, 23);
-			this->btnSearchEmployees->TabIndex = 6;
-			this->btnSearchEmployees->Text = L"Chercher";
-			this->btnSearchEmployees->UseVisualStyleBackColor = true;
+			this->btnSearchPurchases->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
+			this->btnSearchPurchases->Location = System::Drawing::Point(669, 56);
+			this->btnSearchPurchases->Margin = System::Windows::Forms::Padding(3, 10, 3, 3);
+			this->btnSearchPurchases->Name = L"btnSearchPurchases";
+			this->btnSearchPurchases->Size = System::Drawing::Size(150, 23);
+			this->btnSearchPurchases->TabIndex = 6;
+			this->btnSearchPurchases->Text = L"Chercher";
+			this->btnSearchPurchases->UseVisualStyleBackColor = true;
+			this->btnSearchPurchases->Click += gcnew System::EventHandler(this, &PurchaseListForm::btnSearchPurchasesClick);
 			// 
 			// lblFirstName
 			// 
@@ -260,12 +266,12 @@ namespace NS_IHM {
 			this->btnCreateEmployee->TabIndex = 2;
 			this->btnCreateEmployee->Text = L"Créer";
 			this->btnCreateEmployee->UseVisualStyleBackColor = true;
-			//this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &PurchaseListForm::btnCreatePurchaseClick);
+			this->btnCreateEmployee->Click += gcnew System::EventHandler(this, &PurchaseListForm::btnCreatePurchaseClick);
 			// 
 			// gpbOpen
 			// 
 			this->gpbOpen->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->gpbOpen->Controls->Add(this->numIdEmployee);
+			this->gpbOpen->Controls->Add(this->numIdPurchase);
 			this->gpbOpen->Controls->Add(this->lblId);
 			this->gpbOpen->Controls->Add(this->btnOpenEmployee);
 			this->gpbOpen->Location = System::Drawing::Point(675, 131);
@@ -275,16 +281,16 @@ namespace NS_IHM {
 			this->gpbOpen->TabStop = false;
 			this->gpbOpen->Text = L"Modifier";
 			// 
-			// numIdEmployee
+			// numIdPurchase
 			// 
-			this->numIdEmployee->AllowDrop = true;
-			this->numIdEmployee->Location = System::Drawing::Point(41, 20);
-			this->numIdEmployee->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
+			this->numIdPurchase->AllowDrop = true;
+			this->numIdPurchase->Location = System::Drawing::Point(41, 20);
+			this->numIdPurchase->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) {
 				99999999, 0, 0, 0
 			});
-			this->numIdEmployee->Name = L"numIdEmployee";
-			this->numIdEmployee->Size = System::Drawing::Size(115, 20);
-			this->numIdEmployee->TabIndex = 5;
+			this->numIdPurchase->Name = L"numIdPurchase";
+			this->numIdPurchase->Size = System::Drawing::Size(115, 20);
+			this->numIdPurchase->TabIndex = 5;
 			// 
 			// lblId
 			// 
@@ -306,6 +312,7 @@ namespace NS_IHM {
 			this->btnOpenEmployee->TabIndex = 2;
 			this->btnOpenEmployee->Text = L"Ouvrir";
 			this->btnOpenEmployee->UseVisualStyleBackColor = true;
+			this->btnOpenEmployee->Click += gcnew System::EventHandler(this, &PurchaseListForm::btnOpenPurchaseClick);
 			// 
 			// lblTitle
 			// 
@@ -337,22 +344,55 @@ namespace NS_IHM {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvPurchases))->EndInit();
 			this->gpbSearch->ResumeLayout(false);
 			this->gpbSearch->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numIdClient))->EndInit();
 			this->gpbCreate->ResumeLayout(false);
 			this->gpbOpen->ResumeLayout(false);
 			this->gpbOpen->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numIdEmployee))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numIdPurchase))->EndInit();
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
 	private: System::Void purchaseListLoad(System::Object^ sender, System::EventArgs^ e) {
-		DataSet^ data = this->services->searchPurchases(this->txtName->Text, this->txtFirstName->Text, this->dtpOrder->Value, this->dtpPay->Value, this->dtpDelivery->Value, -1);
-		this->dgvPurchases->DataSource = data->Tables[0];
+		updateDgv();
 	}
 
 	private: System::Void btnSearchPurchasesClick(System::Object^ sender, System::EventArgs^ e) {
-		DataSet^ data = this->services->searchPurchases(this->txtName->Text, this->txtFirstName->Text, this->dtpOrder->Value, this->dtpPay->Value, this->dtpDelivery->Value, -1);
-		this->dgvPurchases->DataSource = data->Tables[0];
+		updateDgv();
 	}
+
+	private: System::Void btnCreatePurchaseClick(System::Object^ sender, System::EventArgs^ e) {
+		PurchaseEditorForm^ purchaseEditorForm = gcnew PurchaseEditorForm(services, false, -1);
+		purchaseEditorForm->ShowDialog();
+		updateDgv();
+	}
+
+	private: System::Void btnOpenPurchaseClick(System::Object^ sender, System::EventArgs^ e) {
+		int idPurchase = Decimal::ToInt32(this->numIdPurchase->Value);
+		if (idPurchase > 0) {
+			System::Data::DataSet^ dataSet = services->getPurchaseById(idPurchase);
+			if (dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
+				MessageBox::Show("L'employé n'existe pas", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			} else {
+				PurchaseEditorForm^ purchaseEditorForm = gcnew PurchaseEditorForm(services, true, idPurchase);
+				purchaseEditorForm->ShowDialog();
+				updateDgv();
+			}
+		} else {
+			MessageBox::Show("L'id doit être supérieur ou égal à 0", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			return;
+		}
+	}
+
+	private:
+		// Fait une recherche dans la base de données à l'aide des critères de recherche et met à jour le DataGridView
+		System::Void updateDgv() {
+			int idClient = -1;
+			if (this->numIdClient->Value > 0) {
+				idClient = Decimal::ToInt32(this->numIdClient->Value);
+			}
+			DataSet^ data = this->services->searchPurchases(idClient, this->txtName->Text, this->txtFirstName->Text, this->dtpOrder->Value, this->dtpDelivery->Value);
+			this->dgvPurchases->DataSource = data->Tables[0];
+		}
 	};
 }

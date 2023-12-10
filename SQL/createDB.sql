@@ -15,22 +15,6 @@ CREATE TABLE Address(
    FOREIGN KEY(idCity) REFERENCES City(idCity)
 );
 
-CREATE TABLE PaymentType(
-   idPaymentType INT IDENTITY(1,1) NOT NULL,
-   typeName VARCHAR(50) NOT NULL,
-   PRIMARY KEY(idPaymentType)
-);
-
-CREATE TABLE PaymentMethod(
-   idPaymentMethod INT IDENTITY(1,1) NOT NULL,
-   name VARCHAR(50) NOT NULL,
-   firstName VARCHAR(50) NOT NULL,
-   amount DECIMAL(15,2) NOT NULL,
-   idPaymentType INT NOT NULL,
-   PRIMARY KEY(idPaymentMethod),
-   FOREIGN KEY(idPaymentType) REFERENCES PaymentType(idPaymentType)
-);
-
 CREATE TABLE Employee(
    idEmployee INT IDENTITY(1,1) NOT NULL,
    name VARCHAR(50) NOT NULL,
@@ -66,17 +50,14 @@ CREATE TABLE Item(
 CREATE TABLE Purchase(
    idPurchase INT IDENTITY(1,1) NOT NULL,
    purchaseDate DATE NOT NULL,
-   payDate DATE NOT NULL,
    deliveryDate DATE NOT NULL,
    discountAmount DECIMAL(15,2) NOT NULL,
    dutyFreePrice DECIMAL(15,2),
    vatAmount DECIMAL(15,2),
    ttcPrice DECIMAL(15,2),
-   idPaymentAddress INT NOT NULL,
    idDeliveryAddress INT NOT NULL,
    idClient INT NOT NULL,
    PRIMARY KEY(idPurchase),
-   FOREIGN KEY(idPaymentAddress) REFERENCES Address(idAddress),
    FOREIGN KEY(idDeliveryAddress) REFERENCES Address(idAddress),
    FOREIGN KEY(idClient) REFERENCES Client(idClient)
 );
@@ -93,12 +74,25 @@ CREATE TABLE PurchasedItem(
    FOREIGN KEY(idItem) REFERENCES Item(idItem)
 );
 
-CREATE TABLE paid_with(
+CREATE TABLE PaymentType(
+   idPaymentType INT IDENTITY(1,1) NOT NULL,
+   typeName VARCHAR(50) NOT NULL,
+   PRIMARY KEY(idPaymentType)
+);
+
+CREATE TABLE PaymentMethod(
+   idPaymentMethod INT IDENTITY(1,1) NOT NULL,
+   name VARCHAR(50) NOT NULL,
+   firstName VARCHAR(50) NOT NULL,
+   amount DECIMAL(15,2) NOT NULL,
+   payDate DATE NOT NULL,
+   idPaymentAddress INT NOT NULL,
+   idPaymentType INT NOT NULL,
    idPurchase INT NOT NULL,
-   idPaymentMethod INT NOT NULL,
-   PRIMARY KEY(idPurchase, idPaymentMethod),
-   FOREIGN KEY(idPurchase) REFERENCES Purchase(idPurchase),
-   FOREIGN KEY(idPaymentMethod) REFERENCES PaymentMethod(idPaymentMethod)
+   PRIMARY KEY(idPaymentMethod),
+   FOREIGN KEY(idPaymentAddress) REFERENCES Address(idAddress),
+   FOREIGN KEY(idPaymentType) REFERENCES PaymentType(idPaymentType),
+   FOREIGN KEY(idPurchase) REFERENCES Purchase(idPurchase)
 );
 
 CREATE TABLE manage(
