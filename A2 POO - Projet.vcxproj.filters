@@ -18,9 +18,6 @@
     <ClInclude Include="MainForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EmployeeListForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -57,12 +54,6 @@
     <ClInclude Include="Services.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CAD.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Employee.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DBController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -80,14 +71,23 @@
     <ClCompile Include="Services.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CAD.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Employee.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DBController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ItemEditorForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StatisticsForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
+    <None Include="SQL\createDB.sql" />
+    <None Include="SQL\deleteDB.sql" />
+    <None Include="SQL\populateDB.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="LICENSE.txt" />
   </ItemGroup>
 </Project>

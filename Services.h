@@ -3,17 +3,6 @@
 #include "DBController.h"
 #include "Mapper.h"
 
-#include "Address.h"
-#include "BaseObject.h"
-#include "City.h"
-#include "Client.h"
-#include "Employee.h"
-#include "Item.h"
-#include "PaymentMethod.h"
-#include "PaymentType.h"
-#include "Purchase.h"
-#include "PurchasedItem.h"
-
 namespace NS_Services {
 	public ref class Services {
 	private:

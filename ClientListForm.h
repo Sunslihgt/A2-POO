@@ -2,7 +2,6 @@
 
 #include "ClientEditorForm.h"
 #include "Services.h"
-#include "Client.h"
 
 namespace NS_IHM {
 
@@ -21,9 +20,6 @@ namespace NS_IHM {
 		ClientListForm(NS_Services::Services^ services) {
 			this->services = services;
 			InitializeComponent();
-			//
-			//TODO: ajoutez ici le code du constructeur
-			//
 		}
 
 	protected:

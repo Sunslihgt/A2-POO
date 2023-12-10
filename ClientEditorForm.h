@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Services.h"
-#include "Client.h"
 
 namespace NS_IHM {
 
@@ -41,7 +40,6 @@ namespace NS_IHM {
 		NS_Services::Services^ services;
 		bool alreadyExists;
 		int id;
-		//NS_Services::Client^ client;
 
 	private: System::Windows::Forms::Button^ btnDeleteClient;
 	private: System::Windows::Forms::Button^ btnCreateClient;
