@@ -334,6 +334,7 @@ namespace NS_IHM {
 			if (dataSet != nullptr && dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
 				System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
 				this->id = System::Convert::ToInt32(row[0]);  // Récupération de l'id de l'employé
+				MessageBox::Show("Employé créé.", "Ok", MessageBoxButtons::OK, MessageBoxIcon::Information);
 				fillFieldsFromDataSet(dataSet);  // Update des champs
 				alreadyExists = true;  // Le client existe maintenant
 				enableButtons();  // Activation des boutons
@@ -374,7 +375,12 @@ namespace NS_IHM {
 
 			// Modification de l'employé
 			System::Data::DataSet^ dataSet = this->services->updateEmployee(this->id, this->txtName->Text, this->txtFirstName->Text, this->dtpStart->Value, this->txtStreet->Text, (int) this->numStreetNumber->Value, this->txtCity->Text);
-			fillFieldsFromDataSet(dataSet);  // Update des champs
+			if (dataSet != nullptr && dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
+				MessageBox::Show("Employé modifié.", "Ok", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				fillFieldsFromDataSet(dataSet);  // Update des champs
+			} else {
+				MessageBox::Show("Une erreur est survenue lors de la modification de l'employé.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
 		}
 
 		System::Void btnDeleteEmployeeClick(System::Object^ sender, System::EventArgs^ e) {

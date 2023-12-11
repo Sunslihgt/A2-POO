@@ -209,8 +209,6 @@ namespace NS_IHM {
 
 		// Affichage du MainForm
 		mainForm->ShowDialog();
-
-		delete mainForm;  // Suppression du MainForm
 	}
 
 	};

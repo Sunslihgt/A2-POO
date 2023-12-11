@@ -255,6 +255,7 @@ namespace NS_IHM {
 			System::Data::DataSet^ dataSet = this->services->createClient(this->txtName->Text, this->txtFirstName->Text, this->dtpBirth->Value, this->dtpFirstPurchase->Value);
 			if (dataSet != nullptr && dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
 				System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
+				MessageBox::Show("Client créé.", "Ok", MessageBoxButtons::OK, MessageBoxIcon::Information);
 				this->id = System::Convert::ToInt32(row[0]);
 				fillFieldsFromDataSet(dataSet);  // Update des champs
 				alreadyExists = true;  // Le client existe maintenant
@@ -284,7 +285,12 @@ namespace NS_IHM {
 
 			// Modification du client
 			System::Data::DataSet^ dataSet = this->services->updateClient(this->id, this->txtName->Text, this->txtFirstName->Text, this->dtpBirth->Value, this->dtpFirstPurchase->Value);
-			fillFieldsFromDataSet(dataSet);  // Update des champs
+			if (dataSet != nullptr && dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
+				MessageBox::Show("Client modifié.", "Ok", MessageBoxButtons::OK, MessageBoxIcon::Information);
+				fillFieldsFromDataSet(dataSet);  // Update des champs
+			} else {
+				MessageBox::Show("Une erreur est survenue lors de la modification du client.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
 		}
 
 		System::Void btnDeleteClientClick(System::Object^ sender, System::EventArgs^ e) {

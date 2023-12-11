@@ -9,8 +9,6 @@ int __clrcall WinMain(array<String^>^ args) {
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
 
-	System::DateTime::Now.ToString("yyyy-MM-dd HH:mm:ss");
-
 	NS_IHM::ConnectionForm connectionForm;
 	Application::Run(% connectionForm);
 }

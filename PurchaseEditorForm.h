@@ -1045,8 +1045,8 @@ namespace NS_IHM {
 				this->id = System::Convert::ToInt32(row[0]);  // Récupération de l'id de l'item
 				this->alreadyExists = true;
 				MessageBox::Show("La commande a bien été créée.", "Succès", MessageBoxButtons::OK, MessageBoxIcon::Information);
-				enableButtons();
 				fillFieldsFromId();
+				enableButtons();
 			} else {
 				MessageBox::Show("Une erreur est survenue lors de la création de la commande.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}

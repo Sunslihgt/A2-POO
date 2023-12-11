@@ -649,6 +649,20 @@ namespace NS_DB {
 			query += "ttcPrice = " + ttcPrice.ToString()->Replace(",", ".");
 			modification = true;
 		}
+		if (idDeliveryAddress > 0) {
+			if (modification) {
+				query += ", ";
+			}
+			query += "idDeliveryAddress = " + idDeliveryAddress;
+			modification = true;
+		}
+		if (idClient > 0) {
+			if (modification) {
+				query += ", ";
+			}
+			query += "idClient = " + idClient;
+			modification = true;
+		}
 
 		query += " WHERE idPurchase = " + idPurchase;
 
@@ -873,10 +887,10 @@ namespace NS_DB {
 	}
 	
 	System::String^ Mapper::getItemsMostSold() {
-		return gcnew System::String("SELECT TOP 10 * FROM Item ORDER BY quantity - availableQuantity DESC");
+		return gcnew System::String("SELECT TOP 10 * FROM Item WHERE quantity > availableQuantity ORDER BY quantity - availableQuantity DESC");
 	}
 
 	System::String^ Mapper::getItemsLeastSold() {
-		return gcnew System::String("SELECT TOP 10 * FROM Item ORDER BY quantity - availableQuantity ASC");
+		return gcnew System::String("SELECT TOP 10 * FROM Item WHERE quantity > availableQuantity ORDER BY quantity - availableQuantity ASC");
 	}
 }

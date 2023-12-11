@@ -167,13 +167,18 @@ System::Data::DataSet^ NS_Services::Services::createPurchasedItem(int itemAmount
 		return nullptr;
 	}
 	System::Data::DataRow^ rowItem = dataSetItem->Tables[0]->Rows[0];
+	int availableQuantity = (int) rowItem[4];  // Quantité disponible de l'item
 
 	float totalPrice = itemAmount * System::Convert::ToSingle(rowItem[7]->ToString());  // Quantité * prix unitaire
 	float vatAmount = totalPrice * System::Convert::ToSingle(rowItem[8]->ToString()) / 100;  // Prix total * pourcentage de TVA / 100
 
-	if (itemAmount > (int) rowItem[4]) {  // Si la quantité demandée est supérieure à la quantité disponible
+	if (itemAmount > availableQuantity) {  // Si la quantité demandée est supérieure à la quantité disponible
 		return nullptr;  // Impossible de commander plus d'items que la quantité disponible
 	}
+
+	// Met à jour la quantité disponible de l'item (quantité disponible - quantité commandée)
+	availableQuantity -= itemAmount;
+	this->updateItem(idItem, gcnew System::String(""), gcnew System::String(""), -1, availableQuantity, -1, (float) -1, (float) -1, (float) -1);
 
 	System::String^ sql = NS_DB::Mapper::createPurchasedItem(itemAmount, totalPrice, vatAmount, idPurchase, idItem);
 	int id = this->dbController->createObject(sql);
