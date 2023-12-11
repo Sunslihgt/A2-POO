@@ -3,6 +3,7 @@
 Projet réalisé par le groupe 1 du **Projet POO** de seconde année de prépa intégrée spécialité informatique à Saint Nazaire (*CPI A2 Info 2023/2024*).
 
 ### Description
+
 Ce projet est un outil informatique développé en Visual C++/CLI (en utilisant Winforms) permettant à une entreprise vendant des produits électroniques de gérer :
 - Employés
 - Clients
