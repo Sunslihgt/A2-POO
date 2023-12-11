@@ -17,11 +17,10 @@ namespace NS_IHM {
 	public ref class StatisticsForm : public System::Windows::Forms::Form {
 	public:
 		StatisticsForm(NS_Services::Services^ services) {
-			this->services = services;
 			InitializeComponent();
-			//
-			//TODO: ajoutez ici le code du constructeur
-			//
+			addFloatTextBoxConstraints();
+
+			this->services = services;
 		}
 
 	protected:
@@ -160,6 +159,7 @@ namespace NS_IHM {
 			this->btnStoredValue->TabIndex = 6;
 			this->btnStoredValue->Text = L"Calculer valeur stock";
 			this->btnStoredValue->UseVisualStyleBackColor = true;
+			this->btnStoredValue->Click += gcnew System::EventHandler(this, &StatisticsForm::btnStoredValueClick);
 			// 
 			// lblUnknownShrinkage
 			// 
@@ -240,6 +240,7 @@ namespace NS_IHM {
 			this->btnTurnOverMonth->TabIndex = 13;
 			this->btnTurnOverMonth->Text = L"Chiffre d\'affaires";
 			this->btnTurnOverMonth->UseVisualStyleBackColor = true;
+			this->btnTurnOverMonth->Click += gcnew System::EventHandler(this, &StatisticsForm::btnTurnOverMonthClick);
 			// 
 			// gpbTurnOverMonth
 			// 
@@ -352,6 +353,7 @@ namespace NS_IHM {
 			this->btnClientTotalSpending->TabIndex = 20;
 			this->btnClientTotalSpending->Text = L"Calcul dépenses";
 			this->btnClientTotalSpending->UseVisualStyleBackColor = true;
+			this->btnClientTotalSpending->Click += gcnew System::EventHandler(this, &StatisticsForm::btnClientTotalSpendingClick);
 			// 
 			// btnThresholdWarning
 			// 
@@ -361,7 +363,7 @@ namespace NS_IHM {
 			this->btnThresholdWarning->TabIndex = 17;
 			this->btnThresholdWarning->Text = L"Produits sous approvisionnés";
 			this->btnThresholdWarning->UseVisualStyleBackColor = true;
-			this->btnThresholdWarning->Click += gcnew System::EventHandler(this, &StatisticsForm::button4_Click);
+			this->btnThresholdWarning->Click += gcnew System::EventHandler(this, &StatisticsForm::btnThresholdWarningClick);
 			// 
 			// btnMostSoldItems
 			// 
@@ -371,7 +373,7 @@ namespace NS_IHM {
 			this->btnMostSoldItems->TabIndex = 17;
 			this->btnMostSoldItems->Text = L"Produits les plus vendus";
 			this->btnMostSoldItems->UseVisualStyleBackColor = true;
-			this->btnMostSoldItems->Click += gcnew System::EventHandler(this, &StatisticsForm::button5_Click);
+			this->btnMostSoldItems->Click += gcnew System::EventHandler(this, &StatisticsForm::btnMostSoldItemsClick);
 			// 
 			// btnLeastSoldItems
 			// 
@@ -381,7 +383,7 @@ namespace NS_IHM {
 			this->btnLeastSoldItems->TabIndex = 19;
 			this->btnLeastSoldItems->Text = L"Produits les moins vendus";
 			this->btnLeastSoldItems->UseVisualStyleBackColor = true;
-			this->btnLeastSoldItems->Click += gcnew System::EventHandler(this, &StatisticsForm::button6_Click);
+			this->btnLeastSoldItems->Click += gcnew System::EventHandler(this, &StatisticsForm::btnLeastSoldItemsClick);
 			// 
 			// btnStoredSupplierPrice
 			// 
@@ -391,6 +393,7 @@ namespace NS_IHM {
 			this->btnStoredSupplierPrice->TabIndex = 20;
 			this->btnStoredSupplierPrice->Text = L"Prix d\'achat stock";
 			this->btnStoredSupplierPrice->UseVisualStyleBackColor = true;
+			this->btnStoredSupplierPrice->Click += gcnew System::EventHandler(this, &StatisticsForm::btnStoredSupplierPriceClick);
 			// 
 			// btnStoredSellPrice
 			// 
@@ -400,6 +403,7 @@ namespace NS_IHM {
 			this->btnStoredSellPrice->TabIndex = 21;
 			this->btnStoredSellPrice->Text = L"Prix de vente stock";
 			this->btnStoredSellPrice->UseVisualStyleBackColor = true;
+			this->btnStoredSellPrice->Click += gcnew System::EventHandler(this, &StatisticsForm::btnStoredSellPriceClick);
 			// 
 			// gpbStockStats
 			// 
@@ -424,6 +428,7 @@ namespace NS_IHM {
 			this->btnAveragePurchasePrice->TabIndex = 18;
 			this->btnAveragePurchasePrice->Text = L"Panier Moyen";
 			this->btnAveragePurchasePrice->UseVisualStyleBackColor = true;
+			this->btnAveragePurchasePrice->Click += gcnew System::EventHandler(this, &StatisticsForm::btnAveragePurchaseClick);
 			// 
 			// gpbItemsStock
 			// 
@@ -454,7 +459,6 @@ namespace NS_IHM {
 			this->Name = L"StatisticsForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Statistiques";
-			this->Load += gcnew System::EventHandler(this, &StatisticsForm::statisticsLoad);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvItems))->EndInit();
 			this->gpbStockValue->ResumeLayout(false);
 			this->gpbStockValue->PerformLayout();
@@ -468,17 +472,128 @@ namespace NS_IHM {
 			this->gpbStockStats->ResumeLayout(false);
 			this->gpbItemsStock->ResumeLayout(false);
 			this->ResumeLayout(false);
-
 		}
 #pragma endregion
-	private: System::Void statisticsLoad(System::Object^ sender, System::EventArgs^ e) {
-
-	}
-	private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {}
-	private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e) {}
-	private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {}
-
 	private:
 		System::Void StatisticsForm::addFloatTextBoxConstraints();
+
+		System::Void btnAveragePurchaseClick(System::Object^ sender, System::EventArgs^ e) {
+			float averagePurchasePrice = this->services->calculateAveragePurchasePrice();
+			if (averagePurchasePrice >= 0) {
+				MessageBox::Show("Le panier moyen est de " + averagePurchasePrice + " €.", "Statistiques", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			} else {
+				MessageBox::Show("Erreur lors du calcul du panier moyen.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+
+		System::Void btnStoredSupplierPriceClick(System::Object^ sender, System::EventArgs^ e) {
+			float totalSupplierPrice = this->services->calculateStoredSupplierPrice();
+			if (totalSupplierPrice >= 0) {
+				MessageBox::Show("Le prix total d'achat du stock est de " + totalSupplierPrice + " €.", "Statistiques", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			} else {
+				MessageBox::Show("Erreur lors du calcul du prix total d'achat du stock.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+
+		System::Void btnStoredSellPriceClick(System::Object^ sender, System::EventArgs^ e) {
+			float totalSellPrice = this->services->calculateStoredSellPrice();
+			if (totalSellPrice >= 0) {
+				MessageBox::Show("Le prix total de vente du stock est de " + totalSellPrice + " € (HT).", "Statistiques", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			} else {
+				MessageBox::Show("Erreur lors du calcul du prix total de vente du stock.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+
+		System::Void btnClientTotalSpendingClick(System::Object^ sender, System::EventArgs^ e) {
+			if (this->numClientId->Value < 0) {
+				MessageBox::Show("Veuillez entrer un identifiant client.");
+				return;
+			}
+
+			float totalSpending = this->services->calculateClientTotalSpendingPurchases((int) this->numClientId->Value);
+			float totalPaid = this->services->calculateClientTotalSpendingPaymentMethods((int) this->numClientId->Value);
+			if (totalSpending >= 0) {
+				MessageBox::Show("Les dépenses totales du client s'élèvent à " + totalSpending + " € (TTC) et le client a payé " + totalPaid + " €.", "Statistiques", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			} else {
+				MessageBox::Show("Erreur lors du calcul des dépenses totales du client.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+
+		System::Void btnTurnOverMonthClick(System::Object^ sender, System::EventArgs^ e) {
+			int month = (int) this->numTurnOverMonth->Value;
+			int year = (int) this->numTurnOverYear->Value;
+
+			if (month < 1 || month > 12) {
+				MessageBox::Show("Veuillez entrer un mois valide.");
+				return;
+			}
+
+			if (year < 2000 || year > System::DateTime::Now.Year) {
+				MessageBox::Show("Veuillez entrer une année valide.");
+				return;
+			}
+
+			float turnOver = this->services->calculateTurnOverMonth(month, year);
+			if (turnOver >= 0) {
+				MessageBox::Show("Le chiffre d'affaires du " + month + "/" + year + " est de " + turnOver + " € (TTC).", "Statistiques", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			} else {
+				MessageBox::Show("Erreur lors du calcul du chiffre d'affaires du " + month + "/" + year + ".", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+		
+		System::Void btnStoredValueClick(System::Object^ sender, System::EventArgs^ e) {
+			float profitPercent = float::Parse(this->txtFloatProfitPercent->Text);
+			float vatPercent = float::Parse(this->txtFloatVatPercent->Text);
+			float unknownShrinkagePercent = float::Parse(this->txtFloatUnknownShrinkagePercent->Text);
+
+			if (profitPercent < 0) {
+				MessageBox::Show("Veuillez entrer une marge commerciale valide.");
+				return;
+			}
+
+			if (vatPercent < 0) {
+				MessageBox::Show("Veuillez entrer une TVA valide.");
+				return;
+			}
+
+			if (unknownShrinkagePercent < 0) {
+				MessageBox::Show("Veuillez entrer une démarque inconnue valide.");
+				return;
+			}
+
+			float storedValue = this->services->calculateStoredValueManual(profitPercent, vatPercent, unknownShrinkagePercent);
+			if (storedValue >= 0) {
+				MessageBox::Show("Avec les critères donnés, la valeur du stock est de " + storedValue + " € (TTC).", "Statistiques", MessageBoxButtons::OK, MessageBoxIcon::Information);
+			} else {
+				MessageBox::Show("Erreur lors du calcul de la valeur du stock.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+
+		System::Void btnThresholdWarningClick(System::Object^ sender, System::EventArgs^ e) {
+			System::Data::DataSet^ dataSet = this->services->getItemsUnderThreshold();
+			if (dataSet != nullptr) {
+				this->dgvItems->DataSource = dataSet->Tables[0];
+			} else {
+				MessageBox::Show("Erreur lors de la récupération des produits sous seuil d'approvisionnement.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+
+		System::Void btnMostSoldItemsClick(System::Object^ sender, System::EventArgs^ e) {
+			System::Data::DataSet^ dataSet = this->services->getItemsMostSold();
+			if (dataSet != nullptr) {
+				this->dgvItems->DataSource = dataSet->Tables[0];
+			} else {
+				MessageBox::Show("Erreur lors de la récupération des produits les plus vendus.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
+
+		System::Void btnLeastSoldItemsClick(System::Object^ sender, System::EventArgs^ e) {
+			System::Data::DataSet^ dataSet = this->services->getItemsLeastSold();
+			if (dataSet != nullptr) {
+				this->dgvItems->DataSource = dataSet->Tables[0];
+			} else {
+				MessageBox::Show("Erreur lors de la récupération des produits les moins vendus.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			}
+		}
 	};
 }

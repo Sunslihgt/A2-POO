@@ -839,4 +839,44 @@ namespace NS_DB {
 	System::String^ Mapper::calculatePurchaseTotalPrice(int idPurchase) {
 		return gcnew System::String("SELECT SUM(totalPrice), SUM(vatAmount) FROM PurchasedItem WHERE idPurchase = " + idPurchase);
 	}
+	
+	System::String^ Mapper::calculateAveragePurchasePrice() {
+		return gcnew System::String("SELECT AVG(ttcPrice) FROM Purchase");
+	}
+	
+	System::String^ Mapper::calculateStoredSupplierPrice() {
+		return gcnew System::String("SELECT SUM(supplierPrice * availableQuantity) FROM Item");
+	}
+	
+	System::String^ Mapper::calculateStoredSellPrice() {
+		return gcnew System::String("SELECT SUM(unitPrice * availableQuantity) FROM Item");
+	}
+	
+	System::String^ Mapper::calculateClientTotalSpendingPurchases(int idClient) {
+		return gcnew System::String("SELECT SUM(ttcPrice) FROM Purchase WHERE idClient = " + idClient);
+	}
+	
+	System::String^ Mapper::calculateClientTotalSpendingPaymentMethods(int idClient) {
+		return gcnew System::String("SELECT SUM(pm.amount) FROM Purchase p INNER JOIN PaymentMethod pm ON p.idPurchase = pm.idPurchase WHERE idClient = " + idClient);
+	}
+	
+	System::String^ Mapper::calculateTurnOverMonth(int month, int year) {
+		return gcnew System::String("SELECT SUM(ttcPrice) FROM Purchase WHERE MONTH(purchaseDate) = " + month + " AND YEAR(purchaseDate) = " + year);
+	}
+	
+	System::String^ Mapper::calculateStoredValueManual(float profitPercent, float vatPercent, float unknownShrinkagePercent) {
+		return gcnew System::String("SELECT SUM(unitPrice * availableQuantity) * (100 + " + profitPercent.ToString()->Replace(",", ".") + ") / 100 * (100 + " + vatPercent.ToString()->Replace(",", ".") + ") / 100 * (100 - " + unknownShrinkagePercent.ToString()->Replace(",", ".") + ") / 100 FROM Item");
+	}
+	
+	System::String^ Mapper::getItemsUnderThreshold() {
+		return gcnew System::String("SELECT TOP 10 * FROM Item WHERE availableQuantity < quantityThreshold ORDER BY quantityThreshold - availableQuantity DESC");
+	}
+	
+	System::String^ Mapper::getItemsMostSold() {
+		return gcnew System::String("SELECT TOP 10 * FROM Item ORDER BY quantity - availableQuantity DESC");
+	}
+
+	System::String^ Mapper::getItemsLeastSold() {
+		return gcnew System::String("SELECT TOP 10 * FROM Item ORDER BY quantity - availableQuantity ASC");
+	}
 }

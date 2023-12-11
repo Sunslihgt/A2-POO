@@ -474,7 +474,7 @@ namespace NS_IHM {
 
 			// Création de l'item
 			System::Data::DataSet^ dataSet = this->services->createItem(this->txtName->Text, this->txtReference->Text, (int) this->numQuantity->Value, (int) this->numAvailableQuantity->Value, (int) this->numQuantityThreshold->Value, supplierPrice, unitPrice, vatRate);
-			if (dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
+			if (dataSet != nullptr && dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
 				System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
 				this->id = System::Convert::ToInt32(row[0]);  // Récupération de l'id de l'item
 				fillFieldsFromDataSet(dataSet);  // Update des champs
@@ -578,7 +578,7 @@ namespace NS_IHM {
 		}
 
 		System::Void fillFieldsFromDataSet(System::Data::DataSet^ dataSet) {
-			if (dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
+			if (dataSet != nullptr && dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
 				System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
 				// 0,        1,      2,           3,          4,                   5,                   6,               7,           8
 				// i.idItem, i.name, i.reference, i.quantity, i.availableQuantity, i.quantityThreshold, i.supplierPrice, i.unitPrice, i.vatRate

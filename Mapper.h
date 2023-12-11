@@ -58,6 +58,17 @@ namespace NS_DB {
 		static System::String^ deleteManage(int idEmployee, bool isSuperior);
 
 		static System::String^ calculatePurchaseTotalPrice(int idPurchase);
+		static System::String^ calculateAveragePurchasePrice();
+		static System::String^ calculateStoredSupplierPrice();
+		static System::String^ calculateStoredSellPrice();
+		static System::String^ calculateClientTotalSpendingPurchases(int idClient);
+		static System::String^ calculateClientTotalSpendingPaymentMethods(int idClient);
+		static System::String^ calculateTurnOverMonth(int month, int year);
+		static System::String^ calculateStoredValueManual(float profitPercent, float vatPercent, float unknownShrinkagePercent);
+		static System::String^ getItemsUnderThreshold();
+		static System::String^ getItemsMostSold();
+		static System::String^ getItemsLeastSold();
+			
 
 		// Date minimale pour qu'une date soit valide dans la base de données (01/01/1900)
 		const static System::DateTime^ MIN_DATETIME = gcnew System::DateTime(1900, 01, 01);

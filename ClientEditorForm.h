@@ -253,7 +253,7 @@ namespace NS_IHM {
 
 			// Création du client
 			System::Data::DataSet^ dataSet = this->services->createClient(this->txtName->Text, this->txtFirstName->Text, this->dtpBirth->Value, this->dtpFirstPurchase->Value);
-			if (dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
+			if (dataSet != nullptr && dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
 				System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
 				this->id = System::Convert::ToInt32(row[0]);
 				fillFieldsFromDataSet(dataSet);  // Update des champs
@@ -325,7 +325,7 @@ namespace NS_IHM {
 		}
 
 		System::Void fillFieldsFromDataSet(System::Data::DataSet^ dataSet) {
-			if (dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
+			if (dataSet != nullptr && dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
 				System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
 				// cl.idClient, cl.name , cl.firstName, cl.birthDate, cl.firstOrderDate
 				this->txtName->Text = row[1]->ToString();

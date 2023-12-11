@@ -371,7 +371,7 @@ namespace NS_IHM {
 		int idPurchase = Decimal::ToInt32(this->numIdPurchase->Value);
 		if (idPurchase > 0) {
 			System::Data::DataSet^ dataSet = services->getPurchaseById(idPurchase);
-			if (dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
+			if (dataSet == nullptr || dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
 				MessageBox::Show("L'employé n'existe pas", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			} else {
 				PurchaseEditorForm^ purchaseEditorForm = gcnew PurchaseEditorForm(services, true, idPurchase);
