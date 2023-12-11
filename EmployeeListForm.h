@@ -365,7 +365,7 @@ namespace NS_IHM {
 		int idEmployee = Decimal::ToInt32(this->numIdEmployee->Value);
 		if (idEmployee > 0) {
 			System::Data::DataSet^ dataSet = services->getEmployeeById(idEmployee);
-			if (dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
+			if (dataSet == nullptr || dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
 				MessageBox::Show("L'employé n'existe pas", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			} else {
 				EmployeeEditorForm^ employeeEditorForm = gcnew EmployeeEditorForm(services, true, idEmployee);

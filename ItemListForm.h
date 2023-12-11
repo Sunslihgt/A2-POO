@@ -284,7 +284,7 @@ namespace NS_IHM {
 		int idItem = Decimal::ToInt32(this->numIdItem->Value);
 		if (idItem > 0) {
 			System::Data::DataSet^ dataSet = services->getItemById(idItem);
-			if (dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
+			if (dataSet == nullptr || dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
 				MessageBox::Show("L'employé n'existe pas", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			} else {
 				ItemEditorForm^ itemEditorForm = gcnew ItemEditorForm(services, true, idItem);

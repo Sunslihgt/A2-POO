@@ -1157,48 +1157,70 @@ namespace NS_IHM {
 				return;
 			}
 
-			bool deleted = this->services->deletePurchasedItem((int) this->numDeletePurchasedItemId->Value);
-			if (deleted) {
-				this->services->updatePurchasePrices(this->id);
-				MessageBox::Show("La ligne de commande a bien été supprimée.", "Succès", MessageBoxButtons::OK, MessageBoxIcon::Information);
-				fillFieldsFromId();
-				this->numDeletePurchasedItemId->Value = 0;
+			System::Data::DataSet^ dataSet = this->services->getPurchasedItemById((int) this->numDeletePurchasedItemId->Value);
+			if (dataSet != nullptr && dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
+				bool deleted = this->services->deletePurchasedItem((int) this->numDeletePurchasedItemId->Value);
+				if (deleted) {
+					this->services->updatePurchasePrices(this->id);
+					MessageBox::Show("La ligne de commande a bien été supprimée.", "Succès", MessageBoxButtons::OK, MessageBoxIcon::Information);
+					fillFieldsFromId();
+					this->numDeletePurchasedItemId->Value = 0;
+				} else {
+					MessageBox::Show("Une erreur est survenue lors de la suppression de la ligne de commande.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				}
 			} else {
-				MessageBox::Show("Une erreur est survenue lors de la suppression de la ligne de commande.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				MessageBox::Show("La ligne de commande n'existe pas.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
+
+			
 		}
 
 		System::Void btnCreatePaymentClick(System::Object^ sender, System::EventArgs^ e) {
-			int idItem = -1;
-			if (useIdPurchasedItem) {
-				idItem = Decimal::ToInt32(this->numIdPurchasedItem->Value);
-			} else {
-				Data::DataSet^ dataSetClient = this->services->searchItems(this->txtNamePurchasedItem->Text, this->txtReferencePurchasedItem->Text);
-				if (dataSetClient->Tables->Count > 0 && dataSetClient->Tables[0]->Rows->Count == 1) {
-					System::Data::DataRow^ row = dataSetClient->Tables[0]->Rows[0];
-					idItem = System::Convert::ToInt32(row[0]);
-				} else if (dataSetClient->Tables->Count > 0 && dataSetClient->Tables[0]->Rows->Count > 1) {
-					MessageBox::Show("Plusieurs produits correspondent à ces critères. Utilisez un identifiant de produit.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				} else {
-					MessageBox::Show("Le produit n'existe pas.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
-				}
-			}
-
-			if (this->numQuantityPurchasedItem->Value <= 0) {
-				MessageBox::Show("La quantité achetée doit être supérieure à 0.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			if (this->txtPaymentName->Text == "" || this->txtPaymentFirstName->Text == "") {
+				MessageBox::Show("Veuillez entrer un nom et un prénom.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
 				return;
 			}
 
-			System::Data::DataSet^ dataSet = this->services->createPurchasedItem((int) this->numQuantityPurchasedItem->Value, this->id, idItem);
+			if (System::DateTime::Compare(this->dtpPayDate->Value, *NS_Services::Services::MIN_PURCHASE_DATE) < 0) {
+				MessageBox::Show("La date de paiement ne peut pas être antérieure à 01/01/2000.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			float paymentAmount = -1;
+			try {
+				paymentAmount = System::Convert::ToSingle(this->txtFloatPaymentAmount->Text);
+			} catch (System::FormatException^) {
+				MessageBox::Show("Le montant du paiement doit être un nombre.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+			if (paymentAmount <= 0) {
+				MessageBox::Show("Le montant du paiement doit être supérieur à 0.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			if (this->txtPaymentStreet->Text == "" || (int) this->numPaymentStreetNumber->Value <= 0 || this->txtPaymentCity->Text == "") {
+				MessageBox::Show("Veuillez entrer une adresse de paiement complète.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			if (this->numPaymentType->Value <= 0) {
+				MessageBox::Show("L'id du type de paiement doit être supérieur à 0.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				return;
+			}
+
+			System::Data::DataSet^ dataSet = this->services->createPaymentMethod(this->txtPaymentName->Text, this->txtPaymentFirstName->Text, paymentAmount, this->dtpPayDate->Value, (int) this->numPaymentType->Value, this->id, this->txtPaymentStreet->Text, (int) this->numPaymentStreetNumber->Value, this->txtPaymentCity->Text);
 			if (dataSet != nullptr && dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
 				MessageBox::Show("La commande a bien été modifiée.", "Succès", MessageBoxButtons::OK, MessageBoxIcon::Information);
 				fillFieldsFromId();
-				this->txtNamePurchasedItem->Text = "";
-				this->txtReferencePurchasedItem->Text = "";
-				this->numIdPurchasedItem->Value = 0;
-				this->numQuantityPurchasedItem->Value = 0;
+				this->txtPaymentName->Text = "";
+				this->txtPaymentFirstName->Text = "";
+				this->txtFloatPaymentAmount->Text = "0,00";
+				this->numPaymentType->Value = 1;
+				this->numPaymentStreetNumber->Value = 0;
+				this->txtPaymentStreet->Text = "";
+				this->txtPaymentCity->Text = "";
 			} else {
-				MessageBox::Show("Une erreur est survenue lors de la modification de la commande. Le produit est peut-être hors stock", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				MessageBox::Show("Une erreur est survenue lors de la modification de la commande.", "Erreur", MessageBoxButtons::OK, MessageBoxIcon::Error);
 			}
 		}
 
@@ -1294,7 +1316,7 @@ namespace NS_IHM {
 		}
 
 		System::Void fillFieldsFromDataSet(System::Data::DataSet^ dataSetPurchase, System::Data::DataSet^ dataSetPurchasedItems, System::Data::DataSet^ dataSetPaymentMethods) {
-			if (dataSetPurchase->Tables->Count > 0 && dataSetPurchase->Tables[0]->Rows->Count > 0) {
+			if (dataSetPurchase != nullptr && dataSetPurchase->Tables->Count > 0 && dataSetPurchase->Tables[0]->Rows->Count > 0) {
 				System::Data::DataRow^ row = dataSetPurchase->Tables[0]->Rows[0];
 				// 0,            1,          2,       3,            4,              5,              6,                7,               8,           9,        
 				// p.idPurchase, p.idClient, cl.name, cl.firstName, p.purchaseDate, p.deliveryDate, p.discountAmount, p.dutyFreePrice, p.vatAmount, p.ttcPrice
@@ -1314,11 +1336,11 @@ namespace NS_IHM {
 				this->txtDeliveryCity->Text = System::Convert::ToString(row[13]);
 			}
 
-			if (dataSetPurchasedItems->Tables->Count > 0 && dataSetPurchasedItems->Tables[0]->Rows->Count > 0) {
+			if (dataSetPurchasedItems != nullptr && dataSetPurchasedItems->Tables->Count > 0 && dataSetPurchasedItems->Tables[0]->Rows->Count > 0) {
 				this->dgvPurchasedItems->DataSource = dataSetPurchasedItems->Tables[0];
 			}
 
-			if (dataSetPaymentMethods->Tables->Count > 0 && dataSetPaymentMethods->Tables[0]->Rows->Count > 0) {
+			if (dataSetPaymentMethods != nullptr && dataSetPaymentMethods->Tables->Count > 0 && dataSetPaymentMethods->Tables[0]->Rows->Count > 0) {
 				this->dgvPaymentMethods->DataSource = dataSetPaymentMethods->Tables[0];
 			}
 		}

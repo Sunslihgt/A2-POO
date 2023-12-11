@@ -331,7 +331,7 @@ namespace NS_IHM {
 
 			// Création de l'employé
 			System::Data::DataSet^ dataSet = this->services->createEmployee(this->txtName->Text, this->txtFirstName->Text, this->dtpStart->Value, this->txtStreet->Text, (int) this->numStreetNumber->Value, this->txtCity->Text);
-			if (dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
+			if (dataSet != nullptr && dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
 				System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
 				this->id = System::Convert::ToInt32(row[0]);  // Récupération de l'id de l'employé
 				fillFieldsFromDataSet(dataSet);  // Update des champs
@@ -415,7 +415,7 @@ namespace NS_IHM {
 		}
 
 		System::Void fillFieldsFromDataSet(System::Data::DataSet^ dataSet) {
-			if (dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
+			if (dataSet != nullptr && dataSet->Tables->Count > 0 && dataSet->Tables[0]->Rows->Count > 0) {
 				System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
 				// e.idEmployee, e.name, e.firstName, e.startDate, e.idAddress, a.streetName, a.streetNumber, ci.cityName
 				this->txtName->Text = row[1]->ToString();

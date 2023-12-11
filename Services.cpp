@@ -527,3 +527,89 @@ bool NS_Services::Services::deletePurchase(int idPurchase) {
 	System::String^ sqlDeletePurchase = NS_DB::Mapper::deletePurchase(idPurchase);  // Supprime la commande
 	return this->dbController->actionRows(sqlDeletePurchase);
 }
+
+float NS_Services::Services::calculateAveragePurchasePrice() {
+	System::String^ sql = NS_DB::Mapper::calculateAveragePurchasePrice();
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+
+	if (dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
+		return -1;
+	}
+
+	try {
+		System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
+		return System::Convert::ToSingle(row[0]->ToString());
+	} catch (System::Exception^ ex) {
+		return -1;
+	}
+	return -1;
+}
+
+float NS_Services::Services::calculateStoredSupplierPrice() {
+	System::String^ sql = NS_DB::Mapper::calculateStoredSupplierPrice();
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+
+	if (dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
+		return -1;
+	}
+
+	try {
+		System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
+		return System::Convert::ToSingle(row[0]->ToString());
+	} catch (System::Exception^ ex) {
+		return -1;
+	}
+	return -1;
+}
+
+float NS_Services::Services::calculateStoredSellPrice() {
+	System::String^ sql = NS_DB::Mapper::calculateStoredSellPrice();
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+
+	if (dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
+		return -1;
+	}
+
+	try {
+		System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
+		return System::Convert::ToSingle(row[0]->ToString());
+	} catch (System::Exception^ ex) {
+		return -1;
+	}
+	return -1;
+}
+
+float NS_Services::Services::calculateClientTotalSpendingPurchases(int idClient) {
+	System::String^ sql = NS_DB::Mapper::calculateClientTotalSpendingPurchases(idClient);
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+
+	if (dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
+		return -1;
+	}
+
+	try {
+		System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
+		return System::Convert::ToSingle(row[0]->ToString());
+	} catch (System::Exception^ ex) {
+		return -1;
+	}
+	return -1;
+}
+
+float NS_Services::Services::calculateClientTotalSpendingPaymentMethods(int idClient) {
+	System::String^ sql = NS_DB::Mapper::calculateClientTotalSpendingPaymentMethods(idClient);
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+
+	if (dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
+		return -1;
+	}
+
+	try {
+		System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
+		return System::Convert::ToSingle(row[0]->ToString());
+	} catch (System::Exception^ ex) {
+		return -1;
+	}
+	return -1;
+}
+

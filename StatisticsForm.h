@@ -17,11 +17,10 @@ namespace NS_IHM {
 	public ref class StatisticsForm : public System::Windows::Forms::Form {
 	public:
 		StatisticsForm(NS_Services::Services^ services) {
-			this->services = services;
 			InitializeComponent();
-			//
-			//TODO: ajoutez ici le code du constructeur
-			//
+			addFloatTextBoxConstraints();
+
+			this->services = services;
 		}
 
 	protected:
@@ -352,6 +351,7 @@ namespace NS_IHM {
 			this->btnClientTotalSpending->TabIndex = 20;
 			this->btnClientTotalSpending->Text = L"Calcul dépenses";
 			this->btnClientTotalSpending->UseVisualStyleBackColor = true;
+			this->btnClientTotalSpending->Click += gcnew System::EventHandler(this, &StatisticsForm::btnClientTotalSpendingClick);
 			// 
 			// btnThresholdWarning
 			// 
@@ -361,7 +361,6 @@ namespace NS_IHM {
 			this->btnThresholdWarning->TabIndex = 17;
 			this->btnThresholdWarning->Text = L"Produits sous approvisionnés";
 			this->btnThresholdWarning->UseVisualStyleBackColor = true;
-			this->btnThresholdWarning->Click += gcnew System::EventHandler(this, &StatisticsForm::button4_Click);
 			// 
 			// btnMostSoldItems
 			// 
@@ -371,7 +370,6 @@ namespace NS_IHM {
 			this->btnMostSoldItems->TabIndex = 17;
 			this->btnMostSoldItems->Text = L"Produits les plus vendus";
 			this->btnMostSoldItems->UseVisualStyleBackColor = true;
-			this->btnMostSoldItems->Click += gcnew System::EventHandler(this, &StatisticsForm::button5_Click);
 			// 
 			// btnLeastSoldItems
 			// 
@@ -381,7 +379,6 @@ namespace NS_IHM {
 			this->btnLeastSoldItems->TabIndex = 19;
 			this->btnLeastSoldItems->Text = L"Produits les moins vendus";
 			this->btnLeastSoldItems->UseVisualStyleBackColor = true;
-			this->btnLeastSoldItems->Click += gcnew System::EventHandler(this, &StatisticsForm::button6_Click);
 			// 
 			// btnStoredSupplierPrice
 			// 
@@ -391,6 +388,7 @@ namespace NS_IHM {
 			this->btnStoredSupplierPrice->TabIndex = 20;
 			this->btnStoredSupplierPrice->Text = L"Prix d\'achat stock";
 			this->btnStoredSupplierPrice->UseVisualStyleBackColor = true;
+			this->btnStoredSupplierPrice->Click += gcnew System::EventHandler(this, &StatisticsForm::btnStoredSupplierPriceClick);
 			// 
 			// btnStoredSellPrice
 			// 
@@ -400,6 +398,7 @@ namespace NS_IHM {
 			this->btnStoredSellPrice->TabIndex = 21;
 			this->btnStoredSellPrice->Text = L"Prix de vente stock";
 			this->btnStoredSellPrice->UseVisualStyleBackColor = true;
+			this->btnStoredSellPrice->Click += gcnew System::EventHandler(this, &StatisticsForm::btnStoredSellPriceClick);
 			// 
 			// gpbStockStats
 			// 
@@ -424,6 +423,7 @@ namespace NS_IHM {
 			this->btnAveragePurchasePrice->TabIndex = 18;
 			this->btnAveragePurchasePrice->Text = L"Panier Moyen";
 			this->btnAveragePurchasePrice->UseVisualStyleBackColor = true;
+			this->btnAveragePurchasePrice->Click += gcnew System::EventHandler(this, &StatisticsForm::btnAveragePurchaseClick);
 			// 
 			// gpbItemsStock
 			// 
@@ -454,7 +454,6 @@ namespace NS_IHM {
 			this->Name = L"StatisticsForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Statistiques";
-			this->Load += gcnew System::EventHandler(this, &StatisticsForm::statisticsLoad);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dgvItems))->EndInit();
 			this->gpbStockValue->ResumeLayout(false);
 			this->gpbStockValue->PerformLayout();
@@ -468,17 +467,51 @@ namespace NS_IHM {
 			this->gpbStockStats->ResumeLayout(false);
 			this->gpbItemsStock->ResumeLayout(false);
 			this->ResumeLayout(false);
-
 		}
 #pragma endregion
-	private: System::Void statisticsLoad(System::Object^ sender, System::EventArgs^ e) {
-
-	}
-	private: System::Void button4_Click(System::Object^ sender, System::EventArgs^ e) {}
-	private: System::Void button6_Click(System::Object^ sender, System::EventArgs^ e) {}
-	private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {}
-
 	private:
 		System::Void StatisticsForm::addFloatTextBoxConstraints();
+
+	private: System::Void btnAveragePurchaseClick(System::Object^ sender, System::EventArgs^ e) {
+		float averagePurchasePrice = this->services->calculateAveragePurchasePrice();
+		if (averagePurchasePrice >= 0) {
+			MessageBox::Show("Le panier moyen est de " + averagePurchasePrice + " €.");
+		} else {
+			MessageBox::Show("Erreur lors du calcul du panier moyen.");
+		}
+	}
+
+	private: System::Void btnStoredSupplierPriceClick(System::Object^ sender, System::EventArgs^ e) {
+		float totalSupplierPrice = this->services->calculateStoredSupplierPrice();
+		if (totalSupplierPrice >= 0) {
+			MessageBox::Show("Le prix total d'achat du stock est de " + totalSupplierPrice + " €.");
+		} else {
+			MessageBox::Show("Erreur lors du calcul du prix total d'achat du stock.");
+		}
+	}
+
+	private: System::Void btnStoredSellPriceClick(System::Object^ sender, System::EventArgs^ e) {
+		float totalSellPrice = this->services->calculateStoredSellPrice();
+		if (totalSellPrice >= 0) {
+			MessageBox::Show("Le prix total de vente du stock est de " + totalSellPrice + " € (HT).");
+		} else {
+			MessageBox::Show("Erreur lors du calcul du prix total de vente du stock.");
+		}
+	}
+
+	private: System::Void btnClientTotalSpendingClick(System::Object^ sender, System::EventArgs^ e) {
+		if (this->numClientId->Value < 0) {
+			MessageBox::Show("Veuillez entrer un identifiant client.");
+			return;
+		}
+
+		float totalSpending = this->services->calculateClientTotalSpendingPurchases((int) this->numClientId->Value);
+		float totalPaid = this->services->calculateClientTotalSpendingPaymentMethods((int) this->numClientId->Value);
+		if (totalSpending >= 0) {
+			MessageBox::Show("Les dépenses totales du client s'élèvent à " + totalSpending + " € (TTC) et le client a payé " + totalPaid + "€.");
+		} else {
+			MessageBox::Show("Erreur lors du calcul des dépenses totales du client.");
+		}
+	}
 	};
 }

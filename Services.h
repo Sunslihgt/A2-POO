@@ -71,31 +71,11 @@ namespace NS_Services {
 		bool deletePurchasedItem(int idItem);
 		bool deletePurchase(int idPurchase);
 
-		//System::Data::DataSet^ selectClientDeliveryAddressesByIdClient(int idClient);
-		//System::Data::DataSet^ selectClientBillingAddressesByIdClient(int idClient);
-
-		
-		/*
-		DataSet^ searchEmployees(System::String name, System::String firstName, System::String streetName, int streetNumber, System::String cityName);
-		DataSet^ getEmployeeAdress(int employeeId);
-		DataSet^ searchClientDeliveryAdresses(int clientId);
-		DataSet^ searchClientBillingAdresses(int clientId);
-		DataSet^ searchItems();
-		DataSet^ searchPurchases();
-		DataSet^ searchAddresses();
-		DataSet^ searchStatistics();
-		float getAveragePurchasePrice();
-		float getTurnoverMonth(int year, int month);
-		float getClientTotalSpending(int clientId);
-		DataSet^ searchThresholdItems();
-		DataSet^ searchMostSoldItems();
-		DataSet^ searchLeastSoldItems();
-		float getStoredSupplierPrice();
-		float getStoredSellPrice();
-		float getStoredValue(float vatPercent, float profitPercent, float unknownShrinkagePercent);
-		*/
-
-	
+		float calculateAveragePurchasePrice();
+		float calculateStoredSupplierPrice();
+		float calculateStoredSellPrice();
+		float calculateClientTotalSpendingPurchases(int idClient);
+		float calculateClientTotalSpendingPaymentMethods(int idClient);
 	
 		// Date minimale pour qu'une date soit valide dans la base de données (01/01/1900)
 		const static System::DateTime^ MIN_DATETIME = NS_DB::Mapper::MIN_DATETIME;

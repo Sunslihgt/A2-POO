@@ -839,4 +839,19 @@ namespace NS_DB {
 	System::String^ Mapper::calculatePurchaseTotalPrice(int idPurchase) {
 		return gcnew System::String("SELECT SUM(totalPrice), SUM(vatAmount) FROM PurchasedItem WHERE idPurchase = " + idPurchase);
 	}
+	System::String^ Mapper::calculateAveragePurchasePrice() {
+		return gcnew System::String("SELECT AVG(ttcPrice) FROM Purchase");
+	}
+	System::String^ Mapper::calculateStoredSupplierPrice() {
+		return gcnew System::String("SELECT SUM(supplierPrice * availableQuantity) FROM Item");
+	}
+	System::String^ Mapper::calculateStoredSellPrice() {
+		return gcnew System::String("SELECT SUM(unitPrice * availableQuantity) FROM Item");
+	}
+	System::String^ Mapper::calculateClientTotalSpendingPurchases(int idClient) {
+		return gcnew System::String("SELECT SUM(ttcPrice) FROM Purchase WHERE idClient = " + idClient);
+	}
+	System::String^ Mapper::calculateClientTotalSpendingPaymentMethods(int idClient) {
+		return gcnew System::String("SELECT SUM(pm.amount) FROM Purchase p INNER JOIN PaymentMethod pm ON p.idPurchase = pm.idPurchase WHERE idClient = " + idClient);
+	}
 }

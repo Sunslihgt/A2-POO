@@ -82,12 +82,22 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="README.md" />
-    <None Include="SQL\createDB.sql" />
-    <None Include="SQL\deleteDB.sql" />
-    <None Include="SQL\populateDB.sql" />
+    <None Include="README.md">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="SQL\createDB.sql">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="SQL\deleteDB.sql">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="SQL\populateDB.sql">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="LICENSE.txt" />
+    <Text Include="LICENSE.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
