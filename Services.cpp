@@ -613,3 +613,54 @@ float NS_Services::Services::calculateClientTotalSpendingPaymentMethods(int idCl
 	return -1;
 }
 
+float NS_Services::Services::calculateTurnOverMonth(int month, int year) {
+	System::String^ sql = NS_DB::Mapper::calculateTurnOverMonth(month, year);
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+
+	if (dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
+		return -1;
+	}
+
+	try {
+		System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
+		return System::Convert::ToSingle(row[0]->ToString());
+	} catch (System::Exception^ ex) {
+		return -1;
+	}
+	return -1;
+}
+
+float NS_Services::Services::calculateStoredValueManual(float profitPercent, float vatPercent, float unknownShrinkagePercent) {
+	System::String^ sql = NS_DB::Mapper::calculateStoredValueManual(profitPercent, vatPercent, unknownShrinkagePercent);
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+
+	if (dataSet->Tables->Count == 0 || dataSet->Tables[0]->Rows->Count == 0) {
+		return -1;
+	}
+
+	try {
+		System::Data::DataRow^ row = dataSet->Tables[0]->Rows[0];
+		return System::Convert::ToSingle(row[0]->ToString());
+	} catch (System::Exception^ ex) {
+		return -1;
+	}
+	return -1;
+}
+
+System::Data::DataSet^ NS_Services::Services::getItemsUnderThreshold() {
+	System::String^ sql = NS_DB::Mapper::getItemsUnderThreshold();
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+	return dataSet;
+}
+
+System::Data::DataSet^ NS_Services::Services::getItemsMostSold() {
+	System::String^ sql = NS_DB::Mapper::getItemsMostSold();
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+	return dataSet;
+}
+
+System::Data::DataSet^ NS_Services::Services::getItemsLeastSold() {
+	System::String^ sql = NS_DB::Mapper::getItemsLeastSold();
+	System::Data::DataSet^ dataSet = this->dbController->getRows(sql);
+	return dataSet;
+}

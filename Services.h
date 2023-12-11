@@ -76,6 +76,11 @@ namespace NS_Services {
 		float calculateStoredSellPrice();
 		float calculateClientTotalSpendingPurchases(int idClient);
 		float calculateClientTotalSpendingPaymentMethods(int idClient);
+		float calculateTurnOverMonth(int month, int year);
+		float calculateStoredValueManual(float profitPercent, float vatPercent, float unknownShrinkagePercent);
+		System::Data::DataSet^ getItemsUnderThreshold();
+		System::Data::DataSet^ getItemsMostSold();
+		System::Data::DataSet^ getItemsLeastSold();
 	
 		// Date minimale pour qu'une date soit valide dans la base de données (01/01/1900)
 		const static System::DateTime^ MIN_DATETIME = NS_DB::Mapper::MIN_DATETIME;
